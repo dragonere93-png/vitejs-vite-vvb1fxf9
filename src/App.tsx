@@ -5,7 +5,7 @@ import {
   ChevronUp, Settings, ExternalLink, ArrowRight,
   MessageSquare, Palette, Type, DollarSign,
   Copy, RotateCcw, Plus, Trash2, CheckCircle2,
-  BarChart3, Clapperboard, Users, Bell, Gift
+  BarChart3, Clapperboard, Users, Bell, Gift, AlertTriangle
 } from 'lucide-react';
 
 // ============================================================================
@@ -1058,6 +1058,33 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
 
         </div>
 
+        {/* IMPORTANT WARNING: JOIN DISCORD FIRST */}
+        <div className={`max-w-4xl mx-auto mb-12 ${radiusCard} bg-amber-500/10 border-2 border-amber-500/70 p-5 sm:p-6 shadow-[0_0_35px_rgba(245,158,11,0.18)]`}>
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+            <div className="w-12 h-12 rounded-xl bg-amber-500/20 border border-amber-500/50 flex items-center justify-center text-amber-400 shrink-0">
+              <AlertTriangle className="w-6 h-6" />
+            </div>
+            <div className="flex-1 text-left">
+              <h3 className="text-base sm:text-lg font-black uppercase tracking-wide text-amber-400 mb-1">
+                ⚠️ IMPORTANT: Join the Discord Server FIRST!
+              </h3>
+              <p className="text-xs sm:text-sm text-slate-200 leading-relaxed">
+                You <strong className="text-white underline">must join our free Discord server BEFORE upgrading</strong> so the bot can assign your VIP role automatically in 5 seconds.
+                If you purchase before joining, you&apos;ll need to <strong className="text-amber-300">DM me privately on Discord</strong> so I can activate it manually (which can take anywhere from <strong className="text-white">10 minutes to 10 hours</strong>).
+              </p>
+            </div>
+            <a
+              href={config.discordInviteUrl}
+              target="_blank"
+              rel="noreferrer"
+              className={`w-full sm:w-auto px-5 py-3 ${radiusBtn} font-black text-xs sm:text-sm bg-[#5865F2] hover:bg-[#4752C4] text-white flex items-center justify-center gap-1.5 shrink-0 shadow-lg shadow-[#5865F2]/30 transition`}
+            >
+              <span>Join Discord First</span>
+              <ArrowRight className="w-4 h-4" />
+            </a>
+          </div>
+        </div>
+
         {/* Dynamic Paid Tiers Grid */}
         <div className={`grid grid-cols-1 ${gridColsClass} gap-6 items-stretch`}>
           {tiers.map((tier) => {
@@ -1073,9 +1100,11 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
                 }`}
               >
                 {tier.isPopular && tier.popularBanner && (
-                  <div className={`absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-gradient-to-r ${theme.barGradient} text-white text-xs font-black uppercase tracking-wider shadow-lg flex items-center gap-1.5 whitespace-nowrap`}>
-                    <Flame className="w-3.5 h-3.5 fill-white" />
-                    {tier.popularBanner}
+                  <div className="absolute -top-4 inset-x-0 flex justify-center pointer-events-none">
+                    <div className={`px-4 py-1 rounded-full bg-gradient-to-r ${theme.barGradient} text-white text-xs font-black uppercase tracking-wider shadow-lg flex items-center gap-1.5 whitespace-nowrap`}>
+                      <Flame className="w-3.5 h-3.5 fill-white" />
+                      {tier.popularBanner}
+                    </div>
                   </div>
                 )}
 
