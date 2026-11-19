@@ -23,6 +23,7 @@ interface SiteConfig {
   bannerUrl: string;
   showBanner: boolean;
   showNotifications: boolean;
+  showSideDecorations: boolean;
 
   // Live Stat Pill (Hero)
   statDiscord: string;
@@ -129,12 +130,13 @@ const DEFAULT_CONFIG: SiteConfig = {
   bannerUrl: '/banner.gif',
   showBanner: true,
   showNotifications: true,
+  showSideDecorations: true,
 
   statDiscord: '1,600+ on Discord',
-  statVault: '1,080+ videos in vault',
+  statVault: '1,080+ content in vault',
   statVips: '84 VIPs',
 
-  heroTitle: 'Uncensored anime captions, full cuts & reels.',
+  heroTitle: 'CAPTIONVIBES: Short and Long captioned videos',
   heroSubtitle:
     'Free full versions and weekly drops are posted in the Discord. If you want the entire private archive — quick edits, full long videos, and 900+ reels — VIP unlocks automatically in 5 seconds.',
   primaryCtaText: 'Join Free Discord',
@@ -321,7 +323,8 @@ const createRandomToast = (prevUser?: string): SocialToastEvent => {
   return { user, action: tpl.action, time, note: tpl.note, isVip: tpl.isVip };
 };
 
-const STORAGE_KEY = 'captionvibes_editorial_studio_v29';
+const BANNER_FALLBACKS = ['/banner.gif', '/standard(1).gif', '/banner.png', '/banner.jpg', '/standard(1).jpg'];
+const STORAGE_KEY = 'captionvibes_vertical_studio_v31';
 
 export default function App() {
   const loadSaved = () => {
@@ -368,7 +371,8 @@ export default function App() {
   const [activeTab, setActiveTab] = useState<HubTab>('discord');
   const [openFaq, setOpenFaq] = useState<number>(0);
   const [iconError, setIconError] = useState<boolean>(false);
-  const [bannerError, setBannerError] = useState<boolean>(false);
+  const [bannerFallbackIdx, setBannerFallbackIdx] = useState<number>(0);
+  const [bannerAllFailed, setBannerAllFailed] = useState<boolean>(false);
 
   // Notifications Toast states
   const [currentToast, setCurrentToast] = useState<SocialToastEvent>(() => createRandomToast());
@@ -395,13 +399,13 @@ export default function App() {
     }
   }, [config, vaultNumbers, previewClips, tiers, faqs]);
 
-  // Reset image error flags when URLs change
   useEffect(() => {
     setIconError(false);
   }, [config.iconUrl]);
 
   useEffect(() => {
-    setBannerError(false);
+    setBannerFallbackIdx(0);
+    setBannerAllFailed(false);
   }, [config.bannerUrl]);
 
   // Notifications cycle: visible 5.5s, hidden 12.5s
@@ -427,6 +431,31 @@ export default function App() {
       if (showTimeout !== undefined) window.clearTimeout(showTimeout);
     };
   }, [config.showNotifications, toastDismissed]);
+
+  const bannerCandidates = [
+    config.bannerUrl,
+    ...BANNER_FALLBACKS.filter((u) => u !== config.bannerUrl),
+  ].filter(Boolean);
+  const activeBannerSrc = bannerCandidates[bannerFallbackIdx] || '';
+
+  const handleBannerError = () => {
+    if (bannerFallbackIdx + 1 < bannerCandidates.length) {
+      setBannerFallbackIdx((idx) => idx + 1);
+    } else {
+      setBannerAllFailed(true);
+    }
+  };
+
+  const handleFileUpload = (file: File, field: 'iconUrl' | 'bannerUrl') => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      const result = typeof reader.result === 'string' ? reader.result : '';
+      if (result) {
+        setConfig((prev) => ({ ...prev, [field]: result }));
+      }
+    };
+    reader.readAsDataURL(file);
+  };
 
   const safeClipIdx = featuredClipIdx < previewClips.length ? featuredClipIdx : 0;
   const featuredClip = previewClips[safeClipIdx];
@@ -516,20 +545,141 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
   };
 
   return (
-    <div className="min-h-screen bg-[#0D0912] text-[#F5EFEF] font-sans antialiased selection:bg-[#FF8A75] selection:text-[#120912] relative overflow-x-hidden">
-      {/* Subtle warm twilight wash */}
-      <div
-        className="pointer-events-none fixed inset-x-0 top-0 h-[440px] z-0"
-        style={{
-          background:
-            'radial-gradient(ellipse 80% 55% at 75% -10%, rgba(255, 138, 117, 0.16) 0%, rgba(244, 143, 177, 0.08) 45%, rgba(13, 9, 18, 0) 100%)',
-        }}
-      />
+    <div className="min-h-screen bg-[#0B0710] text-[#F5EFEF] font-sans antialiased selection:bg-[#FF8A75] selection:text-[#120912] relative overflow-x-hidden">
+      {/* ==================================================================== */}
+      {/* DECORATIVE TRANSPARENT BACKGROUND & SIDE ARTWORK                     */}
+      {/* ==================================================================== */}
+      {config.showSideDecorations && (
+        <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
+          {/* Soft ambient sunset washes */}
+          <div
+            className="absolute -top-24 left-1/2 -translate-x-1/2 w-[820px] h-[420px] rounded-full blur-[130px] opacity-30"
+            style={{
+              background:
+                'radial-gradient(ellipse at center, rgba(255, 138, 117, 0.45) 0%, rgba(244, 143, 177, 0.25) 45%, rgba(11, 7, 16, 0) 75%)',
+            }}
+          />
+          <div
+            className="absolute top-[38%] -left-32 w-[420px] h-[420px] rounded-full blur-[130px] opacity-20"
+            style={{
+              background: 'radial-gradient(circle, rgba(255, 158, 199, 0.45) 0%, rgba(11, 7, 16, 0) 70%)',
+            }}
+          />
+          <div
+            className="absolute bottom-[10%] -right-32 w-[460px] h-[460px] rounded-full blur-[140px] opacity-20"
+            style={{
+              background: 'radial-gradient(circle, rgba(255, 184, 140, 0.4) 0%, rgba(11, 7, 16, 0) 70%)',
+            }}
+          />
 
-      {/* HEADER — Official Icon + Brand + Nav + Join Discord */}
-      <header className="sticky top-0 z-40 bg-[#0D0912]/88 backdrop-blur-md border-b border-white/[0.08]">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
-          <a href="#" className="flex items-center gap-3 min-w-0">
+          {/* Faint architectural grid texture */}
+          <div
+            className="absolute inset-0 opacity-[0.035]"
+            style={{
+              backgroundImage:
+                'linear-gradient(to right, rgba(255,184,140,0.4) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,158,199,0.4) 1px, transparent 1px)',
+              backgroundSize: '64px 64px',
+            }}
+          />
+
+          {/* LEFT SIDE TRANSPARENT DECORATIONS (Desktop & Tablet) */}
+          <div className="hidden lg:flex fixed left-5 xl:left-10 top-0 bottom-0 flex-col items-center justify-between py-24 select-none">
+            {/* Vertical delicate line + sparkle SVG */}
+            <div className="flex flex-col items-center gap-4 opacity-25">
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                <path
+                  d="M14 2L16.4 11.6L26 14L16.4 16.4L14 26L11.6 16.4L2 14L11.6 11.6L14 2Z"
+                  fill="url(#sparkleLeft)"
+                />
+                <defs>
+                  <linearGradient id="sparkleLeft" x1="2" y1="2" x2="26" y2="26">
+                    <stop stopColor="#FFD6A5" />
+                    <stop offset="1" stopColor="#FF9EC7" />
+                  </linearGradient>
+                </defs>
+              </svg>
+              <div className="w-[1px] h-28 bg-gradient-to-b from-[#FFB88C]/60 via-[#FF9EC7]/30 to-transparent" />
+            </div>
+
+            {/* Vertical transparent brand watermark */}
+            <div
+              className="text-[11px] font-black uppercase tracking-[0.45em] text-[#FFB88C] opacity-[0.14]"
+              style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
+            >
+              CAPTIONVIBES · PRIVATE ARCHIVE · 18+
+            </div>
+
+            {/* Soft translucent cloud / crescent silhouette */}
+            <div className="flex flex-col items-center gap-3 opacity-20">
+              <div className="w-[1px] h-24 bg-gradient-to-t from-[#FF9EC7]/60 to-transparent" />
+              <svg width="44" height="44" viewBox="0 0 44 44" fill="none">
+                <circle cx="22" cy="22" r="19" stroke="#FFB88C" strokeOpacity="0.45" strokeWidth="1" strokeDasharray="3 5" />
+                <path
+                  d="M22 10L23.8 19.2L33 21L23.8 22.8L22 32L20.2 22.8L11 21L20.2 19.2L22 10Z"
+                  fill="#FF9EC7"
+                  fillOpacity="0.65"
+                />
+              </svg>
+            </div>
+          </div>
+
+          {/* RIGHT SIDE TRANSPARENT DECORATIONS (Desktop & Tablet) */}
+          <div className="hidden lg:flex fixed right-5 xl:right-10 top-0 bottom-0 flex-col items-center justify-between py-24 select-none">
+            <div className="flex flex-col items-center gap-3 opacity-20">
+              <svg width="44" height="44" viewBox="0 0 44 44" fill="none">
+                <circle cx="22" cy="22" r="19" stroke="#FF9EC7" strokeOpacity="0.45" strokeWidth="1" strokeDasharray="3 5" />
+                <path
+                  d="M22 11L23.5 19.5L32 21L23.5 22.5L22 31L20.5 22.5L12 21L20.5 19.5L22 11Z"
+                  fill="#FFD6A5"
+                  fillOpacity="0.65"
+                />
+              </svg>
+              <div className="w-[1px] h-24 bg-gradient-to-b from-[#FF9EC7]/60 to-transparent" />
+            </div>
+
+            {/* Vertical transparent Japanese/editorial accent */}
+            <div
+              className="text-[11px] font-black uppercase tracking-[0.45em] text-[#FF9EC7] opacity-[0.14]"
+              style={{ writingMode: 'vertical-rl' }}
+            >
+              SUNSET LOUNGE · DAILY DROPS · VIP
+            </div>
+
+            <div className="flex flex-col items-center gap-4 opacity-25">
+              <div className="w-[1px] h-28 bg-gradient-to-t from-[#FFB88C]/60 via-[#FF9EC7]/30 to-transparent" />
+              <svg width="24" height="24" viewBox="0 0 28 28" fill="none">
+                <path
+                  d="M14 2L16.4 11.6L26 14L16.4 16.4L14 26L11.6 16.4L2 14L11.6 11.6L14 2Z"
+                  fill="#FFB88C"
+                />
+              </svg>
+            </div>
+          </div>
+
+          {/* Faint floating icon watermark in far background (if icon loaded) */}
+          {config.iconUrl && !iconError && (
+            <>
+              <img
+                src={config.iconUrl}
+                alt=""
+                aria-hidden="true"
+                className="hidden xl:block fixed -left-24 top-[22%] w-72 h-72 rounded-full object-cover opacity-[0.06] blur-[2px] -rotate-12"
+              />
+              <img
+                src={config.iconUrl}
+                alt=""
+                aria-hidden="true"
+                className="hidden xl:block fixed -right-24 bottom-[16%] w-72 h-72 rounded-full object-cover opacity-[0.06] blur-[2px] rotate-12"
+              />
+            </>
+          )}
+        </div>
+      )}
+
+      {/* HEADER — Compact & Mobile-Safe */}
+      <header className="sticky top-0 z-40 bg-[#0B0710]/88 backdrop-blur-md border-b border-white/[0.08]">
+        <div className="max-w-3xl mx-auto px-4 h-16 flex items-center justify-between gap-3">
+          <a href="#" className="flex items-center gap-2.5 min-w-0">
             <div
               className="relative w-10 h-10 rounded-full p-[1.5px] shrink-0 shadow-[0_0_16px_rgba(255,158,199,0.35)]"
               style={{ backgroundImage: 'linear-gradient(135deg, #FFB88C 0%, #FF7E6B 50%, #FF9EC7 100%)' }}
@@ -546,7 +696,7 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
                   CV
                 </div>
               )}
-              <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full bg-emerald-400 border-2 border-[#0D0912]" />
+              <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full bg-emerald-400 border-2 border-[#0B0710]" />
             </div>
 
             <div className="min-w-0">
@@ -555,231 +705,241 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
                   {config.brandPrefix}
                   <span className="text-[#FFA896]">{config.brandAccent}</span>
                 </span>
-                <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded bg-[#FF7E6B]/15 text-[#FFB88C] border border-[#FFB88C]/30 hidden sm:inline">
+                <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded bg-[#FF7E6B]/15 text-[#FFB88C] border border-[#FFB88C]/30 shrink-0">
                   {config.ageBadge}
                 </span>
               </div>
             </div>
           </a>
 
-          <nav className="hidden md:flex items-center gap-7 text-sm text-[#B8A8C0]">
-            <button type="button" onClick={() => openTabAndScroll('discord')} className="hover:text-white transition cursor-pointer">
-              Discord
-            </button>
-            <button type="button" onClick={() => openTabAndScroll('vip')} className="hover:text-white transition cursor-pointer">
-              VIP Access
-            </button>
-            <button type="button" onClick={() => openTabAndScroll('promo')} className="hover:text-white transition cursor-pointer">
-              Promo
-            </button>
-            <button type="button" onClick={() => scrollTo('faq')} className="hover:text-white transition cursor-pointer">
-              FAQ
-            </button>
-          </nav>
+          <div className="flex items-center gap-4 shrink-0">
+            <nav className="hidden sm:flex items-center gap-5 text-xs font-medium text-[#B8A8C0]">
+              <button type="button" onClick={() => openTabAndScroll('vip')} className="hover:text-white transition cursor-pointer">
+                VIP
+              </button>
+              <button type="button" onClick={() => openTabAndScroll('promo')} className="hover:text-white transition cursor-pointer">
+                Promo
+              </button>
+              <button type="button" onClick={() => scrollTo('faq')} className="hover:text-white transition cursor-pointer">
+                FAQ
+              </button>
+            </nav>
 
-          <a
-            href={config.discordUrl}
-            target="_blank"
-            rel="noreferrer"
-            className="px-3.5 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold text-white bg-[#5865F2] hover:bg-[#4955D6] transition whitespace-nowrap shrink-0 flex items-center gap-1.5"
-          >
-            <span>Join Discord</span>
-            <ExternalLink className="w-3.5 h-3.5 opacity-80" />
-          </a>
+            <a
+              href={config.discordUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="px-3.5 py-2 rounded-lg text-xs font-semibold text-white bg-[#5865F2] hover:bg-[#4955D6] transition whitespace-nowrap flex items-center gap-1.5 shadow-md shadow-[#5865F2]/25"
+            >
+              <span>Join Discord</span>
+              <ExternalLink className="w-3 h-3 opacity-80" />
+            </a>
+          </div>
         </div>
       </header>
 
-      {/* ANIMATED BANNER SHOWCASE (Official Sunset Cloud GIF Banner) */}
-      {config.showBanner && config.bannerUrl && !bannerError && (
-        <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 pt-6">
-          <div className="relative w-full h-36 sm:h-52 md:h-64 rounded-2xl overflow-hidden border border-[#FFB88C]/25 shadow-[0_20px_60px_rgba(255,126,107,0.18)]">
-            <img
-              src={config.bannerUrl}
-              alt="CaptionVibes Official Banner"
-              onError={() => setBannerError(true)}
-              className="w-full h-full object-cover object-center"
-            />
+      {/* ==================================================================== */}
+      {/* VERTICAL-FIRST MAIN COLUMN (MOBILE-NATIVE EXPERIENCE)                */}
+      {/* ==================================================================== */}
+      <main className="relative z-10 max-w-3xl mx-auto px-4 pt-5 pb-20 space-y-8">
+        {/* 1. OFFICIAL BANNER (Always visible with smart fallback if file name differs) */}
+        {config.showBanner && (
+          <div className="relative w-full h-36 sm:h-48 md:h-56 rounded-2xl overflow-hidden border border-[#FFB88C]/30 shadow-[0_18px_50px_rgba(255,126,107,0.2)]">
+            {!bannerAllFailed && activeBannerSrc ? (
+              <img
+                src={activeBannerSrc}
+                alt="CaptionVibes Official Banner"
+                onError={handleBannerError}
+                className="w-full h-full object-cover object-center"
+              />
+            ) : (
+              /* Sunset Cloud fallback if banner file isn't in public/ yet */
+              <div
+                className="w-full h-full flex flex-col items-center justify-center text-center px-4"
+                style={{
+                  backgroundImage:
+                    'linear-gradient(135deg, #2D1635 0%, #7C2D52 38%, #E06D67 72%, #FFB88C 100%)',
+                }}
+              >
+                <span className="text-2xl sm:text-4xl font-black tracking-[0.14em] text-white drop-shadow-[0_4px_18px_rgba(0,0,0,0.45)]">
+                  CAPTIONVIBES
+                </span>
+                {ENABLE_OWNER_CUSTOMIZER && (
+                  <span className="mt-2 text-[11px] bg-black/55 text-[#FFD6A5] px-3 py-1 rounded-full border border-white/15">
+                    Carica il banner in public/banner.gif oppure da &ldquo;Modifica Sito → Media&rdquo;
+                  </span>
+                )}
+              </div>
+            )}
             <div
               className="pointer-events-none absolute inset-0"
               style={{
                 background:
-                  'linear-gradient(180deg, rgba(13,9,18,0.12) 0%, rgba(13,9,18,0.05) 55%, rgba(13,9,18,0.72) 100%)',
+                  'linear-gradient(180deg, rgba(11,7,16,0.08) 0%, rgba(11,7,16,0.05) 55%, rgba(11,7,16,0.78) 100%)',
               }}
             />
           </div>
-        </div>
-      )}
+        )}
 
-      {/* HERO — Editorial Split Layout (Real video above the fold, left-aligned copy) */}
-      <section className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 pt-8 pb-14 md:pt-12 md:pb-20">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
-          {/* Left: Dynamic Glowing Stats Box + Direct Copy */}
-          <div className="lg:col-span-6 space-y-6">
-            {/* LIVE METRICS PILL (Classic clean live style) */}
-            <div className="inline-flex flex-wrap items-center gap-2 sm:gap-3 px-4 py-1.5 rounded-full bg-white/[0.03] border border-white/10 backdrop-blur-md shadow-inner">
-              <span className="flex items-center gap-1.5 text-xs font-semibold text-emerald-400">
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
-                </span>
-                <span>{config.statDiscord}</span>
+        {/* 2. VERTICAL HERO BLOCK (Centered & Scannable on Phone) */}
+        <section className="text-center space-y-5">
+          {/* Classic Clean Live Metrics Pill */}
+          <div className="inline-flex flex-wrap items-center justify-center gap-2 sm:gap-3 px-4 py-1.5 rounded-full bg-white/[0.03] border border-white/10 backdrop-blur-md shadow-inner">
+            <span className="flex items-center gap-1.5 text-xs font-semibold text-emerald-400">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
               </span>
+              <span>{config.statDiscord}</span>
+            </span>
 
-              <span className="text-white/20">|</span>
+            <span className="text-white/20">|</span>
 
-              <span className="text-xs font-semibold text-slate-300">
-                {config.statVault}
-              </span>
+            <span className="text-xs font-semibold text-slate-300">{config.statVault}</span>
 
-              <span className="text-white/20">|</span>
+            <span className="text-white/20">|</span>
 
-              <span className="flex items-center gap-1.5 text-xs font-semibold text-rose-400">
-                <Crown className="w-3.5 h-3.5" />
-                <span>{config.statVips}</span>
+            <span className="flex items-center gap-1.5 text-xs font-semibold text-rose-400">
+              <Crown className="w-3.5 h-3.5" />
+              <span>{config.statVips}</span>
+            </span>
+          </div>
+
+          <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight leading-[1.08] text-white max-w-2xl mx-auto">
+            {config.heroTitle}
+          </h1>
+
+          <p className="text-sm sm:text-base text-[#BFB0C7] leading-relaxed max-w-xl mx-auto">
+            {config.heroSubtitle}
+          </p>
+
+          {/* Vertical-friendly Full-width CTAs on Mobile, Side-by-side on Desktop */}
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 pt-1 max-w-md mx-auto">
+            <a
+              href={config.discordUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="flex-1 px-6 py-3.5 rounded-xl font-semibold text-sm sm:text-base text-white bg-[#5865F2] hover:bg-[#4955D6] transition flex items-center justify-center gap-2 shadow-lg shadow-[#5865F2]/30"
+            >
+              <span>{config.primaryCtaText}</span>
+              <ArrowRight className="w-4 h-4" />
+            </a>
+
+            <button
+              type="button"
+              onClick={() => openTabAndScroll('vip')}
+              className="flex-1 px-6 py-3.5 rounded-xl font-semibold text-sm sm:text-base text-[#FFEAE5] border border-[#FFA896]/40 hover:border-[#FFA896]/75 bg-[#181121] hover:bg-[#21172D] transition flex items-center justify-center gap-2 cursor-pointer"
+            >
+              <span>{config.secondaryCtaText}</span>
+            </button>
+          </div>
+
+          {/* Compact Giveaway Progress Bar */}
+          <div className="max-w-md mx-auto pt-2 text-left bg-[#140E1D]/85 border border-white/[0.08] rounded-xl p-3.5">
+            <div className="flex items-center justify-between text-xs mb-2 gap-2">
+              <span className="text-[#D8C8DE] font-medium">{config.goalLabel}</span>
+              <span className="text-[#FFB88C] font-bold shrink-0">
+                {config.vipCurrent}/{config.vipGoal}
               </span>
             </div>
-
-            <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight leading-[1.08] text-white">
-              {config.heroTitle}
-            </h1>
-
-            <p className="text-base sm:text-[17px] text-[#BFB0C7] leading-relaxed max-w-xl">
-              {config.heroSubtitle}
+            <div className="w-full h-1.5 bg-white/[0.08] rounded-full overflow-hidden">
+              <div
+                className="h-full rounded-full transition-all duration-500"
+                style={{
+                  width: `${progressPct}%`,
+                  backgroundImage: 'linear-gradient(90deg, #FF7E6B 0%, #FF9EC7 60%, #FFD6A5 100%)',
+                }}
+              />
+            </div>
+            <p className="text-[11px] text-[#95849E] mt-1.5">
+              {remainingVips} VIPs left to trigger the giveaway · {config.goalFooterNote}
             </p>
+          </div>
+        </section>
 
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-1">
+        {/* 3. FEATURED VIDEO PREVIEW CARD (Stacked vertically right below Hero) */}
+        <section className="rounded-2xl bg-[#150F1E]/95 border border-white/[0.09] overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.65)]">
+          <div className="aspect-video bg-black relative">
+            <video
+              key={featuredClip.src}
+              src={featuredClip.src}
+              controls
+              muted
+              playsInline
+              preload="metadata"
+              className="w-full h-full object-cover"
+            />
+          </div>
+
+          <div className="p-4 sm:p-5 space-y-4">
+            <div className="flex items-start justify-between gap-3">
+              <div>
+                <div className="flex items-center gap-2 flex-wrap">
+                  <h2 className="font-bold text-white text-base">{featuredClip.title}</h2>
+                  <span className="text-[11px] px-2 py-0.5 rounded bg-white/[0.06] text-[#FFB88C]">
+                    {featuredClip.tag}
+                  </span>
+                </div>
+                <p className="text-xs text-[#A897B2] mt-1 leading-relaxed">{featuredClip.note}</p>
+              </div>
               <a
                 href={config.discordUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="px-6 py-3.5 rounded-xl font-semibold text-sm sm:text-base text-white bg-[#5865F2] hover:bg-[#4955D6] transition flex items-center justify-center gap-2 shadow-lg shadow-[#5865F2]/25"
+                className="text-xs font-semibold text-[#FFA896] hover:text-white transition whitespace-nowrap shrink-0 mt-0.5"
               >
-                <span>{config.primaryCtaText}</span>
-                <ArrowRight className="w-4 h-4" />
+                Full cut →
               </a>
-
-              <button
-                type="button"
-                onClick={() => openTabAndScroll('vip')}
-                className="px-6 py-3.5 rounded-xl font-semibold text-sm sm:text-base text-[#FFEAE5] border border-[#FFA896]/40 hover:border-[#FFA896]/75 bg-[#181121] hover:bg-[#21172D] transition flex items-center justify-center gap-2 cursor-pointer"
-              >
-                <span>{config.secondaryCtaText}</span>
-              </button>
             </div>
 
-            {/* Giveaway milestone */}
-            <div className="pt-4 border-t border-white/[0.08] max-w-md">
-              <div className="flex items-center justify-between text-xs mb-2">
-                <span className="text-[#D8C8DE]">{config.goalLabel}</span>
-                <span className="text-[#FFB88C] font-semibold">
-                  {config.vipCurrent}/{config.vipGoal}
-                </span>
-              </div>
-              <div className="w-full h-1.5 bg-white/[0.08] rounded-full overflow-hidden">
-                <div
-                  className="h-full rounded-full transition-all duration-500"
-                  style={{
-                    width: `${progressPct}%`,
-                    backgroundImage: 'linear-gradient(90deg, #FF7E6B 0%, #FF9EC7 60%, #FFD6A5 100%)',
-                  }}
-                />
-              </div>
-              <p className="text-[11px] text-[#95849E] mt-1.5">
-                {remainingVips} VIPs left to trigger the giveaway · {config.goalFooterNote}
-              </p>
-            </div>
-          </div>
-
-          {/* Right: Live Featured Preview Player */}
-          <div className="lg:col-span-6">
-            <div className="rounded-2xl bg-[#150F1E] border border-white/[0.09] overflow-hidden shadow-[0_24px_70px_rgba(0,0,0,0.65)]">
-              <div className="aspect-video bg-black relative">
-                <video
-                  key={featuredClip.src}
-                  src={featuredClip.src}
-                  controls
-                  muted
-                  playsInline
-                  preload="metadata"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-
-              <div className="p-4 sm:p-5 space-y-4">
-                <div className="flex items-start justify-between gap-3">
-                  <div>
-                    <div className="flex items-center gap-2">
-                      <h2 className="font-bold text-white text-base">{featuredClip.title}</h2>
-                      <span className="text-[11px] px-2 py-0.5 rounded bg-white/[0.06] text-[#FFB88C]">
-                        {featuredClip.tag}
-                      </span>
-                    </div>
-                    <p className="text-xs text-[#A897B2] mt-1 line-clamp-2 leading-relaxed">
-                      {featuredClip.note}
-                    </p>
-                  </div>
-                  <a
-                    href={config.discordUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="text-xs font-semibold text-[#FFA896] hover:text-white transition whitespace-nowrap shrink-0 mt-0.5"
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-2 border-t border-white/[0.07]">
+              {previewClips.map((clip, idx) => {
+                const active = idx === safeClipIdx;
+                return (
+                  <button
+                    key={clip.id}
+                    type="button"
+                    onClick={() => setFeaturedClipIdx(idx)}
+                    className={`px-3 py-2.5 rounded-lg text-left transition cursor-pointer flex items-center gap-2 ${
+                      active
+                        ? 'bg-[#261A34] text-white border border-[#FFA896]/50'
+                        : 'bg-white/[0.03] text-[#A897B2] border border-transparent hover:bg-white/[0.06] hover:text-white'
+                    }`}
                   >
-                    Full cut →
-                  </a>
-                </div>
-
-                {/* Clip switcher pills */}
-                <div className="grid grid-cols-3 gap-2 pt-2 border-t border-white/[0.07]">
-                  {previewClips.map((clip, idx) => {
-                    const active = idx === safeClipIdx;
-                    return (
-                      <button
-                        key={clip.id}
-                        type="button"
-                        onClick={() => setFeaturedClipIdx(idx)}
-                        className={`px-2.5 py-2 rounded-lg text-left transition cursor-pointer flex items-center gap-1.5 ${
-                          active
-                            ? 'bg-[#261A34] text-white border border-[#FFA896]/45'
-                            : 'bg-white/[0.03] text-[#A897B2] border border-transparent hover:bg-white/[0.06] hover:text-white'
-                        }`}
-                      >
-                        <Play className={`w-3 h-3 shrink-0 ${active ? 'text-[#FFA896]' : 'opacity-50'}`} />
-                        <span className="text-[11px] font-medium truncate">{clip.title}</span>
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
+                    <Play className={`w-3.5 h-3.5 shrink-0 ${active ? 'text-[#FFA896]' : 'opacity-50'}`} />
+                    <span className="text-xs font-medium truncate">{clip.title}</span>
+                  </button>
+                );
+              })}
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* VAULT NUMBERS — Clean Typographic Strip */}
-      <section className="relative z-10 border-y border-white/[0.07] bg-[#110C18]">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8 grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+        {/* 4. VAULT NUMBERS (2x2 on Phone, 4-col on Desktop) */}
+        <section className="grid grid-cols-2 sm:grid-cols-4 gap-3">
           {vaultNumbers.map((item) => (
-            <div key={item.id} className="space-y-1">
-              <div className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+            <div
+              key={item.id}
+              className="rounded-xl bg-[#140E1D]/90 border border-white/[0.08] p-4 text-center space-y-0.5"
+            >
+              <div className="text-xl sm:text-2xl font-extrabold text-white tracking-tight">
                 {item.value}
               </div>
-              <div className="text-xs font-semibold text-[#FFA896]">{item.label}</div>
-              <div className="text-xs text-[#8E7D96]">{item.detail}</div>
+              <div className="text-[11px] font-semibold text-[#FFA896]">{item.label}</div>
+              <div className="text-[10px] text-[#8E7D96]">{item.detail}</div>
             </div>
           ))}
-        </div>
-      </section>
+        </section>
 
-      {/* 4-BUTTON HUB SWITCHER + ACTIVE PANEL */}
-      <section id="hub-tabs" className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 py-14 md:py-20">
-        <div className="max-w-xl mx-auto mb-10">
+        {/* 5. 4-BUTTON HUB SWITCHER + COLORED PANELS */}
+        <section id="hub-tabs" className="space-y-6 pt-2">
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 p-1.5 bg-[#150F1E] border border-white/[0.08] rounded-xl">
             <button
               type="button"
               onClick={() => setActiveTab('discord')}
               className={`py-2.5 px-3 rounded-lg font-semibold text-xs sm:text-sm tracking-wide flex items-center justify-center gap-2 transition cursor-pointer ${
                 activeTab === 'discord'
-                  ? 'bg-[#5865F2] text-white shadow-md shadow-[#5865F2]/25'
+                  ? 'bg-[#5865F2] text-white shadow-md shadow-[#5865F2]/30'
                   : 'text-[#B8A8C0] hover:text-white hover:bg-white/[0.04]'
               }`}
             >
@@ -797,7 +957,7 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
               }
               className={`py-2.5 px-3 rounded-lg font-semibold text-xs sm:text-sm tracking-wide flex items-center justify-center gap-2 transition cursor-pointer ${
                 activeTab === 'vip'
-                  ? 'text-[#160B12] shadow-md shadow-[#FF7E6B]/25'
+                  ? 'text-[#160B12] shadow-md shadow-[#FF7E6B]/30'
                   : 'text-[#B8A8C0] hover:text-white hover:bg-white/[0.04]'
               }`}
             >
@@ -810,7 +970,7 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
               onClick={() => setActiveTab('reddit')}
               className={`py-2.5 px-3 rounded-lg font-semibold text-xs sm:text-sm tracking-wide flex items-center justify-center gap-2 transition cursor-pointer ${
                 activeTab === 'reddit'
-                  ? 'bg-[#EA580C] text-white shadow-md shadow-orange-600/25'
+                  ? 'bg-[#FF4500] text-white shadow-md shadow-[#FF4500]/30'
                   : 'text-[#B8A8C0] hover:text-white hover:bg-white/[0.04]'
               }`}
             >
@@ -836,13 +996,11 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
               <span>PROMO</span>
             </button>
           </div>
-        </div>
 
-        {/* TAB 1: DISCORD (Blue themed with blue outline) */}
-        {activeTab === 'discord' && (
-          <div className="rounded-2xl bg-gradient-to-br from-[#5865F2]/18 via-[#121329] to-[#0D0E1D] border-2 border-[#5865F2]/65 shadow-[0_0_40px_rgba(88,101,242,0.18)] p-6 sm:p-9 space-y-8">
-            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
-              <div className="max-w-2xl space-y-2.5">
+          {/* TAB 1: DISCORD (Blue themed with blue outline) */}
+          {activeTab === 'discord' && (
+            <div className="rounded-2xl bg-gradient-to-br from-[#5865F2]/20 via-[#121329] to-[#0D0E1D] border-2 border-[#5865F2]/65 shadow-[0_0_40px_rgba(88,101,242,0.18)] p-5 sm:p-7 space-y-6">
+              <div className="space-y-3">
                 <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#5865F2]/20 border border-[#5865F2]/45 text-xs font-semibold text-[#99A4FF]">
                   <Users className="w-3.5 h-3.5" />
                   {config.discordTabBadge}
@@ -850,72 +1008,66 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
                 <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
                   {config.discordTabTitle}
                 </h2>
-                <p className="text-sm sm:text-base text-slate-300 leading-relaxed">
-                  {config.discordTabSubtitle}
-                </p>
+                <p className="text-sm text-slate-300 leading-relaxed">{config.discordTabSubtitle}</p>
+                <div className="pt-1">
+                  <a
+                    href={config.discordUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="w-full sm:w-auto px-6 py-3.5 rounded-xl font-semibold text-sm text-white bg-[#5865F2] hover:bg-[#4955D6] shadow-lg shadow-[#5865F2]/35 transition inline-flex items-center justify-center gap-2"
+                  >
+                    <span>{config.discordTabCta}</span>
+                    <ExternalLink className="w-4 h-4" />
+                  </a>
+                  <p className="text-[11px] text-[#99A4FF]/80 mt-2">{config.discordTabCtaSub}</p>
+                </div>
               </div>
-              <div className="shrink-0">
-                <a
-                  href={config.discordUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="w-full sm:w-auto px-6 py-3.5 rounded-xl font-semibold text-sm sm:text-base text-white bg-[#5865F2] hover:bg-[#4955D6] shadow-lg shadow-[#5865F2]/35 transition inline-flex items-center justify-center gap-2"
-                >
-                  <span>{config.discordTabCta}</span>
-                  <ExternalLink className="w-4 h-4" />
-                </a>
-                <p className="text-[11px] text-[#99A4FF]/80 text-center mt-2">
-                  {config.discordTabCtaSub}
-                </p>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 pt-5 border-t border-[#5865F2]/25">
+                <div className="rounded-xl bg-[#0C0D1A]/85 border border-[#5865F2]/35 p-4 space-y-2">
+                  <div className="w-8 h-8 rounded-lg bg-[#5865F2]/20 border border-[#5865F2]/40 flex items-center justify-center text-[#99A4FF]">
+                    <Gift className="w-4 h-4" />
+                  </div>
+                  <h3 className="font-semibold text-white text-sm">Free Weekly Drops</h3>
+                  <p className="text-xs text-slate-400 leading-relaxed">
+                    Public full-length cuts, announcements, and uncensored previews that Reddit filters or buries.
+                  </p>
+                </div>
+                <div className="rounded-xl bg-[#0C0D1A]/85 border border-[#5865F2]/35 p-4 space-y-2">
+                  <div className="w-8 h-8 rounded-lg bg-[#5865F2]/20 border border-[#5865F2]/40 flex items-center justify-center text-[#99A4FF]">
+                    <MessageSquare className="w-4 h-4" />
+                  </div>
+                  <h3 className="font-semibold text-white text-sm">Community &amp; Polls</h3>
+                  <p className="text-xs text-slate-400 leading-relaxed">
+                    Chat with 1,600+ fans, suggest ideas and themes, and vote in polls to shape upcoming videos.
+                  </p>
+                </div>
+                <div className="rounded-xl bg-[#0C0D1A]/85 border border-[#5865F2]/35 p-4 space-y-2">
+                  <div className="w-8 h-8 rounded-lg bg-[#5865F2]/20 border border-[#5865F2]/40 flex items-center justify-center text-[#99A4FF]">
+                    <Bell className="w-4 h-4" />
+                  </div>
+                  <h3 className="font-semibold text-white text-sm">Zero Spam, Zero Pressure</h3>
+                  <p className="text-xs text-slate-400 leading-relaxed">
+                    Pick your own notification roles, browse freely, and upgrade to VIP only if and when you want more.
+                  </p>
+                </div>
               </div>
             </div>
+          )}
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-5 pt-6 border-t border-[#5865F2]/25">
-              <div className="rounded-xl bg-[#0C0D1A]/85 border border-[#5865F2]/30 hover:border-[#5865F2]/60 transition p-5 space-y-2.5">
-                <div className="w-9 h-9 rounded-lg bg-[#5865F2]/20 border border-[#5865F2]/40 flex items-center justify-center text-[#99A4FF]">
-                  <Gift className="w-4 h-4" />
-                </div>
-                <h3 className="font-semibold text-white text-sm sm:text-base">Free Weekly Drops</h3>
-                <p className="text-xs text-slate-400 leading-relaxed">
-                  Public full-length cuts, announcements, and uncensored previews that Reddit filters or buries.
-                </p>
-              </div>
-              <div className="rounded-xl bg-[#0C0D1A]/85 border border-[#5865F2]/30 hover:border-[#5865F2]/60 transition p-5 space-y-2.5">
-                <div className="w-9 h-9 rounded-lg bg-[#5865F2]/20 border border-[#5865F2]/40 flex items-center justify-center text-[#99A4FF]">
-                  <MessageSquare className="w-4 h-4" />
-                </div>
-                <h3 className="font-semibold text-white text-sm sm:text-base">Community &amp; Polls</h3>
-                <p className="text-xs text-slate-400 leading-relaxed">
-                  Chat with 1,600+ fans, suggest ideas and themes, and vote in polls to shape upcoming videos.
-                </p>
-              </div>
-              <div className="rounded-xl bg-[#0C0D1A]/85 border border-[#5865F2]/30 hover:border-[#5865F2]/60 transition p-5 space-y-2.5">
-                <div className="w-9 h-9 rounded-lg bg-[#5865F2]/20 border border-[#5865F2]/40 flex items-center justify-center text-[#99A4FF]">
-                  <Bell className="w-4 h-4" />
-                </div>
-                <h3 className="font-semibold text-white text-sm sm:text-base">Zero Spam, Zero Pressure</h3>
-                <p className="text-xs text-slate-400 leading-relaxed">
-                  Pick your own notification roles, browse freely, and upgrade to VIP only if and when you want more.
-                </p>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* TAB 2: VIP */}
-        {activeTab === 'vip' && (
-          <div className="space-y-8">
-            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-              <div className="max-w-xl">
+          {/* TAB 2: VIP */}
+          {activeTab === 'vip' && (
+            <div className="space-y-5">
+              <div className="text-center space-y-2">
                 <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
                   {config.vipTabTitle}
                 </h2>
-                <p className="text-sm sm:text-base text-[#B8A8C0] mt-2 leading-relaxed">
+                <p className="text-sm text-[#B8A8C0] leading-relaxed max-w-xl mx-auto">
                   {config.vipTabSubtitle}
                 </p>
               </div>
 
-              <div className="rounded-xl bg-[#1A1224] border border-[#FFB88C]/35 px-4 py-3 text-xs text-[#DECDE3] max-w-md">
+              <div className="rounded-xl bg-[#1A1224] border border-[#FFB88C]/40 px-4 py-3 text-xs text-[#DECDE3] text-center">
                 <strong className="text-[#FFB88C]">{config.vipReminderBold}</strong> {config.vipReminderRest}{' '}
                 <a
                   href={config.discordUrl}
@@ -926,91 +1078,90 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
                   Join here →
                 </a>
               </div>
-            </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch">
-              {tiers.map((tier) => (
-                <div
-                  key={tier.id}
-                  className={`rounded-2xl p-6 sm:p-7 flex flex-col justify-between transition ${
-                    tier.featured
-                      ? 'bg-[#1B1226] border border-[#FFA896]/60 shadow-[0_20px_60px_rgba(255,126,107,0.14)]'
-                      : 'bg-[#150F1E] border border-white/[0.08]'
-                  }`}
-                >
-                  <div>
-                    <div className="flex items-center justify-between gap-2 mb-5">
-                      <h3 className="text-lg font-bold text-white">{tier.name}</h3>
-                      {tier.featured && (
-                        <span
-                          className="text-[11px] font-semibold px-2.5 py-0.5 rounded-full text-[#160B12]"
-                          style={{ backgroundImage: 'linear-gradient(90deg, #FFB88C 0%, #FF9EC7 100%)' }}
-                        >
-                          Most popular
-                        </span>
-                      )}
-                    </div>
-
-                    <div className="mb-5">
-                      <div className="flex items-baseline gap-2">
-                        {tier.originalPrice && (
-                          <span className="text-sm text-[#7E6D87] line-through">${tier.originalPrice}</span>
-                        )}
-                        <span className="text-4xl font-extrabold text-white tracking-tight">${tier.price}</span>
-                        <span className="text-sm text-[#95849E]">/ month</span>
-                      </div>
-                      <p className="text-xs text-[#FFA896] mt-1 font-medium">{tier.dailyNote}</p>
-                      <p className="text-xs text-[#B2A1BC] mt-2.5 leading-relaxed">{tier.description}</p>
-                    </div>
-
-                    <ul className="space-y-2.5 text-sm mb-8 pt-5 border-t border-white/[0.07]">
-                      {tier.features.map((feat, idx) => (
-                        <li
-                          key={idx}
-                          className={`flex items-center gap-2.5 ${
-                            feat.included ? 'text-[#EAE1EE]' : 'text-[#63546C] line-through'
-                          }`}
-                        >
-                          {feat.included ? (
-                            <Check className={`w-4 h-4 shrink-0 ${tier.featured ? 'text-[#FFA896]' : 'text-[#B8A8C0]'}`} />
-                          ) : (
-                            <X className="w-4 h-4 shrink-0 text-[#594962]" />
-                          )}
-                          <span>{feat.text}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  <a
-                    href={tier.checkoutUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                    style={
+              {/* Vertical-stacked on phone, clean 3-col on md+ */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-stretch">
+                {tiers.map((tier) => (
+                  <div
+                    key={tier.id}
+                    className={`rounded-2xl p-5 flex flex-col justify-between transition ${
                       tier.featured
-                        ? { backgroundImage: 'linear-gradient(90deg, #FF7E6B 0%, #F472B6 55%, #FFB88C 100%)' }
-                        : undefined
-                    }
-                    className={`w-full py-3 rounded-xl font-semibold text-sm text-center transition flex items-center justify-center gap-2 ${
-                      tier.featured
-                        ? 'text-[#160B12] hover:brightness-105'
-                        : 'bg-white/[0.07] hover:bg-white/[0.12] text-white'
+                        ? 'bg-[#1D1229] border-2 border-[#FFA896]/70 shadow-[0_18px_50px_rgba(255,126,107,0.18)]'
+                        : 'bg-[#150F1E] border border-white/[0.08]'
                     }`}
                   >
-                    <span>{tier.ctaText}</span>
-                    <ExternalLink className="w-3.5 h-3.5 opacity-80" />
-                  </a>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
+                    <div>
+                      <div className="flex items-center justify-between gap-2 mb-4">
+                        <h3 className="text-base font-bold text-white">{tier.name}</h3>
+                        {tier.featured && (
+                          <span
+                            className="text-[10px] font-bold px-2 py-0.5 rounded-full text-[#160B12]"
+                            style={{ backgroundImage: 'linear-gradient(90deg, #FFB88C 0%, #FF9EC7 100%)' }}
+                          >
+                            Popular
+                          </span>
+                        )}
+                      </div>
 
-        {/* TAB 3: REDDIT (Orange themed with orange outline) */}
-        {activeTab === 'reddit' && (
-          <div className="rounded-2xl bg-gradient-to-br from-[#FF4500]/18 via-[#1E1112] to-[#130A0C] border-2 border-[#FF4500]/65 shadow-[0_0_40px_rgba(255,69,0,0.18)] p-6 sm:p-9 space-y-8">
-            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
-              <div className="max-w-2xl space-y-2.5">
+                      <div className="mb-4">
+                        <div className="flex items-baseline gap-1.5">
+                          {tier.originalPrice && (
+                            <span className="text-xs text-[#7E6D87] line-through">${tier.originalPrice}</span>
+                          )}
+                          <span className="text-3xl font-extrabold text-white tracking-tight">${tier.price}</span>
+                          <span className="text-xs text-[#95849E]">/mo</span>
+                        </div>
+                        <p className="text-[11px] text-[#FFA896] mt-1 font-medium">{tier.dailyNote}</p>
+                        <p className="text-xs text-[#B2A1BC] mt-2 leading-relaxed">{tier.description}</p>
+                      </div>
+
+                      <ul className="space-y-2 text-xs mb-6 pt-4 border-t border-white/[0.07]">
+                        {tier.features.map((feat, idx) => (
+                          <li
+                            key={idx}
+                            className={`flex items-center gap-2 ${
+                              feat.included ? 'text-[#EAE1EE]' : 'text-[#63546C] line-through'
+                            }`}
+                          >
+                            {feat.included ? (
+                              <Check className={`w-3.5 h-3.5 shrink-0 ${tier.featured ? 'text-[#FFA896]' : 'text-[#B8A8C0]'}`} />
+                            ) : (
+                              <X className="w-3.5 h-3.5 shrink-0 text-[#594962]" />
+                            )}
+                            <span>{feat.text}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    <a
+                      href={tier.checkoutUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      style={
+                        tier.featured
+                          ? { backgroundImage: 'linear-gradient(90deg, #FF7E6B 0%, #F472B6 55%, #FFB88C 100%)' }
+                          : undefined
+                      }
+                      className={`w-full py-2.5 rounded-xl font-semibold text-xs sm:text-sm text-center transition flex items-center justify-center gap-1.5 ${
+                        tier.featured
+                          ? 'text-[#160B12] hover:brightness-105'
+                          : 'bg-white/[0.07] hover:bg-white/[0.12] text-white'
+                      }`}
+                    >
+                      <span>{tier.ctaText}</span>
+                      <ExternalLink className="w-3.5 h-3.5 opacity-80" />
+                    </a>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* TAB 3: REDDIT (Orange themed with orange outline) */}
+          {activeTab === 'reddit' && (
+            <div className="rounded-2xl bg-gradient-to-br from-[#FF4500]/20 via-[#1E1112] to-[#130A0C] border-2 border-[#FF4500]/65 shadow-[0_0_40px_rgba(255,69,0,0.18)] p-5 sm:p-7 space-y-6">
+              <div className="space-y-3">
                 <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FF4500]/20 border border-[#FF4500]/45 text-xs font-semibold text-[#FF8A5B]">
                   <Sparkles className="w-3.5 h-3.5" />
                   Official Subreddit
@@ -1018,59 +1169,55 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
                 <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
                   {config.redditTabTitle}
                 </h2>
-                <p className="text-sm sm:text-base text-slate-300 leading-relaxed">
-                  {config.redditTabSubtitle}
-                </p>
+                <p className="text-sm text-slate-300 leading-relaxed">{config.redditTabSubtitle}</p>
+                <div className="flex flex-col sm:flex-row gap-2.5 pt-1">
+                  <a
+                    href={config.redditUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="px-5 py-3 rounded-xl text-sm font-semibold bg-[#FF4500] hover:bg-[#E03D00] text-white shadow-lg shadow-[#FF4500]/30 transition inline-flex items-center justify-center gap-1.5"
+                  >
+                    <span>Open {config.redditLabel}</span>
+                    <ExternalLink className="w-4 h-4" />
+                  </a>
+                  <button
+                    type="button"
+                    onClick={() => setActiveTab('discord')}
+                    className="px-5 py-3 rounded-xl text-sm font-semibold bg-white/[0.07] hover:bg-white/[0.12] text-white border border-white/15 transition cursor-pointer"
+                  >
+                    Go to Discord
+                  </button>
+                </div>
               </div>
-              <div className="flex flex-wrap gap-3 shrink-0">
-                <a
-                  href={config.redditUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="px-5 py-3 rounded-xl text-sm font-semibold bg-[#FF4500] hover:bg-[#E03D00] text-white shadow-lg shadow-[#FF4500]/30 transition inline-flex items-center gap-1.5"
-                >
-                  <span>Open {config.redditLabel}</span>
-                  <ExternalLink className="w-4 h-4" />
-                </a>
-                <button
-                  type="button"
-                  onClick={() => setActiveTab('discord')}
-                  className="px-5 py-3 rounded-xl text-sm font-semibold bg-white/[0.07] hover:bg-white/[0.12] text-white border border-white/15 transition cursor-pointer"
-                >
-                  Go to Discord
-                </button>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 pt-5 border-t border-[#FF4500]/25">
+                <div className="rounded-xl bg-[#140B0C]/85 border border-[#FF4500]/35 p-4 space-y-1.5">
+                  <h3 className="font-semibold text-[#FF9E75] text-sm">Daily Feed &amp; Teasers</h3>
+                  <p className="text-xs text-slate-400 leading-relaxed">
+                    Fresh concepts and short clips posted regularly for the Reddit community.
+                  </p>
+                </div>
+                <div className="rounded-xl bg-[#140B0C]/85 border border-[#FF4500]/35 p-4 space-y-1.5">
+                  <h3 className="font-semibold text-[#FF9E75] text-sm">Full Cuts on Discord</h3>
+                  <p className="text-xs text-slate-400 leading-relaxed">
+                    Uncensored full-length versions and weekly drops live directly inside Discord.
+                  </p>
+                </div>
+                <div className="rounded-xl bg-[#140B0C]/85 border border-[#FF4500]/35 p-4 space-y-1.5">
+                  <h3 className="font-semibold text-[#FF9E75] text-sm">Optional VIP Archive</h3>
+                  <p className="text-xs text-slate-400 leading-relaxed">
+                    Switch to the VIP tab after joining Discord if you want all 1,080+ videos and reels.
+                  </p>
+                </div>
               </div>
             </div>
+          )}
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-5 pt-6 border-t border-[#FF4500]/25">
-              <div className="rounded-xl bg-[#140B0C]/85 border border-[#FF4500]/30 hover:border-[#FF4500]/60 transition p-5 space-y-1.5">
-                <h3 className="font-semibold text-[#FF9E75] text-sm">Daily Feed &amp; Teasers</h3>
-                <p className="text-xs text-slate-400 leading-relaxed">
-                  Fresh concepts and short clips posted regularly for the Reddit community.
-                </p>
-              </div>
-              <div className="rounded-xl bg-[#140B0C]/85 border border-[#FF4500]/30 hover:border-[#FF4500]/60 transition p-5 space-y-1.5">
-                <h3 className="font-semibold text-[#FF9E75] text-sm">Full Cuts on Discord</h3>
-                <p className="text-xs text-slate-400 leading-relaxed">
-                  Uncensored full-length versions and weekly drops live directly inside Discord.
-                </p>
-              </div>
-              <div className="rounded-xl bg-[#140B0C]/85 border border-[#FF4500]/30 hover:border-[#FF4500]/60 transition p-5 space-y-1.5">
-                <h3 className="font-semibold text-[#FF9E75] text-sm">Optional VIP Archive</h3>
-                <p className="text-xs text-slate-400 leading-relaxed">
-                  Switch to the VIP tab after joining Discord if you want all 1,080+ videos and reels.
-                </p>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* TAB 4: PROMO (Yellow/Gold themed with yellow outline) */}
-        {activeTab === 'promo' && (
-          <div className="rounded-2xl bg-gradient-to-br from-amber-400/18 via-[#1D160E] to-[#130F09] border-2 border-amber-400/65 shadow-[0_0_40px_rgba(245,158,11,0.18)] p-6 sm:p-9 space-y-8">
-            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
-              <div className="max-w-2xl space-y-2.5">
-                <div className="flex items-center gap-2.5 flex-wrap">
+          {/* TAB 4: PROMO (Yellow/Gold themed with yellow outline) */}
+          {activeTab === 'promo' && (
+            <div className="rounded-2xl bg-gradient-to-br from-amber-400/20 via-[#1D160E] to-[#130F09] border-2 border-amber-400/65 shadow-[0_0_40px_rgba(245,158,11,0.18)] p-5 sm:p-7 space-y-6">
+              <div className="space-y-3">
+                <div className="flex items-center gap-2 flex-wrap">
                   <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-400/20 border border-amber-400/45 text-xs font-semibold text-amber-300">
                     <Zap className="w-3.5 h-3.5" />
                     Creator Sponsorships
@@ -1082,97 +1229,89 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
                 <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
                   {config.promoTabTitle}
                 </h2>
-                <p className="text-sm sm:text-base text-slate-300 leading-relaxed">
-                  {config.promoTabSubtitle}
-                </p>
+                <p className="text-sm text-slate-300 leading-relaxed">{config.promoTabSubtitle}</p>
+                <div className="flex flex-col sm:flex-row gap-2.5 pt-1">
+                  <a
+                    href={config.promoCheckoutUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="px-5 py-3 rounded-xl text-sm font-bold text-[#160B12] shadow-lg shadow-amber-400/30 hover:brightness-105 transition inline-flex items-center justify-center gap-1.5"
+                    style={{ backgroundImage: 'linear-gradient(90deg, #F59E0B 0%, #FACC15 100%)' }}
+                  >
+                    <span>Pay &amp; Lock Slot</span>
+                    <ExternalLink className="w-4 h-4" />
+                  </a>
+                  <a
+                    href={config.discordUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="px-5 py-3 rounded-xl text-sm font-semibold bg-white/[0.07] hover:bg-white/[0.12] text-white border border-white/15 transition text-center"
+                  >
+                    Ask on Discord First
+                  </a>
+                </div>
               </div>
-              <div className="flex flex-wrap gap-3 shrink-0">
-                <a
-                  href={config.promoCheckoutUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="px-5 py-3 rounded-xl text-sm font-bold text-[#160B12] shadow-lg shadow-amber-400/30 hover:brightness-105 transition inline-flex items-center gap-1.5"
-                  style={{ backgroundImage: 'linear-gradient(90deg, #F59E0B 0%, #FACC15 100%)' }}
-                >
-                  <span>Pay &amp; Lock Slot</span>
-                  <ExternalLink className="w-4 h-4" />
-                </a>
-                <a
-                  href={config.discordUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="px-5 py-3 rounded-xl text-sm font-semibold bg-white/[0.07] hover:bg-white/[0.12] text-white border border-white/15 transition"
-                >
-                  Ask on Discord First
-                </a>
-              </div>
-            </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-5 pt-6 border-t border-amber-400/25">
-              <div className="rounded-xl bg-[#151009]/85 border border-amber-400/30 hover:border-amber-400/60 transition p-5 space-y-1.5">
-                <h3 className="font-semibold text-amber-300 text-sm">1. Quality &amp; Vibe Fit</h3>
-                <p className="text-xs text-slate-400 leading-relaxed">
-                  Your clip must match the hub&apos;s style, pacing, and rules. Off-theme clips can be declined before payment.
-                </p>
-              </div>
-              <div className="rounded-xl bg-[#151009]/85 border border-amber-400/30 hover:border-amber-400/60 transition p-5 space-y-1.5">
-                <h3 className="font-semibold text-amber-300 text-sm">2. Full Credits Included</h3>
-                <p className="text-xs text-slate-400 leading-relaxed">
-                  Published with clear credits to your creator name or agreed link in front of viewers already into this format.
-                </p>
-              </div>
-              <div className="rounded-xl bg-[#151009]/85 border border-amber-400/30 hover:border-amber-400/60 transition p-5 space-y-1.5">
-                <h3 className="font-semibold text-amber-300 text-sm">3. How Payment Works</h3>
-                <p className="text-xs text-slate-400 leading-relaxed">
-                  DM me on Discord first with your clip for approval. Once approved, pay €20 via checkout to lock your slot.
-                </p>
-              </div>
-            </div>
-          </div>
-        )}
-      </section>
-
-      {/* FAQ — Minimal Accordion */}
-      <section id="faq" className="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 pb-20">
-        <h2 className="text-xl sm:text-2xl font-bold text-white mb-6">FAQ</h2>
-        <div className="divide-y divide-white/[0.08] border-y border-white/[0.08]">
-          {faqs.map((faq, idx) => {
-            const isOpen = openFaq === idx;
-            return (
-              <div key={idx} className="py-4">
-                <button
-                  type="button"
-                  onClick={() => setOpenFaq(isOpen ? -1 : idx)}
-                  className="w-full text-left flex items-center justify-between gap-4 font-medium text-sm sm:text-base text-white hover:text-[#FFA896] transition cursor-pointer"
-                >
-                  <span>{faq.q}</span>
-                  {isOpen ? (
-                    <ChevronUp className="w-4 h-4 text-[#FFA896] shrink-0" />
-                  ) : (
-                    <ChevronDown className="w-4 h-4 text-[#8E7D96] shrink-0" />
-                  )}
-                </button>
-                {isOpen && (
-                  <p className="mt-2.5 text-sm text-[#A897B2] leading-relaxed pr-6">
-                    {faq.a}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 pt-5 border-t border-amber-400/25">
+                <div className="rounded-xl bg-[#151009]/85 border border-amber-400/35 p-4 space-y-1.5">
+                  <h3 className="font-semibold text-amber-300 text-sm">1. Quality &amp; Vibe Fit</h3>
+                  <p className="text-xs text-slate-400 leading-relaxed">
+                    Your clip must match the hub&apos;s style, pacing, and rules. Off-theme clips can be declined before payment.
                   </p>
-                )}
+                </div>
+                <div className="rounded-xl bg-[#151009]/85 border border-amber-400/35 p-4 space-y-1.5">
+                  <h3 className="font-semibold text-amber-300 text-sm">2. Full Credits Included</h3>
+                  <p className="text-xs text-slate-400 leading-relaxed">
+                    Published with clear credits to your creator name or agreed link in front of viewers already into this format.
+                  </p>
+                </div>
+                <div className="rounded-xl bg-[#151009]/85 border border-amber-400/35 p-4 space-y-1.5">
+                  <h3 className="font-semibold text-amber-300 text-sm">3. How Payment Works</h3>
+                  <p className="text-xs text-slate-400 leading-relaxed">
+                    DM me on Discord first with your clip for approval. Once approved, pay €20 via checkout to lock your slot.
+                  </p>
+                </div>
               </div>
-            );
-          })}
-        </div>
-      </section>
+            </div>
+          )}
+        </section>
+
+        {/* 6. FAQ — Minimal Accordion */}
+        <section id="faq" className="pt-4">
+          <h2 className="text-xl font-bold text-white mb-4">FAQ</h2>
+          <div className="divide-y divide-white/[0.08] border-y border-white/[0.08]">
+            {faqs.map((faq, idx) => {
+              const isOpen = openFaq === idx;
+              return (
+                <div key={idx} className="py-4">
+                  <button
+                    type="button"
+                    onClick={() => setOpenFaq(isOpen ? -1 : idx)}
+                    className="w-full text-left flex items-center justify-between gap-4 font-medium text-sm sm:text-base text-white hover:text-[#FFA896] transition cursor-pointer"
+                  >
+                    <span>{faq.q}</span>
+                    {isOpen ? (
+                      <ChevronUp className="w-4 h-4 text-[#FFA896] shrink-0" />
+                    ) : (
+                      <ChevronDown className="w-4 h-4 text-[#8E7D96] shrink-0" />
+                    )}
+                  </button>
+                  {isOpen && (
+                    <p className="mt-2.5 text-sm text-[#A897B2] leading-relaxed pr-6">{faq.a}</p>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </section>
+      </main>
 
       {/* FOOTER */}
-      <footer className="relative z-10 border-t border-white/[0.07] py-8 px-4 sm:px-6 text-xs text-[#8E7D96]">
-        <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2.5">
+      <footer className="relative z-10 border-t border-white/[0.07] py-7 px-4 text-xs text-[#8E7D96]">
+        <div className="max-w-3xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
+          <div className="flex items-center gap-2">
             {config.iconUrl && !iconError && (
-              <img
-                src={config.iconUrl}
-                alt="CaptionVibes"
-                className="w-5 h-5 rounded-full object-cover"
-              />
+              <img src={config.iconUrl} alt="CaptionVibes" className="w-5 h-5 rounded-full object-cover" />
             )}
             <span>{config.footerText}</span>
           </div>
@@ -1190,7 +1329,7 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
       {/* FLOATING SOCIAL PROOF NOTIFICATIONS */}
       {config.showNotifications && !toastDismissed && (
         <div
-          className={`fixed bottom-4 left-4 z-30 w-[calc(100vw-2rem)] max-w-[330px] sm:max-w-[360px] bg-[#191124]/95 backdrop-blur-xl border border-[#FFB88C]/40 rounded-2xl p-3.5 shadow-[0_14px_45px_rgba(0,0,0,0.85)] transition-all duration-500 ${
+          className={`fixed bottom-4 left-4 z-30 w-[calc(100vw-2rem)] max-w-[320px] sm:max-w-[350px] bg-[#191124]/95 backdrop-blur-xl border border-[#FFB88C]/40 rounded-2xl p-3.5 shadow-[0_14px_45px_rgba(0,0,0,0.85)] transition-all duration-500 ${
             showToast ? 'translate-y-0 opacity-100 scale-100' : 'translate-y-5 opacity-0 scale-95 pointer-events-none'
           }`}
         >
@@ -1233,7 +1372,7 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
       )}
 
       {/* ==================================================================== */}
-      {/* VISUAL STUDIO EDITOR (MODIFICA TESTI, MEDIA, STATISTICHE, TIER, FAQ) */}
+      {/* VISUAL STUDIO EDITOR                                                 */}
       {/* ==================================================================== */}
       {ENABLE_OWNER_CUSTOMIZER && (
         <div className="fixed bottom-4 right-4 z-50">
@@ -1329,7 +1468,6 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
 
               {/* Editor Content */}
               <div className="p-4 overflow-y-auto space-y-3.5 flex-1">
-                {/* TAB: COPY */}
                 {editorTab === 'copy' && (
                   <div className="space-y-3">
                     <div className="grid grid-cols-2 gap-2">
@@ -1418,57 +1556,62 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
                         className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1.5 text-white"
                       />
                     </div>
-
-                    <div className="pt-2 border-t border-white/10 space-y-2">
-                      <label className="block text-[10px] font-bold text-[#FFB88C] uppercase">Testi Tab Discord / Promo</label>
-                      <input
-                        type="text"
-                        value={config.discordTabTitle}
-                        onChange={(e) => setConfig({ ...config, discordTabTitle: e.target.value })}
-                        placeholder="Titolo Tab Discord"
-                        className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1.5 text-white"
-                      />
-                      <textarea
-                        rows={2}
-                        value={config.discordTabSubtitle}
-                        onChange={(e) => setConfig({ ...config, discordTabSubtitle: e.target.value })}
-                        placeholder="Testo Tab Discord"
-                        className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1.5 text-white"
-                      />
-                      <input
-                        type="text"
-                        value={config.promoSlotPrice}
-                        onChange={(e) => setConfig({ ...config, promoSlotPrice: e.target.value })}
-                        placeholder="Prezzo Promo (es. €20 / slot)"
-                        className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1.5 text-white"
-                      />
-                    </div>
                   </div>
                 )}
 
-                {/* TAB: MEDIA (ICON, BANNER, VIDEO CLIPS) */}
                 {editorTab === 'media' && (
                   <div className="space-y-3.5">
-                    <div className="space-y-2">
+                    <div className="space-y-2.5">
                       <label className="block text-[10px] font-bold text-[#FFB88C] uppercase">Icona Ufficiale &amp; Banner GIF</label>
-                      <div>
-                        <label className="block text-[10px] text-[#A897B2] mb-1">Percorso Icona (carica in public/icon.jpg)</label>
-                        <input
-                          type="text"
-                          value={config.iconUrl}
-                          onChange={(e) => setConfig({ ...config, iconUrl: e.target.value })}
-                          className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1.5 text-white"
-                        />
+
+                      <div className="space-y-1.5">
+                        <label className="block text-[10px] text-[#A897B2]">Percorso Icona (es. /icon.jpg)</label>
+                        <div className="flex gap-1.5">
+                          <input
+                            type="text"
+                            value={config.iconUrl}
+                            onChange={(e) => setConfig({ ...config, iconUrl: e.target.value })}
+                            className="flex-1 bg-black/50 border border-white/15 rounded-lg px-2.5 py-1.5 text-white"
+                          />
+                          <label className="px-2.5 py-1.5 rounded-lg bg-[#FFB88C]/15 border border-[#FFB88C]/35 text-[#FFD6A5] font-bold cursor-pointer whitespace-nowrap">
+                            Carica
+                            <input
+                              type="file"
+                              accept="image/*"
+                              className="hidden"
+                              onChange={(e) => {
+                                const f = e.target.files?.[0];
+                                if (f) handleFileUpload(f, 'iconUrl');
+                              }}
+                            />
+                          </label>
+                        </div>
                       </div>
-                      <div>
-                        <label className="block text-[10px] text-[#A897B2] mb-1">Percorso Banner GIF (carica in public/banner.gif)</label>
-                        <input
-                          type="text"
-                          value={config.bannerUrl}
-                          onChange={(e) => setConfig({ ...config, bannerUrl: e.target.value })}
-                          className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1.5 text-white"
-                        />
+
+                      <div className="space-y-1.5">
+                        <label className="block text-[10px] text-[#A897B2]">Percorso Banner GIF (es. /banner.gif)</label>
+                        <div className="flex gap-1.5">
+                          <input
+                            type="text"
+                            value={config.bannerUrl}
+                            onChange={(e) => setConfig({ ...config, bannerUrl: e.target.value })}
+                            className="flex-1 bg-black/50 border border-white/15 rounded-lg px-2.5 py-1.5 text-white"
+                          />
+                          <label className="px-2.5 py-1.5 rounded-lg bg-[#FFB88C]/15 border border-[#FFB88C]/35 text-[#FFD6A5] font-bold cursor-pointer whitespace-nowrap">
+                            Carica
+                            <input
+                              type="file"
+                              accept="image/*"
+                              className="hidden"
+                              onChange={(e) => {
+                                const f = e.target.files?.[0];
+                                if (f) handleFileUpload(f, 'bannerUrl');
+                              }}
+                            />
+                          </label>
+                        </div>
                       </div>
+
                       <label className="flex items-center justify-between bg-black/35 border border-white/10 px-3 py-2 rounded-lg cursor-pointer">
                         <span className="text-white">Mostra Banner GIF in alto</span>
                         <input
@@ -1478,6 +1621,17 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
                           className="w-4 h-4 accent-[#FF7E6B]"
                         />
                       </label>
+
+                      <label className="flex items-center justify-between bg-black/35 border border-white/10 px-3 py-2 rounded-lg cursor-pointer">
+                        <span className="text-white">Decorazioni Sfondo &amp; Lati</span>
+                        <input
+                          type="checkbox"
+                          checked={config.showSideDecorations}
+                          onChange={(e) => setConfig({ ...config, showSideDecorations: e.target.checked })}
+                          className="w-4 h-4 accent-[#FF7E6B]"
+                        />
+                      </label>
+
                       <label className="flex items-center justify-between bg-black/35 border border-white/10 px-3 py-2 rounded-lg cursor-pointer">
                         <span className="text-white">Mostra Notifiche Social Proof</span>
                         <input
@@ -1496,7 +1650,6 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
                       <label className="block text-[10px] font-bold text-[#FFB88C] uppercase">I 3 Video Preview</label>
                       {previewClips.map((clip, idx) => (
                         <div key={clip.id} className="bg-black/35 border border-white/10 rounded-xl p-2.5 space-y-1.5">
-                          <div className="text-[10px] font-bold text-[#A897B2]">Clip #{idx + 1}</div>
                           <div className="grid grid-cols-2 gap-1.5">
                             <input
                               type="text"
@@ -1530,26 +1683,15 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
                             placeholder="/video.mp4"
                             className="w-full bg-black/60 border border-white/15 rounded px-2 py-1 text-[#FFB88C]"
                           />
-                          <textarea
-                            rows={2}
-                            value={clip.note}
-                            onChange={(e) =>
-                              setPreviewClips((prev) =>
-                                prev.map((c, i) => (i === idx ? { ...c, note: e.target.value } : c))
-                              )
-                            }
-                            className="w-full bg-black/60 border border-white/15 rounded px-2 py-1 text-[#D8C8DE]"
-                          />
                         </div>
                       ))}
                     </div>
                   </div>
                 )}
 
-                {/* TAB: STATS */}
                 {editorTab === 'stats' && (
                   <div className="space-y-3">
-                    <label className="block text-[10px] font-bold text-[#FFB88C] uppercase">Riquadro Neon Hero (3 Statistiche)</label>
+                    <label className="block text-[10px] font-bold text-[#FFB88C] uppercase">Pillola Statistiche Hero</label>
                     <input
                       type="text"
                       value={config.statDiscord}
@@ -1590,18 +1732,8 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
                       </div>
                     </div>
 
-                    <div>
-                      <label className="block text-[10px] text-[#A897B2] mb-1">Testo Barra Giveaway</label>
-                      <input
-                        type="text"
-                        value={config.goalLabel}
-                        onChange={(e) => setConfig({ ...config, goalLabel: e.target.value })}
-                        className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1.5 text-white"
-                      />
-                    </div>
-
                     <div className="pt-2 border-t border-white/10 space-y-2">
-                      <label className="block text-[10px] font-bold text-[#FFB88C] uppercase">4 Numeri Fascia Vault</label>
+                      <label className="block text-[10px] font-bold text-[#FFB88C] uppercase">4 Numeri Vault</label>
                       {vaultNumbers.map((item, idx) => (
                         <div key={item.id} className="grid grid-cols-3 gap-1.5 bg-black/35 border border-white/10 p-2 rounded-lg">
                           <input
@@ -1630,7 +1762,6 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
                   </div>
                 )}
 
-                {/* TAB: TIERS */}
                 {editorTab === 'tiers' && (
                   <div className="space-y-2.5">
                     {tiers.map((tier) => {
@@ -1660,36 +1791,25 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
                                   type="text"
                                   value={tier.name}
                                   onChange={(e) => updateTier(tier.id, { name: e.target.value })}
-                                  placeholder="Nome"
                                   className="bg-black/60 border border-white/15 rounded px-2 py-1 text-white font-semibold"
                                 />
                                 <input
                                   type="text"
                                   value={tier.price}
                                   onChange={(e) => updateTier(tier.id, { price: e.target.value })}
-                                  placeholder="Prezzo"
                                   className="bg-black/60 border border-white/15 rounded px-2 py-1 text-white"
                                 />
                                 <input
                                   type="text"
                                   value={tier.originalPrice}
                                   onChange={(e) => updateTier(tier.id, { originalPrice: e.target.value })}
-                                  placeholder="Barrato"
                                   className="bg-black/60 border border-white/15 rounded px-2 py-1 text-white"
                                 />
                               </div>
                               <input
                                 type="text"
-                                value={tier.description}
-                                onChange={(e) => updateTier(tier.id, { description: e.target.value })}
-                                placeholder="Descrizione"
-                                className="w-full bg-black/60 border border-white/15 rounded px-2 py-1 text-white"
-                              />
-                              <input
-                                type="text"
                                 value={tier.checkoutUrl}
                                 onChange={(e) => updateTier(tier.id, { checkoutUrl: e.target.value })}
-                                placeholder="URL Checkout"
                                 className="w-full bg-black/60 border border-white/15 rounded px-2 py-1 text-[#FFB88C]"
                               />
                               <div className="pt-1.5 space-y-1">
@@ -1740,7 +1860,6 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
                   </div>
                 )}
 
-                {/* TAB: FAQ */}
                 {editorTab === 'faq' && (
                   <div className="space-y-2.5">
                     <div className="flex items-center justify-between">
@@ -1786,11 +1905,10 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
                   </div>
                 )}
 
-                {/* TAB: EXPORT */}
                 {editorTab === 'export' && (
                   <div className="space-y-3">
                     <p className="text-[#D8C8DE] leading-relaxed">
-                      Le modifiche si salvano in automatico nel browser. Quando vuoi renderle definitive su GitHub:
+                      Quando sei pronto a rendere definitive le modifiche su GitHub:
                     </p>
                     <ol className="list-decimal list-inside space-y-1 text-[#A897B2]">
                       <li>Clicca <strong>Copia Configurazione</strong> qui sotto.</li>
