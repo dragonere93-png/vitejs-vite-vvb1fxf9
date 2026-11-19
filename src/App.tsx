@@ -142,9 +142,9 @@ const DEFAULT_CONFIG: SiteConfig = {
   statVault: '1,080+ content in vault',
   statVips: '84 VIPs',
 
-  heroTitle: 'CAPTIONVIBES: Short and Long captioned videos',
+  heroTitle: 'CAPTIONVIBES',
   heroSubtitle:
-    'Free full versions and weekly drops are posted in the Discord. If you want the entire private archive — quick edits, full long videos, and 900+ reels — VIP unlocks automatically in 5 seconds.',
+    'You like my captions? You can find more caption videos in my Discord, both free and VIP! Every week I expand the free vault with exclusive quick videos, full-length uploads, and reels! If you want to support my work and access to more stuff choose your VIP plan, I really appreciate it :)',
   primaryCtaText: 'Join Free Discord',
   secondaryCtaText: 'View VIP Tiers',
 
