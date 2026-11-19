@@ -1288,10 +1288,10 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
                 <div className="space-y-1.5">
                   <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-500/20 border border-red-500/45 text-xs font-semibold text-red-300">
                     <Film className="w-3.5 h-3.5" />
-                    {config.vaultTabBadge}
+                    CaptionVibes Vault &amp; Previews
                   </span>
                   <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
-                    {config.vaultTabTitle}
+                    Inside the Vault
                   </h2>
                 </div>
                 <a
@@ -1354,7 +1354,7 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
                       rel="noreferrer"
                       className="text-xs font-semibold text-red-400 hover:text-white transition whitespace-nowrap shrink-0 mt-0.5"
                     >
-                      <span>{config.vaultFullCutLabel}</span>
+                      Full cut →
                     </a>
                   </div>
 
@@ -1432,4 +1432,893 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
                     )}
                   </button>
                   {isOpen && (
-                    <p className="mt-2.5 text-sm text-[#A897B2] leading-
+                    <p className="mt-2.5 text-sm text-[#A897B2] leading-relaxed pr-6">{faq.a}</p>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </section>
+      </main>
+
+      {/* FOOTER */}
+      <footer className="relative z-10 border-t border-white/[0.07] py-7 px-4 text-xs text-[#8E7D96]">
+        <div className="max-w-3xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
+          <div className="flex items-center gap-2">
+            {config.iconUrl && !iconError && (
+              <img src={config.iconUrl} alt="CaptionVibes" className="w-5 h-5 rounded-full object-cover" />
+            )}
+            <span>{config.footerText}</span>
+          </div>
+          <div className="flex items-center gap-5">
+            <a href={config.discordUrl} target="_blank" rel="noreferrer" className="hover:text-white transition">
+              {config.footerDiscordLabel}
+            </a>
+            <a href={config.redditUrl} target="_blank" rel="noreferrer" className="hover:text-white transition">
+              {config.redditLabel}
+            </a>
+          </div>
+        </div>
+      </footer>
+
+      {/* FLOATING SOCIAL PROOF NOTIFICATIONS */}
+      {config.showNotifications && !toastDismissed && (
+        <div
+          className={`fixed bottom-4 left-4 z-30 w-[calc(100vw-2rem)] max-w-[320px] sm:max-w-[350px] bg-[#160B0F]/95 backdrop-blur-xl border border-red-500/40 rounded-2xl p-3.5 shadow-[0_14px_45px_rgba(0,0,0,0.85)] transition-all duration-500 ${
+            showToast ? 'translate-y-0 opacity-100 scale-100' : 'translate-y-5 opacity-0 scale-95 pointer-events-none'
+          }`}
+        >
+          <div className="flex items-center gap-3">
+            <div
+              className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 shadow-md"
+              style={{
+                backgroundImage: currentToast.isVip
+                  ? 'linear-gradient(135deg, #991B1B 0%, #DC2626 55%, #EF4444 100%)'
+                  : 'linear-gradient(135deg, #5865F2 0%, #4348C6 100%)',
+              }}
+            >
+              {currentToast.isVip ? (
+                <Crown className="w-5 h-5 text-white" />
+              ) : (
+                <Users className="w-5 h-5 text-white" />
+              )}
+            </div>
+            <div className="min-w-0 flex-1">
+              <div className="flex items-center gap-2">
+                <span className="font-bold text-xs sm:text-sm text-white truncate">{currentToast.user}</span>
+                <span className="inline-flex items-center gap-1 text-[10px] text-emerald-400 font-semibold shrink-0">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                  {currentToast.time}
+                </span>
+              </div>
+              <p className="text-red-400 font-semibold text-xs leading-snug">{currentToast.action}</p>
+              <p className="text-[11px] text-[#A897B2] truncate">{currentToast.note}</p>
+            </div>
+            <button
+              type="button"
+              onClick={() => setToastDismissed(true)}
+              aria-label="Close notification"
+              className="p-1 text-[#7E6D87] hover:text-white transition shrink-0 cursor-pointer"
+            >
+              <X className="w-3.5 h-3.5" />
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* ==================================================================== */}
+      {/* VISUAL STUDIO EDITOR                                                 */}
+      {/* ==================================================================== */}
+      {ENABLE_OWNER_CUSTOMIZER && (
+        <div className="fixed bottom-4 right-4 z-50">
+          {visitorPreview ? (
+            <button
+              type="button"
+              onClick={() => setVisitorPreview(false)}
+              title="Esci da Anteprima Visitatore"
+              className="p-2.5 rounded-full bg-black/75 hover:bg-[#1B1226] text-[#B8A8C0] hover:text-white border border-white/15 backdrop-blur-md transition opacity-60 hover:opacity-100 cursor-pointer"
+            >
+              <Settings className="w-4 h-4" />
+            </button>
+          ) : !showEditor ? (
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={() => setVisitorPreview(true)}
+                title="Nascondi editor per vedere come visitatore"
+                className="p-2.5 rounded-full bg-[#150C0F]/95 hover:bg-[#241116] text-[#B8A8C0] hover:text-white border border-white/15 shadow-xl backdrop-blur-md transition cursor-pointer"
+              >
+                <EyeOff className="w-4 h-4" />
+              </button>
+              <button
+                type="button"
+                onClick={() => setShowEditor(true)}
+                className="px-4 py-2.5 rounded-full bg-[#150C0F]/95 hover:bg-[#241116] text-red-400 border border-red-500/40 shadow-2xl flex items-center gap-2 text-xs font-bold backdrop-blur-md transition cursor-pointer"
+              >
+                <Settings className="w-4 h-4" />
+                <span>Modifica Sito</span>
+              </button>
+            </div>
+          ) : (
+            <div className="w-[94vw] sm:w-[450px] max-h-[84vh] bg-[#140A0D]/98 backdrop-blur-xl border border-red-500/25 rounded-2xl shadow-[0_20px_70px_rgba(0,0,0,0.92)] flex flex-col overflow-hidden text-xs">
+              {/* Editor Header */}
+              <div className="flex items-center justify-between px-4 py-3 border-b border-white/10 bg-black/35">
+                <div className="flex items-center gap-2 font-bold text-white text-sm">
+                  <Settings className="w-4 h-4 text-red-400" />
+                  <span>CaptionVibes Editor</span>
+                  <span className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-semibold">
+                    Auto-Saved
+                  </span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <button
+                    type="button"
+                    onClick={handleResetAll}
+                    title="Ripristina tutto ai valori di default"
+                    className="p-1.5 rounded-lg text-[#A897B2] hover:text-rose-400 hover:bg-white/5 transition cursor-pointer"
+                  >
+                    <RotateCcw className="w-3.5 h-3.5" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setShowEditor(false)}
+                    className="p-1.5 rounded-lg text-[#A897B2] hover:text-white hover:bg-white/5 transition cursor-pointer"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+
+              {/* Editor Tabs */}
+              <div className="grid grid-cols-6 border-b border-white/10 bg-black/25 text-[10px] font-bold">
+                {(
+                  [
+                    { id: 'copy', label: 'Testi', icon: Type },
+                    { id: 'media', label: 'Media', icon: ImageIcon },
+                    { id: 'stats', label: 'Stats', icon: BarChart3 },
+                    { id: 'tiers', label: 'VIP', icon: DollarSign },
+                    { id: 'faq', label: 'FAQ', icon: MessageSquare },
+                    { id: 'export', label: 'Esporta', icon: Copy },
+                  ] as const
+                ).map((tab) => {
+                  const Icon = tab.icon;
+                  const active = editorTab === tab.id;
+                  return (
+                    <button
+                      key={tab.id}
+                      type="button"
+                      onClick={() => setEditorTab(tab.id)}
+                      className={`py-2.5 flex flex-col items-center gap-1 border-b-2 transition cursor-pointer ${
+                        active
+                          ? 'border-red-500 text-white bg-white/5'
+                          : 'border-transparent text-[#9E8EA8] hover:text-white'
+                      }`}
+                    >
+                      <Icon className="w-3.5 h-3.5" />
+                      <span>{tab.label}</span>
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Editor Content */}
+              <div className="p-4 overflow-y-auto space-y-3.5 flex-1">
+                {editorTab === 'copy' && (
+                  <div className="space-y-3">
+                    <div className="grid grid-cols-3 gap-2">
+                      <div>
+                        <label className="block text-[10px] text-[#A897B2] mb-1">Brand Parte 1</label>
+                        <input
+                          type="text"
+                          value={config.brandPrefix}
+                          onChange={(e) => setConfig({ ...config, brandPrefix: e.target.value })}
+                          className="w-full bg-black/50 border border-white/15 rounded-lg px-2 py-1.5 text-white"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-[10px] text-[#A897B2] mb-1">Brand Colorata</label>
+                        <input
+                          type="text"
+                          value={config.brandAccent}
+                          onChange={(e) => setConfig({ ...config, brandAccent: e.target.value })}
+                          className="w-full bg-black/50 border border-white/15 rounded-lg px-2 py-1.5 text-white"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-[10px] text-[#A897B2] mb-1">Badge Età</label>
+                        <input
+                          type="text"
+                          value={config.ageBadge}
+                          onChange={(e) => setConfig({ ...config, ageBadge: e.target.value })}
+                          className="w-full bg-black/50 border border-white/15 rounded-lg px-2 py-1.5 text-white"
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-[10px] text-[#A897B2] mb-1">Titolo Hero</label>
+                      <input
+                        type="text"
+                        value={config.heroTitle}
+                        onChange={(e) => setConfig({ ...config, heroTitle: e.target.value })}
+                        className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1.5 text-white font-semibold"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-[10px] text-[#A897B2] mb-1">Sottotitolo Hero</label>
+                      <textarea
+                        rows={3}
+                        value={config.heroSubtitle}
+                        onChange={(e) => setConfig({ ...config, heroSubtitle: e.target.value })}
+                        className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1.5 text-white"
+                      />
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-2">
+                      <div>
+                        <label className="block text-[10px] text-[#A897B2] mb-1">Bottone Discord</label>
+                        <input
+                          type="text"
+                          value={config.primaryCtaText}
+                          onChange={(e) => setConfig({ ...config, primaryCtaText: e.target.value })}
+                          className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1.5 text-white"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-[10px] text-[#A897B2] mb-1">Bottone VIP</label>
+                        <input
+                          type="text"
+                          value={config.secondaryCtaText}
+                          onChange={(e) => setConfig({ ...config, secondaryCtaText: e.target.value })}
+                          className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1.5 text-white"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="pt-2 border-t border-white/10 space-y-2">
+                      <label className="block text-[10px] font-bold text-red-400 uppercase">Testi Tab Discord</label>
+                      <div className="grid grid-cols-2 gap-2">
+                        <input
+                          type="text"
+                          value={config.discordTabBadge}
+                          onChange={(e) => setConfig({ ...config, discordTabBadge: e.target.value })}
+                          placeholder="Badge Discord"
+                          className="bg-black/50 border border-white/15 rounded-lg px-2 py-1 text-white"
+                        />
+                        <input
+                          type="text"
+                          value={config.discordTabTitle}
+                          onChange={(e) => setConfig({ ...config, discordTabTitle: e.target.value })}
+                          placeholder="Titolo Discord"
+                          className="bg-black/50 border border-white/15 rounded-lg px-2 py-1 text-white font-semibold"
+                        />
+                      </div>
+                      <textarea
+                        rows={2}
+                        value={config.discordTabSubtitle}
+                        onChange={(e) => setConfig({ ...config, discordTabSubtitle: e.target.value })}
+                        placeholder="Descrizione Discord"
+                        className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1 text-white"
+                      />
+                      <div className="grid grid-cols-2 gap-2">
+                        <input
+                          type="text"
+                          value={config.discordTabCta}
+                          onChange={(e) => setConfig({ ...config, discordTabCta: e.target.value })}
+                          placeholder="Bottone Discord Tab"
+                          className="bg-black/50 border border-white/15 rounded-lg px-2 py-1 text-white"
+                        />
+                        <input
+                          type="text"
+                          value={config.discordTabCtaSub}
+                          onChange={(e) => setConfig({ ...config, discordTabCtaSub: e.target.value })}
+                          placeholder="Sotto-testo bottone"
+                          className="bg-black/50 border border-white/15 rounded-lg px-2 py-1 text-white"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="pt-2 border-t border-white/10 space-y-2">
+                      <label className="block text-[10px] font-bold text-red-400 uppercase">Testi Tab VIP &amp; Avviso</label>
+                      <input
+                        type="text"
+                        value={config.vipTabTitle}
+                        onChange={(e) => setConfig({ ...config, vipTabTitle: e.target.value })}
+                        placeholder="Titolo VIP"
+                        className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1 text-white font-semibold"
+                      />
+                      <textarea
+                        rows={2}
+                        value={config.vipTabSubtitle}
+                        onChange={(e) => setConfig({ ...config, vipTabSubtitle: e.target.value })}
+                        placeholder="Sottotitolo VIP"
+                        className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1 text-white"
+                      />
+                      <div className="grid grid-cols-2 gap-2">
+                        <input
+                          type="text"
+                          value={config.vipReminderBold}
+                          onChange={(e) => setConfig({ ...config, vipReminderBold: e.target.value })}
+                          placeholder="Titolo avviso giallo"
+                          className="bg-black/50 border border-yellow-400/35 rounded-lg px-2 py-1 text-yellow-200 font-semibold"
+                        />
+                        <input
+                          type="text"
+                          value={config.vipReminderRest}
+                          onChange={(e) => setConfig({ ...config, vipReminderRest: e.target.value })}
+                          placeholder="Testo avviso giallo"
+                          className="bg-black/50 border border-white/15 rounded-lg px-2 py-1 text-white"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="pt-2 border-t border-white/10 space-y-2">
+                      <label className="block text-[10px] font-bold text-red-400 uppercase">Testi Tab Reddit, Promo &amp; Vault</label>
+                      <div className="grid grid-cols-2 gap-2">
+                        <input
+                          type="text"
+                          value={config.redditTabTitle}
+                          onChange={(e) => setConfig({ ...config, redditTabTitle: e.target.value })}
+                          placeholder="Titolo Reddit"
+                          className="bg-black/50 border border-white/15 rounded-lg px-2 py-1 text-white"
+                        />
+                        <input
+                          type="text"
+                          value={config.redditLabel}
+                          onChange={(e) => setConfig({ ...config, redditLabel: e.target.value })}
+                          placeholder="Etichetta Reddit"
+                          className="bg-black/50 border border-white/15 rounded-lg px-2 py-1 text-white"
+                        />
+                      </div>
+                      <textarea
+                        rows={2}
+                        value={config.redditTabSubtitle}
+                        onChange={(e) => setConfig({ ...config, redditTabSubtitle: e.target.value })}
+                        placeholder="Descrizione Reddit"
+                        className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1 text-white"
+                      />
+                      <div className="grid grid-cols-3 gap-2">
+                        <input
+                          type="text"
+                          value={config.promoSlotPrice}
+                          onChange={(e) => setConfig({ ...config, promoSlotPrice: e.target.value })}
+                          placeholder="Prezzo Promo"
+                          className="bg-black/50 border border-amber-400/35 rounded-lg px-2 py-1 text-amber-200 font-bold"
+                        />
+                        <input
+                          type="text"
+                          value={config.promoTabTitle}
+                          onChange={(e) => setConfig({ ...config, promoTabTitle: e.target.value })}
+                          placeholder="Titolo Promo"
+                          className="col-span-2 bg-black/50 border border-white/15 rounded-lg px-2 py-1 text-white"
+                        />
+                      </div>
+                      <textarea
+                        rows={2}
+                        value={config.promoTabSubtitle}
+                        onChange={(e) => setConfig({ ...config, promoTabSubtitle: e.target.value })}
+                        placeholder="Descrizione Promo"
+                        className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1 text-white"
+                      />
+                      <div className="grid grid-cols-3 gap-2">
+                        <input
+                          type="text"
+                          value={config.vaultTabTitle}
+                          onChange={(e) => setConfig({ ...config, vaultTabTitle: e.target.value })}
+                          placeholder="Titolo Vault"
+                          className="bg-black/50 border border-white/15 rounded-lg px-2 py-1 text-white"
+                        />
+                        <input
+                          type="text"
+                          value={config.vaultTabCta}
+                          onChange={(e) => setConfig({ ...config, vaultTabCta: e.target.value })}
+                          placeholder="Bottone Vault"
+                          className="bg-black/50 border border-white/15 rounded-lg px-2 py-1 text-white"
+                        />
+                        <input
+                          type="text"
+                          value={config.vaultViewsSuffix}
+                          onChange={(e) => setConfig({ ...config, vaultViewsSuffix: e.target.value })}
+                          placeholder="Etichetta views"
+                          className="bg-black/50 border border-white/15 rounded-lg px-2 py-1 text-white"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="pt-2 border-t border-white/10 space-y-2">
+                      <label className="block text-[10px] font-bold text-red-400 uppercase">Link Principali &amp; Footer</label>
+                      <input
+                        type="text"
+                        value={config.discordUrl}
+                        onChange={(e) => setConfig({ ...config, discordUrl: e.target.value })}
+                        placeholder="URL Discord"
+                        className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1.5 text-white"
+                      />
+                      <input
+                        type="text"
+                        value={config.redditUrl}
+                        onChange={(e) => setConfig({ ...config, redditUrl: e.target.value })}
+                        placeholder="URL Reddit"
+                        className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1.5 text-white"
+                      />
+                      <input
+                        type="text"
+                        value={config.promoCheckoutUrl}
+                        onChange={(e) => setConfig({ ...config, promoCheckoutUrl: e.target.value })}
+                        placeholder="URL Checkout Promo"
+                        className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1.5 text-white"
+                      />
+                      <div className="grid grid-cols-3 gap-2">
+                        <input
+                          type="text"
+                          value={config.footerText}
+                          onChange={(e) => setConfig({ ...config, footerText: e.target.value })}
+                          placeholder="Testo Footer"
+                          className="col-span-2 bg-black/50 border border-white/15 rounded-lg px-2 py-1 text-white"
+                        />
+                        <input
+                          type="text"
+                          value={config.footerDiscordLabel}
+                          onChange={(e) => setConfig({ ...config, footerDiscordLabel: e.target.value })}
+                          placeholder="Link Discord"
+                          className="bg-black/50 border border-white/15 rounded-lg px-2 py-1 text-white"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {editorTab === 'media' && (
+                  <div className="space-y-3.5">
+                    <div className="space-y-2.5">
+                      <label className="block text-[10px] font-bold text-red-400 uppercase">Icona Ufficiale &amp; Banner GIF</label>
+
+                      <div className="space-y-1.5">
+                        <label className="block text-[10px] text-[#A897B2]">Percorso Icona (es. /icon.jpg)</label>
+                        <div className="flex gap-1.5">
+                          <input
+                            type="text"
+                            value={config.iconUrl}
+                            onChange={(e) => setConfig({ ...config, iconUrl: e.target.value })}
+                            className="flex-1 bg-black/50 border border-white/15 rounded-lg px-2.5 py-1.5 text-white"
+                          />
+                          <label className="px-2.5 py-1.5 rounded-lg bg-red-500/15 border border-red-500/35 text-red-300 font-bold cursor-pointer whitespace-nowrap">
+                            Carica
+                            <input
+                              type="file"
+                              accept="image/*"
+                              className="hidden"
+                              onChange={(e) => {
+                                const f = e.target.files?.[0];
+                                if (f) handleFileUpload(f, 'iconUrl');
+                              }}
+                            />
+                          </label>
+                        </div>
+                      </div>
+
+                      <div className="space-y-1.5">
+                        <label className="block text-[10px] text-[#A897B2]">Percorso Banner GIF (es. /banner.gif)</label>
+                        <div className="flex gap-1.5">
+                          <input
+                            type="text"
+                            value={config.bannerUrl}
+                            onChange={(e) => setConfig({ ...config, bannerUrl: e.target.value })}
+                            className="flex-1 bg-black/50 border border-white/15 rounded-lg px-2.5 py-1.5 text-white"
+                          />
+                          <label className="px-2.5 py-1.5 rounded-lg bg-red-500/15 border border-red-500/35 text-red-300 font-bold cursor-pointer whitespace-nowrap">
+                            Carica
+                            <input
+                              type="file"
+                              accept="image/*"
+                              className="hidden"
+                              onChange={(e) => {
+                                const f = e.target.files?.[0];
+                                if (f) handleFileUpload(f, 'bannerUrl');
+                              }}
+                            />
+                          </label>
+                        </div>
+                      </div>
+
+                      <label className="flex items-center justify-between bg-black/35 border border-white/10 px-3 py-2 rounded-lg cursor-pointer">
+                        <span className="text-white">Mostra Banner GIF in alto</span>
+                        <input
+                          type="checkbox"
+                          checked={config.showBanner}
+                          onChange={(e) => setConfig({ ...config, showBanner: e.target.checked })}
+                          className="w-4 h-4 accent-red-500"
+                        />
+                      </label>
+
+                      <label className="flex items-center justify-between bg-black/35 border border-white/10 px-3 py-2 rounded-lg cursor-pointer">
+                        <span className="text-white">Mostra Notifiche Social Proof</span>
+                        <input
+                          type="checkbox"
+                          checked={config.showNotifications}
+                          onChange={(e) => {
+                            setToastDismissed(false);
+                            setConfig({ ...config, showNotifications: e.target.checked });
+                          }}
+                          className="w-4 h-4 accent-red-500"
+                        />
+                      </label>
+                    </div>
+
+                    <div className="pt-2 border-t border-white/10 space-y-2.5">
+                      <label className="block text-[10px] font-bold text-red-400 uppercase">I 3 Video Preview</label>
+                      {previewClips.map((clip, idx) => (
+                        <div key={clip.id} className="bg-black/35 border border-white/10 rounded-xl p-2.5 space-y-1.5">
+                          <div className="grid grid-cols-2 gap-1.5">
+                            <input
+                              type="text"
+                              value={clip.title}
+                              onChange={(e) =>
+                                setPreviewClips((prev) =>
+                                  prev.map((c, i) => (i === idx ? { ...c, title: e.target.value } : c))
+                                )
+                              }
+                              className="bg-black/60 border border-white/15 rounded px-2 py-1 text-white font-semibold"
+                            />
+                            <input
+                              type="text"
+                              value={clip.tag}
+                              onChange={(e) =>
+                                setPreviewClips((prev) =>
+                                  prev.map((c, i) => (i === idx ? { ...c, tag: e.target.value } : c))
+                                )
+                              }
+                              className="bg-black/60 border border-white/15 rounded px-2 py-1 text-white"
+                            />
+                          </div>
+                          <input
+                            type="text"
+                            value={clip.src}
+                            onChange={(e) =>
+                              setPreviewClips((prev) =>
+                                prev.map((c, i) => (i === idx ? { ...c, src: e.target.value } : c))
+                              )
+                            }
+                            placeholder="/video.mp4"
+                            className="w-full bg-black/60 border border-white/15 rounded px-2 py-1 text-red-400"
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {editorTab === 'stats' && (
+                  <div className="space-y-3">
+                    <label className="block text-[10px] font-bold text-red-400 uppercase">Pillola Statistiche &amp; Visite Sito</label>
+                    <input
+                      type="text"
+                      value={config.statDiscord}
+                      onChange={(e) => setConfig({ ...config, statDiscord: e.target.value })}
+                      className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1.5 text-white"
+                    />
+                    <input
+                      type="text"
+                      value={config.statVault}
+                      onChange={(e) => setConfig({ ...config, statVault: e.target.value })}
+                      className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1.5 text-white"
+                    />
+                    <div className="grid grid-cols-2 gap-2">
+                      <div>
+                        <label className="block text-[10px] text-[#A897B2] mb-1">VIP Badge</label>
+                        <input
+                          type="text"
+                          value={config.statVips}
+                          onChange={(e) => setConfig({ ...config, statVips: e.target.value })}
+                          className="w-full bg-black/50 border border-white/15 rounded-lg px-2 py-1.5 text-white"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-[10px] text-[#A897B2] mb-1">Numero Site Views</label>
+                        <input
+                          type="number"
+                          value={siteViews}
+                          onChange={(e) => setSiteViews(Math.max(0, Number(e.target.value)))}
+                          className="w-full bg-black/50 border border-amber-400/35 rounded-lg px-2 py-1.5 text-amber-300 font-bold"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="pt-2 border-t border-white/10 grid grid-cols-2 gap-2">
+                      <div>
+                        <label className="block text-[10px] text-[#A897B2] mb-1">VIP Attuali</label>
+                        <input
+                          type="number"
+                          value={config.vipCurrent}
+                          onChange={(e) => setConfig({ ...config, vipCurrent: Number(e.target.value) })}
+                          className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1.5 text-white"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-[10px] text-[#A897B2] mb-1">Obiettivo VIP</label>
+                        <input
+                          type="number"
+                          value={config.vipGoal}
+                          onChange={(e) => setConfig({ ...config, vipGoal: Number(e.target.value) })}
+                          className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1.5 text-white"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-2">
+                      <div>
+                        <label className="block text-[10px] text-[#A897B2] mb-1">Testo Giveaway</label>
+                        <input
+                          type="text"
+                          value={config.goalLabel}
+                          onChange={(e) => setConfig({ ...config, goalLabel: e.target.value })}
+                          className="w-full bg-black/50 border border-white/15 rounded-lg px-2 py-1.5 text-white"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-[10px] text-[#A897B2] mb-1">Nota Sconto</label>
+                        <input
+                          type="text"
+                          value={config.goalFooterNote}
+                          onChange={(e) => setConfig({ ...config, goalFooterNote: e.target.value })}
+                          className="w-full bg-black/50 border border-white/15 rounded-lg px-2 py-1.5 text-white"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="pt-2 border-t border-white/10 space-y-2">
+                      <label className="block text-[10px] font-bold text-red-400 uppercase">4 Numeri Vault</label>
+                      {vaultNumbers.map((item, idx) => (
+                        <div key={item.id} className="bg-black/35 border border-white/10 p-2 rounded-lg space-y-1.5">
+                          <div className="grid grid-cols-3 gap-1.5">
+                            <input
+                              type="text"
+                              value={item.value}
+                              onChange={(e) =>
+                                setVaultNumbers((prev) =>
+                                  prev.map((v, i) => (i === idx ? { ...v, value: e.target.value } : v))
+                                )
+                              }
+                              className="bg-black/60 border border-white/15 rounded px-2 py-1 text-white font-bold"
+                            />
+                            <input
+                              type="text"
+                              value={item.label}
+                              onChange={(e) =>
+                                setVaultNumbers((prev) =>
+                                  prev.map((v, i) => (i === idx ? { ...v, label: e.target.value } : v))
+                                )
+                              }
+                              className="col-span-2 bg-black/60 border border-white/15 rounded px-2 py-1 text-white"
+                            />
+                          </div>
+                          <input
+                            type="text"
+                            value={item.detail}
+                            onChange={(e) =>
+                              setVaultNumbers((prev) =>
+                                prev.map((v, i) => (i === idx ? { ...v, detail: e.target.value } : v))
+                              )
+                            }
+                            className="w-full bg-black/60 border border-white/15 rounded px-2 py-1 text-[#A897B2] text-[11px]"
+                          />
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className="pt-2 border-t border-white/10 space-y-2">
+                      <label className="block text-[10px] font-bold text-red-400 uppercase">Views &amp; Like per Video</label>
+                      {previewClips.map((clip) => {
+                        const st = clipStats[clip.id] || { views: 0, likes: 0, liked: false };
+                        return (
+                          <div key={clip.id} className="bg-black/35 border border-white/10 p-2 rounded-lg flex items-center justify-between gap-2">
+                            <span className="text-white font-semibold truncate">{clip.title}</span>
+                            <div className="flex items-center gap-1.5 shrink-0">
+                              <input
+                                type="number"
+                                value={st.views}
+                                onChange={(e) =>
+                                  setClipStats((prev) => ({
+                                    ...prev,
+                                    [clip.id]: { ...st, views: Math.max(0, Number(e.target.value)) },
+                                  }))
+                                }
+                                title="Views video"
+                                className="w-16 bg-black/60 border border-white/15 rounded px-1.5 py-1 text-white text-right"
+                              />
+                              <input
+                                type="number"
+                                value={st.likes}
+                                onChange={(e) =>
+                                  setClipStats((prev) => ({
+                                    ...prev,
+                                    [clip.id]: { ...st, likes: Math.max(0, Number(e.target.value)) },
+                                  }))
+                                }
+                                title="Like video"
+                                className="w-14 bg-black/60 border border-red-500/35 rounded px-1.5 py-1 text-red-300 text-right"
+                              />
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+
+                {editorTab === 'tiers' && (
+                  <div className="space-y-2.5">
+                    {tiers.map((tier) => {
+                      const isEditing = editingTierId === tier.id;
+                      return (
+                        <div
+                          key={tier.id}
+                          className={`bg-black/35 border rounded-xl overflow-hidden ${
+                            tier.featured ? 'border-red-500/50' : 'border-white/10'
+                          }`}
+                        >
+                          <button
+                            type="button"
+                            onClick={() => setEditingTierId(isEditing ? null : tier.id)}
+                            className="w-full px-3 py-2.5 flex items-center justify-between text-left font-bold text-white cursor-pointer"
+                          >
+                            <span>
+                              {tier.name} <span className="text-[#A897B2] font-normal">(${tier.price})</span>
+                            </span>
+                            {isEditing ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+                          </button>
+
+                          {isEditing && (
+                            <div className="p-3 pt-2 border-t border-white/10 space-y-2 bg-black/25">
+                              <div className="grid grid-cols-3 gap-1.5">
+                                <input
+                                  type="text"
+                                  value={tier.name}
+                                  onChange={(e) => updateTier(tier.id, { name: e.target.value })}
+                                  className="bg-black/60 border border-white/15 rounded px-2 py-1 text-white font-semibold"
+                                />
+                                <input
+                                  type="text"
+                                  value={tier.price}
+                                  onChange={(e) => updateTier(tier.id, { price: e.target.value })}
+                                  className="bg-black/60 border border-white/15 rounded px-2 py-1 text-white"
+                                />
+                                <input
+                                  type="text"
+                                  value={tier.originalPrice}
+                                  onChange={(e) => updateTier(tier.id, { originalPrice: e.target.value })}
+                                  className="bg-black/60 border border-white/15 rounded px-2 py-1 text-white"
+                                />
+                              </div>
+                              <input
+                                type="text"
+                                value={tier.checkoutUrl}
+                                onChange={(e) => updateTier(tier.id, { checkoutUrl: e.target.value })}
+                                className="w-full bg-black/60 border border-white/15 rounded px-2 py-1 text-red-400"
+                              />
+                              <div className="pt-1.5 space-y-1">
+                                <div className="flex items-center justify-between">
+                                  <span className="text-[10px] text-[#A897B2] uppercase font-bold">Vantaggi</span>
+                                  <button
+                                    type="button"
+                                    onClick={() => addTierFeature(tier.id)}
+                                    className="text-[10px] text-emerald-400 font-bold flex items-center gap-0.5 cursor-pointer"
+                                  >
+                                    <Plus className="w-3 h-3" /> Aggiungi
+                                  </button>
+                                </div>
+                                {tier.features.map((f, fIdx) => (
+                                  <div key={fIdx} className="flex items-center gap-1.5">
+                                    <button
+                                      type="button"
+                                      onClick={() => updateTierFeature(tier.id, fIdx, { included: !f.included })}
+                                      className={`p-1 rounded border cursor-pointer ${
+                                        f.included
+                                          ? 'bg-emerald-500/20 border-emerald-500/40 text-emerald-400'
+                                          : 'bg-rose-500/20 border-rose-500/40 text-rose-400'
+                                      }`}
+                                    >
+                                      {f.included ? <Check className="w-3 h-3" /> : <X className="w-3 h-3" />}
+                                    </button>
+                                    <input
+                                      type="text"
+                                      value={f.text}
+                                      onChange={(e) => updateTierFeature(tier.id, fIdx, { text: e.target.value })}
+                                      className="flex-1 bg-black/60 border border-white/15 rounded px-2 py-1 text-white text-[11px]"
+                                    />
+                                    <button
+                                      type="button"
+                                      onClick={() => removeTierFeature(tier.id, fIdx)}
+                                      className="p-1 text-[#8E7D96] hover:text-rose-400 cursor-pointer"
+                                    >
+                                      <Trash2 className="w-3 h-3" />
+                                    </button>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+
+                {editorTab === 'faq' && (
+                  <div className="space-y-2.5">
+                    <div className="flex items-center justify-between">
+                      <span className="text-[10px] font-bold text-red-400 uppercase">Domande FAQ ({faqs.length})</span>
+                      <button
+                        type="button"
+                        onClick={() => setFaqs((prev) => [...prev, { q: 'New question?', a: 'Answer here.' }])}
+                        className="px-2.5 py-1 rounded-lg bg-red-500 text-white font-bold flex items-center gap-1 cursor-pointer"
+                      >
+                        <Plus className="w-3 h-3" /> Aggiungi
+                      </button>
+                    </div>
+                    {faqs.map((faq, idx) => (
+                      <div key={idx} className="bg-black/35 border border-white/10 rounded-xl p-2.5 space-y-1.5">
+                        <div className="flex items-center justify-between">
+                          <span className="text-[10px] text-[#A897B2] font-bold">FAQ #{idx + 1}</span>
+                          <button
+                            type="button"
+                            onClick={() => setFaqs((prev) => prev.filter((_, i) => i !== idx))}
+                            className="text-[#8E7D96] hover:text-rose-400 cursor-pointer"
+                          >
+                            <Trash2 className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
+                        <input
+                          type="text"
+                          value={faq.q}
+                          onChange={(e) =>
+                            setFaqs((prev) => prev.map((f, i) => (i === idx ? { ...f, q: e.target.value } : f)))
+                          }
+                          className="w-full bg-black/60 border border-white/15 rounded px-2 py-1 text-white font-semibold"
+                        />
+                        <textarea
+                          rows={2}
+                          value={faq.a}
+                          onChange={(e) =>
+                            setFaqs((prev) => prev.map((f, i) => (i === idx ? { ...f, a: e.target.value } : f)))
+                          }
+                          className="w-full bg-black/60 border border-white/15 rounded px-2 py-1 text-[#D8C8DE]"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {editorTab === 'export' && (
+                  <div className="space-y-3">
+                    <p className="text-[#D8C8DE] leading-relaxed">
+                      Quando sei pronto a rendere definitive le modifiche su GitHub:
+                    </p>
+                    <ol className="list-decimal list-inside space-y-1 text-[#A897B2]">
+                      <li>Clicca <strong>Copia Configurazione</strong> qui sotto.</li>
+                      <li>Incollala in <code className="text-red-400">src/App.tsx</code> al posto dei blocchi <code className="text-red-400">DEFAULT_*</code>.</li>
+                      <li>Imposta <code className="text-emerald-400">ENABLE_OWNER_CUSTOMIZER = false</code> in riga 13.</li>
+                    </ol>
+                    <button
+                      type="button"
+                      onClick={copyExportCode}
+                      className="w-full py-2.5 rounded-xl font-bold text-white flex items-center justify-center gap-2 cursor-pointer"
+                      style={{ backgroundImage: 'linear-gradient(90deg, #B91C1C 0%, #DC2626 50%, #EF4444 100%)' }}
+                    >
+                      {copiedFlag ? <CheckCircle2 className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+                      <span>{copiedFlag ? 'Copiato negli appunti!' : 'Copia Configurazione Pronta'}</span>
+                    </button>
+                    <pre className="bg-black/70 border border-white/10 rounded-xl p-2.5 text-[10px] text-[#D8C8DE] max-h-40 overflow-auto font-mono">
+                      {generateExportCode()}
+                    </pre>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
