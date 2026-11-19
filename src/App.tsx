@@ -1,41 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import {
-  Sparkles,
-  Unlock,
-  EyeOff,
-  Flame,
-  ShieldCheck,
-  Zap,
-  Check,
-  X,
-  Crown,
-  Film,
-  Clock,
-  ChevronDown,
-  ChevronUp,
-  Settings,
-  ExternalLink,
-  ArrowRight,
-  MessageSquare,
-  Palette,
-  Type,
-  DollarSign,
-  Copy,
-  RotateCcw,
-  Plus,
-  Trash2,
-  CheckCircle2,
-  BarChart3,
-  Clapperboard,
-  Users,
-  Bell,
-  Gift,
+  Sparkles, Unlock, EyeOff, Flame, ShieldCheck, Zap,
+  Check, X, Crown, Film, Clock, ChevronDown,
+  ChevronUp, Settings, ExternalLink, ArrowRight,
+  MessageSquare, Palette, Type, DollarSign,
+  Copy, RotateCcw, Plus, Trash2, CheckCircle2,
+  BarChart3, Clapperboard, Users, Bell, Gift
 } from 'lucide-react';
 
 // ============================================================================
 // IMPOSTA SU `false` QUANDO PUBBLICHI IL SITO PER NASCONDERE IL CUSTOMIZER
 // ============================================================================
-const ENABLE_OWNER_CUSTOMIZER = true;
+const ENABLE_OWNER_CUSTOMIZER = false;
 
 // --- THEME PRESETS ---
 type ThemeKey = 'cyberpunk' | 'crimson' | 'ocean' | 'emerald' | 'gold';
@@ -64,10 +40,8 @@ const THEMES: Record<ThemeKey, ThemePalette> = {
     accentText: 'text-pink-400',
     badgeBg: 'bg-pink-500/20',
     badgeBorder: 'border-pink-500/40',
-    buttonGradient:
-      'from-pink-600 via-fuchsia-600 to-purple-600 hover:from-pink-500 hover:to-purple-500',
-    buttonShadow:
-      'shadow-[0_0_35px_rgba(236,72,153,0.4)] hover:shadow-[0_0_50px_rgba(236,72,153,0.65)]',
+    buttonGradient: 'from-pink-600 via-fuchsia-600 to-purple-600 hover:from-pink-500 hover:to-purple-500',
+    buttonShadow: 'shadow-[0_0_35px_rgba(236,72,153,0.4)] hover:shadow-[0_0_50px_rgba(236,72,153,0.65)]',
     borderGlow: 'border-pink-500',
     hoverBorder: 'hover:border-pink-500',
     glowTop: 'bg-pink-600',
@@ -81,10 +55,8 @@ const THEMES: Record<ThemeKey, ThemePalette> = {
     accentText: 'text-rose-400',
     badgeBg: 'bg-red-500/20',
     badgeBorder: 'border-red-500/40',
-    buttonGradient:
-      'from-red-600 via-rose-600 to-orange-600 hover:from-red-500 hover:to-orange-500',
-    buttonShadow:
-      'shadow-[0_0_35px_rgba(239,68,68,0.4)] hover:shadow-[0_0_50px_rgba(239,68,68,0.65)]',
+    buttonGradient: 'from-red-600 via-rose-600 to-orange-600 hover:from-red-500 hover:to-orange-500',
+    buttonShadow: 'shadow-[0_0_35px_rgba(239,68,68,0.4)] hover:shadow-[0_0_50px_rgba(239,68,68,0.65)]',
     borderGlow: 'border-red-500',
     hoverBorder: 'hover:border-red-500',
     glowTop: 'bg-red-600',
@@ -98,10 +70,8 @@ const THEMES: Record<ThemeKey, ThemePalette> = {
     accentText: 'text-sky-400',
     badgeBg: 'bg-cyan-500/20',
     badgeBorder: 'border-cyan-500/40',
-    buttonGradient:
-      'from-cyan-600 via-sky-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500',
-    buttonShadow:
-      'shadow-[0_0_35px_rgba(6,182,212,0.4)] hover:shadow-[0_0_50px_rgba(6,182,212,0.65)]',
+    buttonGradient: 'from-cyan-600 via-sky-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500',
+    buttonShadow: 'shadow-[0_0_35px_rgba(6,182,212,0.4)] hover:shadow-[0_0_50px_rgba(6,182,212,0.65)]',
     borderGlow: 'border-cyan-400',
     hoverBorder: 'hover:border-cyan-400',
     glowTop: 'bg-cyan-500',
@@ -115,10 +85,8 @@ const THEMES: Record<ThemeKey, ThemePalette> = {
     accentText: 'text-teal-400',
     badgeBg: 'bg-emerald-500/20',
     badgeBorder: 'border-emerald-500/40',
-    buttonGradient:
-      'from-emerald-600 via-teal-600 to-cyan-600 hover:from-emerald-500 hover:to-cyan-500',
-    buttonShadow:
-      'shadow-[0_0_35px_rgba(16,185,129,0.4)] hover:shadow-[0_0_50px_rgba(16,185,129,0.65)]',
+    buttonGradient: 'from-emerald-600 via-teal-600 to-cyan-600 hover:from-emerald-500 hover:to-cyan-500',
+    buttonShadow: 'shadow-[0_0_35px_rgba(16,185,129,0.4)] hover:shadow-[0_0_50px_rgba(16,185,129,0.65)]',
     borderGlow: 'border-emerald-400',
     hoverBorder: 'hover:border-emerald-400',
     glowTop: 'bg-emerald-500',
@@ -132,16 +100,14 @@ const THEMES: Record<ThemeKey, ThemePalette> = {
     accentText: 'text-yellow-400',
     badgeBg: 'bg-amber-500/20',
     badgeBorder: 'border-amber-500/40',
-    buttonGradient:
-      'from-amber-500 via-yellow-500 to-orange-500 hover:from-amber-400 hover:to-orange-400',
-    buttonShadow:
-      'shadow-[0_0_35px_rgba(245,158,11,0.4)] hover:shadow-[0_0_50px_rgba(245,158,11,0.65)]',
+    buttonGradient: 'from-amber-500 via-yellow-500 to-orange-500 hover:from-amber-400 hover:to-orange-400',
+    buttonShadow: 'shadow-[0_0_35px_rgba(245,158,11,0.4)] hover:shadow-[0_0_50px_rgba(245,158,11,0.65)]',
     borderGlow: 'border-amber-400',
     hoverBorder: 'hover:border-amber-400',
     glowTop: 'bg-amber-500',
     glowBottom: 'bg-orange-600',
     barGradient: 'from-amber-400 via-yellow-400 to-orange-500',
-  },
+  }
 };
 
 // --- TYPES ---
@@ -253,358 +219,267 @@ interface SiteConfig {
 
 // --- DEFAULT DATA ---
 const DEFAULT_CONFIG: SiteConfig = {
-  brandPrefix: 'Caption',
-  brandAccent: 'Vibes',
-  brandBadge: 'Official Hub',
-  brandSubtext: 'r/CaptionVibesHub Community & Discord',
-  heroTitleStart: 'Join The Official ',
-  heroTitleHighlight: 'CaptionVibes',
-  heroTitleEnd: ' Discord Hub.',
-  heroSubtitle:
-    'Start completely free in our Discord community—hang out, get free weekly teasers, vote on polls, and never miss a drop. Upgrade to VIP anytime only if you want the full uncensored archive.',
-  primaryCtaText: 'Join Free Discord Server',
-  secondaryCtaText: 'See Optional VIP Tiers',
-
-  communityBadge: 'Free Discord Community',
-  communityTitle: '100% Free to Join. Zero Pressure to Pay.',
-  communitySubtitle:
-    'Most of our members hang out in the free channels first. Come see the vibe, grab free drops, and decide later if you ever want to unlock the full VIP channels.',
-  communityCtaText: 'Enter Free Discord Now',
-  communityCtaSubtext: 'Instant invite • No credit card needed',
-  discordMembersLabel: '1,600+ Discord Members',
-
-  urgencyBadge: '⚡ VIP BONUS',
-  urgencyText: 'Only 9 spots left before our 100 VIP Mega Drop (84/100 VIPs)',
-  urgencyCtaText: 'View Tiers',
-  showUrgencyTimer: true,
-
-  statsTitle: 'CAPTIONVIBES CURRENT VAULT:',
-  goalTitle: 'Community VIP Milestone Goal',
-  goalBonusText:
-    'At 100 VIPs, we drop an exclusive 25-video Mega Pack for all active members.',
-
-  pricingBadge: 'Optional VIP Upgrades',
-  pricingTitle: 'Want Even More Inside Discord?',
-  pricingSubtitle:
-    'The server is always free to join. If you want the full uncensored archive, pick a tier below for instant automated Discord role access.',
-  bottomBannerTitle: 'Just want to check out the server first?',
-  bottomBannerSubtitle:
-    'Hop into the free Discord channels—no payment required, ever.',
-  bottomBannerCta: 'Join Free Discord',
-
-  faqTitle: 'Frequently Asked Questions',
-  faqSubtitle:
-    'Quick answers about our Discord community and optional VIP tiers.',
-  footerTagline: '18+ Adult Anime & Caption Community',
-  redditUrl: 'https://reddit.com/r/CaptionVibesHub',
-  redditLabel: 'r/CaptionVibesHub',
-
-  vipCount: 84,
-  vipGoal: 100,
-  weeklyVisitors: '4,200+',
-  spotsLeft: 9,
-  discordInviteUrl: 'https://discord.gg/captionvibes',
-  defaultCheckoutUrl: 'https://discord.gg/captionvibes',
-
-  theme: 'crimson',
-  glowOpacity: 15,
-  cardStyle: 'rounded',
-  showUrgencyBar: false,
-  showSocialToast: true,
-  showGoalBar: true,
-  showStatsBanner: true,
-  showCommunitySection: true,
-  showFaqSection: true,
+  "brandPrefix": "Caption",
+  "brandAccent": "Vibes",
+  "brandBadge": "Official Hub",
+  "brandSubtext": "r/CaptionVibesHub Community & Discord",
+  "heroTitleStart": "Join The Official ",
+  "heroTitleHighlight": "CaptionVibes",
+  "heroTitleEnd": " Discord Hub.",
+  "heroSubtitle": "You like my captions? You can find some FULL versions in my discord for FREE! plus some quick videos and CaptionVibes Reels!",
+  "primaryCtaText": "Join Free Discord Server",
+  "secondaryCtaText": "See Optional VIP Tiers",
+  "communityBadge": "Free Discord Community",
+  "communityTitle": "100% Free to Join",
+  "communitySubtitle": "You like my Captions? You can find more Caption Videos in my discord, both for free and premium! Every week I increase the free vault with Exclusive Quick Videos + FULL length videos + REELS! ",
+  "communityCtaText": "Enter Discord Now",
+  "communityCtaSubtext": "Instant invite • No credit card needed",
+  "discordMembersLabel": "1600+ Discord Members",
+  "urgencyBadge": "⚡ VIP DISCOUNT",
+  "urgencyText": "Only 21 spots left for the 25% DISCOUNT!",
+  "urgencyCtaText": "View Tiers",
+  "showUrgencyTimer": false,
+  "statsTitle": "CAPTIONVIBES CURRENT VAULT:",
+  "goalTitle": "50€ GIVE-AWAY (or 1 year of CaptionVibes Unlimited)",
+  "goalBonusText": "At 100 VIPs, I'll give in give-away 50€! (or 1 year of CaptionVibes Unlimited)",
+  "pricingBadge": "VIP Upgrades",
+  "pricingTitle": "CAPTIONVIBES ",
+  "pricingSubtitle": "Want to support my daily work and get access to more content? choose your plan",
+  "bottomBannerTitle": "discord link",
+  "bottomBannerSubtitle": "click here to join the discord server",
+  "bottomBannerCta": "Join Free Discord",
+  "faqTitle": "FAQ",
+  "faqSubtitle": "Most common questions I get in private",
+  "footerTagline": "18+ Adult Anime & Caption Community",
+  "redditUrl": "https://reddit.com/r/CaptionVibesHub",
+  "redditLabel": "r/CaptionVibesHub",
+  "vipCount": 84,
+  "vipGoal": 100,
+  "weeklyVisitors": "7760",
+  "spotsLeft": 0,
+  "discordInviteUrl": "https://discord.gg/captionvibes",
+  "defaultCheckoutUrl": "https://discord.gg/captionvibes",
+  "theme": "crimson",
+  "glowOpacity": 0,
+  "cardStyle": "rounded",
+  "showUrgencyBar": true,
+  "showSocialToast": true,
+  "showGoalBar": true,
+  "showStatsBanner": true,
+  "showCommunitySection": true,
+  "showFaqSection": true
 };
 
 const DEFAULT_STATS: StatBox[] = [
   {
-    id: 'quick',
-    value: '145+',
-    label: 'Quick Videos',
-    sublabel: 'Fast-pace instant dopamine',
-    icon: 'zap',
+    "id": "quick",
+    "value": "145+",
+    "label": "Quick Videos",
+    "sublabel": "Fast-pace instant dopamine",
+    "icon": "zap"
   },
   {
-    id: 'long',
-    value: '42+',
-    label: 'Long Videos',
-    sublabel: 'Full-length uncut videos',
-    icon: 'film',
+    "id": "long",
+    "value": "42+",
+    "label": "Long Videos",
+    "sublabel": "Full-length uncut videos",
+    "icon": "film"
   },
   {
-    id: 'reels',
-    value: '540+',
-    label: 'CaptionVibes Reels',
-    sublabel: 'Exclusive vertical archive',
-    icon: 'reels',
+    "id": "reels",
+    "value": "900+",
+    "label": "CaptionVibes Reels",
+    "sublabel": "Exclusive vertical archive",
+    "icon": "reels"
   },
   {
-    id: 'daily',
-    value: 'Daily',
-    label: 'Daily Uploads',
-    sublabel: 'Fresh drops in Discord',
-    icon: 'sparkles',
-  },
+    "id": "daily",
+    "value": "Daily",
+    "label": "Daily Uploads",
+    "sublabel": "Fresh drops in Discord",
+    "icon": "sparkles"
+  }
 ];
 
 const DEFAULT_TIERS: PricingTier[] = [
   {
-    id: 'tier-supporter',
-    name: 'CaptionVibes Supporter',
-    badge: 'Entry Tier',
-    price: '3.99',
-    originalPrice: '5.99',
-    description: 'Support the hub and unlock VIP role + Quick Videos.',
-    ctaText: 'Unlock Supporter',
-    checkoutUrl: 'https://discord.gg/captionvibes',
-    isPopular: false,
-    popularBanner: '',
-    features: [
-      { text: 'VIP role', included: true },
-      { text: 'CaptionVibes Quick Videos', included: true },
-      { text: 'CaptionVibes Full Long Videos', included: false },
-      { text: 'CaptionVibes Reels', included: false },
-      { text: 'CaptionVibes Vote', included: false },
-    ],
+    "id": "tier-supporter",
+    "name": "CaptionVibes Supporter",
+    "badge": "Entry Tier",
+    "price": "3.99",
+    "originalPrice": "5.99",
+    "description": "Support the hub and unlock VIP role + Quick Videos.",
+    "ctaText": "Unlock Supporter",
+    "checkoutUrl": "https://upgrade.chat/1529327614362128474/p/captionvibes",
+    "isPopular": false,
+    "popularBanner": "",
+    "features": [
+      {
+        "text": "VIP role",
+        "included": true
+      },
+      {
+        "text": "CaptionVibes Quick Videos",
+        "included": true
+      },
+      {
+        "text": "CaptionVibes Full Long Videos",
+        "included": false
+      },
+      {
+        "text": "CaptionVibes Reels",
+        "included": false
+      },
+      {
+        "text": "CaptionVibes Vote",
+        "included": false
+      }
+    ]
   },
   {
-    id: 'tier-unlimited',
-    name: 'CaptionVibes Unlimited',
-    badge: 'Best Value',
-    price: '9.99',
-    originalPrice: '13.99',
-    description:
-      'Full all-access pass to every video, reel, and community vote.',
-    ctaText: 'Unlock Unlimited',
-    checkoutUrl: 'https://discord.gg/captionvibes',
-    isPopular: true,
-    popularBanner: 'MOST POPULAR • ALL-ACCESS',
-    features: [
-      { text: 'VIP role', included: true },
-      { text: 'CaptionVibes Quick Videos', included: true },
-      { text: 'CaptionVibes Full Long Videos', included: true },
-      { text: 'CaptionVibes Reels', included: true },
-      { text: 'CaptionVibes Vote', included: true },
-    ],
+    "id": "tier-unlimited",
+    "name": "CaptionVibes Unlimited",
+    "badge": "Best Value",
+    "price": "9.99",
+    "originalPrice": "13.99",
+    "description": "Full all-access pass to every video, reel, and community vote.",
+    "ctaText": "Unlock Unlimited",
+    "checkoutUrl": "https://upgrade.chat/1529327614362128474/p/2d165489-e89b-481b-82e0-d2bf1982dbf7",
+    "isPopular": true,
+    "popularBanner": "MOST POPULAR • ALL-ACCESS",
+    "features": [
+      {
+        "text": "VIP role",
+        "included": true
+      },
+      {
+        "text": "CaptionVibes Quick Videos",
+        "included": true
+      },
+      {
+        "text": "CaptionVibes Full Long Videos",
+        "included": true
+      },
+      {
+        "text": "CaptionVibes Reels",
+        "included": true
+      },
+      {
+        "text": "CaptionVibes Vote",
+        "included": true
+      }
+    ]
   },
   {
-    id: 'tier-elite',
-    name: 'CaptionVibes Elite',
-    badge: 'Mid Tier',
-    price: '6.99',
-    originalPrice: '9.99',
-    description:
-      'Unlock Quick Videos plus the full archive of Full Long Videos.',
-    ctaText: 'Unlock Elite',
-    checkoutUrl: 'https://discord.gg/captionvibes',
-    isPopular: false,
-    popularBanner: '',
-    features: [
-      { text: 'VIP role', included: true },
-      { text: 'CaptionVibes Quick Videos', included: true },
-      { text: 'CaptionVibes Full Long Videos', included: true },
-      { text: 'CaptionVibes Reels', included: false },
-      { text: 'CaptionVibes Vote', included: false },
-    ],
-  },
+    "id": "tier-elite",
+    "name": "CaptionVibes Elite",
+    "badge": "Mid Tier",
+    "price": "6.99",
+    "originalPrice": "9.99",
+    "description": "Unlock Quick Videos plus the full archive of Full Long Videos.",
+    "ctaText": "Unlock Elite",
+    "checkoutUrl": "https://upgrade.chat/1529327614362128474/p/40998f93-0851-4f70-a628-7400b3318b95",
+    "isPopular": false,
+    "popularBanner": "",
+    "features": [
+      {
+        "text": "VIP role",
+        "included": true
+      },
+      {
+        "text": "CaptionVibes Quick Videos",
+        "included": true
+      },
+      {
+        "text": "CaptionVibes Full Long Videos",
+        "included": true
+      },
+      {
+        "text": "CaptionVibes Reels",
+        "included": false
+      },
+      {
+        "text": "CaptionVibes Vote",
+        "included": false
+      }
+    ]
+  }
 ];
 
 const DEFAULT_COMMUNITY_CARDS: CommunityCard[] = [
   {
-    id: 'card-1',
-    title: 'Free Weekly Teasers & Drops',
-    description:
-      'Get free public uploads, announcements, and uncensored previews that Reddit filters or buries in the algorithm.',
-    icon: 'gift',
+    "id": "card-1",
+    "title": "Free WEEKLY Teasers & Drops",
+    "description": "Get free public uploads, announcements, and uncensored previews that Reddit filters or buries in the algorithm.",
+    "icon": "gift"
   },
   {
-    id: 'card-2',
-    title: 'Active Community & Polls',
-    description:
-      'Chat with other fans, share ideas, suggest themes, and vote in community polls to shape upcoming videos.',
-    icon: 'message',
+    "id": "card-2",
+    "title": "Active Community & Polls",
+    "description": "Chat with other fans, share ideas, suggest themes, and vote in community polls to shape upcoming videos.",
+    "icon": "message"
   },
   {
-    id: 'card-3',
-    title: 'First to Know, Zero Spam',
-    description:
-      'Pick your own notification roles, browse at your own pace, and only upgrade to VIP if and when you want more.',
-    icon: 'bell',
-  },
+    "id": "card-3",
+    "title": "First to Know, Zero Spam",
+    "description": "Pick your own notification roles, browse at your own pace, and only upgrade to VIP if and when you want more.",
+    "icon": "bell"
+  }
 ];
 
 const DEFAULT_FAQS: FaqItem[] = [
   {
-    q: 'Do I have to pay to join the Discord server?',
-    a: 'Not at all! Joining the CaptionVibes Discord is 100% free. You get access to public chat, free teasers, community polls, and drop notifications immediately. Upgrading to a VIP tier is completely optional.',
+    "q": "Do I have to pay to join the Discord server?",
+    "a": "Not at all! Joining the CaptionVibes Discord is 100% free. You get access to public chat, free teasers, community polls, and drop notifications immediately. Upgrading to a VIP tier is completely optional. Free tiers still get as much content as I can give as a singular person :)"
   },
   {
-    q: 'How fast do I get my VIP role on Discord if I decide to upgrade?',
-    a: 'Instantly! Our automated Discord bot connects directly to your checkout. Within 5 seconds of upgrading, your private VIP channels unlock automatically on your Discord account.',
+    "q": "How fast do I get my VIP role on Discord if I decide to upgrade?",
+    "a": "Instantly! Our automated Discord bot connects directly to your checkout. Within 5 seconds of upgrading, your private VIP channels unlock automatically on your Discord account."
   },
   {
-    q: 'Is the billing 100% discreet and private?',
-    a: 'Yes. Your bank or card statement will never mention NSFW, Anime, or CaptionVibes. It appears as a generic digital software/community subscription. Your Reddit username is never required.',
+    "q": "Is the billing 100% discreet and private?",
+    "a": "Yes. Your bank or card statement will never mention NSFW, Anime, or CaptionVibes. It appears as a generic digital software/community subscription. Your Reddit username is never required."
   },
   {
-    q: 'Can I cancel or downgrade anytime?',
-    a: '100%. There are zero lock-in contracts. You can manage or cancel your subscription with two clicks at any time and still keep hanging out in the free Discord channels.',
-  },
+    "q": "Can I cancel or downgrade anytime?",
+    "a": "100%. There are zero lock-in contracts. You can manage or cancel your subscription with two clicks at any time."
+  }
 ];
 
 const RANDOM_NICKNAMES = [
-  'DarkVibe_99',
-  'KawaiiHunter',
-  'NekoSenpai_',
-  'ShadowLurker',
-  'VoidWalker',
-  'KuroNeko_',
-  'MidnightEcho',
-  'SoraVibes',
-  'NeonDrift',
-  'Riku_99',
-  'VelvetPulse',
-  'Zed_x',
-  'LofiGhost',
-  'AstraKoi',
-  'Kaze_07',
-  'PixelPhantom',
-  'NoxVibe',
-  'Hana_chan',
-  'CyberMochi',
-  'RoguePulse',
-  'Akira_2k',
-  'Vexel_',
-  'Shiro_x',
-  'DriftKing_',
-  'Lumen_9',
-  'KuroiSora',
-  'Taki_v',
-  'MisoSoup_',
-  'ZephyrX',
-  'Nyxx_',
-  'Kaito_44',
-  'SableWolf',
-  'Yuki_01',
-  'ViperNeon',
-  'Onyx_77',
-  'KiraVibe',
-  'Echo_Zero',
-  'Solstice_',
-  'Rin_Senpai',
-  'DuskRider',
-  'Fuyu_x',
-  'Jett_98',
-  'Kurogane',
-  'NyxShadow',
-  'PockyLover',
-  'Sora_88',
-  'MochiVibes',
-  'Valkyrie_',
-  'Kitsune_x',
-  'Zenith_0',
-  'Aether_99',
-  'Tora_kun',
-  'ChibiRogue',
-  'Vortex_x',
-  'NekoByte',
-  'Hoshi_7',
-  'Kuro_23',
-  'Riven_x',
-  'Sylph_',
-  'Mika_09',
-  'Kage_V',
-  'NovaPulse',
-  'Shiba_99',
-  'Aoi_x',
-  'Rei_04',
-  'KuroVibe',
-  'Satoshi_',
-  'Yoru_x',
-  'Blitz_77',
-  'Nora_v',
-  'Kenshin_',
-  'Luka_02',
-  'Siren_x',
-  'Mako_99',
-  'Haru_x',
-  'Zane_08',
-  'Tsubasa_',
-  'KoiFish_',
-  'VibeCheck_',
-  'SoraKuro',
-  'Riku_x',
-  'Amane_',
-  'Kazu_77',
-  'Nori_x',
-  'Shinji_01',
-  'Yumi_v',
-  'FrostByte_',
-  'Kuroi_9',
-  'Tetsuo_x',
-  'Mina_05',
-  'Raiden_v',
-  'Suki_88',
-  'Nero_x',
-  'KuroTsuki',
-  'Ryuu_07',
-  'Aki_Vibes',
-  'ZeroShift',
-  'Hinata_x',
-  'KuroFox_',
-  'LunaDrift',
+  'DarkVibe_99', 'KawaiiHunter', 'NekoSenpai_', 'ShadowLurker', 'VoidWalker',
+  'KuroNeko_', 'MidnightEcho', 'SoraVibes', 'NeonDrift', 'Riku_99',
+  'VelvetPulse', 'Zed_x', 'LofiGhost', 'AstraKoi', 'Kaze_07',
+  'PixelPhantom', 'NoxVibe', 'Hana_chan', 'CyberMochi', 'RoguePulse',
+  'Akira_2k', 'Vexel_', 'Shiro_x', 'DriftKing_', 'Lumen_9',
+  'KuroiSora', 'Taki_v', 'MisoSoup_', 'ZephyrX', 'Nyxx_',
+  'Kaito_44', 'SableWolf', 'Yuki_01', 'ViperNeon', 'Onyx_77',
+  'KiraVibe', 'Echo_Zero', 'Solstice_', 'Rin_Senpai', 'DuskRider',
+  'Fuyu_x', 'Jett_98', 'Kurogane', 'NyxShadow', 'PockyLover',
+  'Sora_88', 'MochiVibes', 'Valkyrie_', 'Kitsune_x', 'Zenith_0',
+  'Aether_99', 'Tora_kun', 'ChibiRogue', 'Vortex_x', 'NekoByte',
+  'Hoshi_7', 'Kuro_23', 'Riven_x', 'Sylph_', 'Mika_09',
+  'Kage_V', 'NovaPulse', 'Shiba_99', 'Aoi_x', 'Rei_04',
+  'KuroVibe', 'Satoshi_', 'Yoru_x', 'Blitz_77', 'Nora_v',
+  'Kenshin_', 'Luka_02', 'Siren_x', 'Mako_99', 'Haru_x',
+  'Zane_08', 'Tsubasa_', 'KoiFish_', 'VibeCheck_', 'SoraKuro',
+  'Riku_x', 'Amane_', 'Kazu_77', 'Nori_x', 'Shinji_01',
+  'Yumi_v', 'FrostByte_', 'Kuroi_9', 'Tetsuo_x', 'Mina_05',
+  'Raiden_v', 'Suki_88', 'Nero_x', 'KuroTsuki', 'Ryuu_07',
+  'Aki_Vibes', 'ZeroShift', 'Hinata_x', 'KuroFox_', 'LunaDrift'
 ];
 
 const SOCIAL_PROOF_TEMPLATES = [
-  {
-    action: 'joined the Free Discord',
-    note: 'Came from r/CaptionVibesHub',
-    isVip: false,
-  },
-  {
-    action: 'joined the Free Discord',
-    note: 'Browsing free weekly drops',
-    isVip: false,
-  },
-  {
-    action: 'upgraded to CaptionVibes Unlimited',
-    note: 'Instant Discord Role assigned',
-    isVip: true,
-  },
-  {
-    action: 'upgraded to CaptionVibes Unlimited',
-    note: 'Unlocked the full uncut archive',
-    isVip: true,
-  },
-  {
-    action: 'upgraded to CaptionVibes Elite',
-    note: 'Unlocked Full Long Videos',
-    isVip: true,
-  },
-  {
-    action: 'upgraded to CaptionVibes Supporter',
-    note: 'After hanging out in free chat',
-    isVip: true,
-  },
-  {
-    action: 'upgraded to CaptionVibes Unlimited',
-    note: 'Got full access to every exclusive drop',
-    isVip: true,
-  },
+  { action: 'joined the Free Discord', note: 'Came from r/CaptionVibesHub', isVip: false },
+  { action: 'joined the Free Discord', note: 'Browsing free weekly drops', isVip: false },
+  { action: 'upgraded to CaptionVibes Unlimited', note: 'Instant Discord Role assigned', isVip: true },
+  { action: 'upgraded to CaptionVibes Unlimited', note: 'Unlocked the full uncut archive', isVip: true },
+  { action: 'upgraded to CaptionVibes Elite', note: 'Unlocked Full Long Videos', isVip: true },
+  { action: 'upgraded to CaptionVibes Supporter', note: 'After hanging out in free chat', isVip: true },
+  { action: 'upgraded to CaptionVibes Unlimited', note: 'Got full access to every exclusive drop', isVip: true },
 ];
 
-const RECENT_TIMES = [
-  'Just now',
-  '1m ago',
-  '2m ago',
-  '3m ago',
-  '4m ago',
-  '6m ago',
-  '8m ago',
-  '11m ago',
-  '15m ago',
-];
+const RECENT_TIMES = ['Just now', '1m ago', '2m ago', '3m ago', '4m ago', '6m ago', '8m ago', '11m ago', '15m ago'];
 
 interface SocialToastEvent {
   user: string;
@@ -615,18 +490,11 @@ interface SocialToastEvent {
 }
 
 const createRandomToast = (prevUser?: string): SocialToastEvent => {
-  let user =
-    RANDOM_NICKNAMES[Math.floor(Math.random() * RANDOM_NICKNAMES.length)];
+  let user = RANDOM_NICKNAMES[Math.floor(Math.random() * RANDOM_NICKNAMES.length)];
   if (user === prevUser) {
-    user =
-      RANDOM_NICKNAMES[
-        (RANDOM_NICKNAMES.indexOf(user) + 1) % RANDOM_NICKNAMES.length
-      ];
+    user = RANDOM_NICKNAMES[(RANDOM_NICKNAMES.indexOf(user) + 1) % RANDOM_NICKNAMES.length];
   }
-  const tpl =
-    SOCIAL_PROOF_TEMPLATES[
-      Math.floor(Math.random() * SOCIAL_PROOF_TEMPLATES.length)
-    ];
+  const tpl = SOCIAL_PROOF_TEMPLATES[Math.floor(Math.random() * SOCIAL_PROOF_TEMPLATES.length)];
   const time = RECENT_TIMES[Math.floor(Math.random() * RECENT_TIMES.length)];
   return { user, action: tpl.action, time, note: tpl.note, isVip: tpl.isVip };
 };
@@ -636,20 +504,15 @@ const PREV_STORAGE_KEY = 'captionvibes_builder_state_v12';
 
 export default function App() {
   const getRawSaved = () => {
+    if (!ENABLE_OWNER_CUSTOMIZER) return null;
     try {
-      return (
-        localStorage.getItem(STORAGE_KEY) ||
-        localStorage.getItem(PREV_STORAGE_KEY)
-      );
+      return localStorage.getItem(STORAGE_KEY) || localStorage.getItem(PREV_STORAGE_KEY);
     } catch {
       return null;
     }
   };
 
-  function loadSavedObj<T extends Record<string, any>>(
-    key: 'config',
-    fallback: T
-  ): T {
+  function loadSavedObj<T extends Record<string, any>>(key: 'config', fallback: T): T {
     try {
       const raw = getRawSaved();
       if (!raw) return fallback;
@@ -668,28 +531,19 @@ export default function App() {
     }
   }
 
-  function loadSavedArr<T>(
-    key: 'stats' | 'tiers' | 'faqs' | 'communityCards',
-    fallback: T[]
-  ): T[] {
+  function loadSavedArr<T>(key: 'stats' | 'tiers' | 'faqs' | 'communityCards', fallback: T[]): T[] {
     try {
       const raw = getRawSaved();
       if (!raw) return fallback;
       const parsed = JSON.parse(raw);
-      return Array.isArray(parsed[key]) && parsed[key].length > 0
-        ? parsed[key]
-        : fallback;
+      return Array.isArray(parsed[key]) && parsed[key].length > 0 ? parsed[key] : fallback;
     } catch {
       return fallback;
     }
   }
 
-  const [config, setConfig] = useState<SiteConfig>(() =>
-    loadSavedObj('config', DEFAULT_CONFIG)
-  );
-  const [stats, setStats] = useState<StatBox[]>(() =>
-    loadSavedArr('stats', DEFAULT_STATS)
-  );
+  const [config, setConfig] = useState<SiteConfig>(() => loadSavedObj('config', DEFAULT_CONFIG));
+  const [stats, setStats] = useState<StatBox[]>(() => loadSavedArr('stats', DEFAULT_STATS));
   const [tiers, setTiers] = useState<PricingTier[]>(() => {
     const loaded = loadSavedArr('tiers', DEFAULT_TIERS);
     return loaded.map((t) => ({
@@ -697,43 +551,26 @@ export default function App() {
       ctaText: t.ctaText.replace(/^Join\s+/i, 'Unlock '),
     }));
   });
-  const [communityCards, setCommunityCards] = useState<CommunityCard[]>(() =>
-    loadSavedArr('communityCards', DEFAULT_COMMUNITY_CARDS)
-  );
-  const [faqs, setFaqs] = useState<FaqItem[]>(() =>
-    loadSavedArr('faqs', DEFAULT_FAQS)
-  );
+  const [communityCards, setCommunityCards] = useState<CommunityCard[]>(() => loadSavedArr('communityCards', DEFAULT_COMMUNITY_CARDS));
+  const [faqs, setFaqs] = useState<FaqItem[]>(() => loadSavedArr('faqs', DEFAULT_FAQS));
 
   // UI States
-  const [timeLeft, setTimeLeft] = useState({
-    hours: 2,
-    minutes: 47,
-    seconds: 19,
-  });
-  const [currentToast, setCurrentToast] = useState<SocialToastEvent>(() =>
-    createRandomToast()
-  );
+  const [timeLeft, setTimeLeft] = useState({ hours: 2, minutes: 47, seconds: 19 });
+  const [currentToast, setCurrentToast] = useState<SocialToastEvent>(() => createRandomToast());
   const [showToast, setShowToast] = useState(true);
   const [openFaq, setOpenFaq] = useState<number>(0);
 
   // Customizer States
   const [showCustomizer, setShowCustomizer] = useState(false);
   const [visitorPreview, setVisitorPreview] = useState(false);
-  const [activeTab, setActiveTab] = useState<
-    'style' | 'copy' | 'stats' | 'tiers' | 'faq' | 'export'
-  >('style');
-  const [editingTierId, setEditingTierId] = useState<string | null>(
-    'tier-unlimited'
-  );
+  const [activeTab, setActiveTab] = useState<'style' | 'copy' | 'stats' | 'tiers' | 'faq' | 'export'>('style');
+  const [editingTierId, setEditingTierId] = useState<string | null>('tier-unlimited');
   const [copiedFlag, setCopiedFlag] = useState(false);
 
   // Auto-save to localStorage
   useEffect(() => {
     try {
-      localStorage.setItem(
-        STORAGE_KEY,
-        JSON.stringify({ config, stats, tiers, communityCards, faqs })
-      );
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({ config, stats, tiers, communityCards, faqs }));
     } catch {
       // Ignore storage quota errors
     }
@@ -742,12 +579,10 @@ export default function App() {
   // Countdown Timer Effect
   useEffect(() => {
     const timer = setInterval(() => {
-      setTimeLeft((prev) => {
+      setTimeLeft(prev => {
         if (prev.seconds > 0) return { ...prev, seconds: prev.seconds - 1 };
-        if (prev.minutes > 0)
-          return { ...prev, minutes: prev.minutes - 1, seconds: 59 };
-        if (prev.hours > 0)
-          return { hours: prev.hours - 1, minutes: 59, seconds: 59 };
+        if (prev.minutes > 0) return { ...prev, minutes: prev.minutes - 1, seconds: 59 };
+        if (prev.hours > 0) return { hours: prev.hours - 1, minutes: 59, seconds: 59 };
         return { hours: 2, minutes: 59, seconds: 59 };
       });
     }, 1000);
@@ -768,23 +603,10 @@ export default function App() {
 
   const theme = THEMES[config.theme] || THEMES.crimson;
   const formatTime = (num: number) => String(num).padStart(2, '0');
-  const progressPercentage = Math.min(
-    100,
-    Math.round((config.vipCount / Math.max(1, config.vipGoal)) * 100)
-  );
+  const progressPercentage = Math.min(100, Math.round((config.vipCount / Math.max(1, config.vipGoal)) * 100));
 
-  const radiusCard =
-    config.cardStyle === 'sharp'
-      ? 'rounded-md'
-      : config.cardStyle === 'pill'
-      ? 'rounded-[2rem]'
-      : 'rounded-2xl';
-  const radiusBtn =
-    config.cardStyle === 'sharp'
-      ? 'rounded-md'
-      : config.cardStyle === 'pill'
-      ? 'rounded-full'
-      : 'rounded-xl';
+  const radiusCard = config.cardStyle === 'sharp' ? 'rounded-md' : config.cardStyle === 'pill' ? 'rounded-[2rem]' : 'rounded-2xl';
+  const radiusBtn = config.cardStyle === 'sharp' ? 'rounded-md' : config.cardStyle === 'pill' ? 'rounded-full' : 'rounded-xl';
 
   const scrollToSection = (id: string) => {
     const el = document.getElementById(id);
@@ -793,9 +615,7 @@ export default function App() {
 
   // --- COMMUNITY CARDS HELPER ---
   const updateCommunityCard = (id: string, patch: Partial<CommunityCard>) => {
-    setCommunityCards((prev) =>
-      prev.map((c) => (c.id === id ? { ...c, ...patch } : c))
-    );
+    setCommunityCards(prev => prev.map(c => (c.id === id ? { ...c, ...patch } : c)));
   };
 
   const renderCommunityCardIcon = (icon: CommunityCard['icon']) => {
@@ -824,7 +644,7 @@ export default function App() {
 
   // --- STAT BOX HELPER ---
   const updateStat = (id: string, patch: Partial<StatBox>) => {
-    setStats((prev) => prev.map((s) => (s.id === id ? { ...s, ...patch } : s)));
+    setStats(prev => prev.map(s => (s.id === id ? { ...s, ...patch } : s)));
   };
 
   const renderStatIcon = (icon: StatBox['icon']) => {
@@ -857,8 +677,8 @@ export default function App() {
 
   // --- TIERS CRUD HELPERS ---
   const updateTier = (id: string, patch: Partial<PricingTier>) => {
-    setTiers((prev) =>
-      prev.map((t) => {
+    setTiers(prev =>
+      prev.map(t => {
         if (patch.isPopular && t.id !== id) {
           return { ...t, isPopular: false };
         }
@@ -867,41 +687,29 @@ export default function App() {
     );
   };
 
-  const updateTierFeature = (
-    tierId: string,
-    featIdx: number,
-    patch: Partial<TierFeature>
-  ) => {
-    setTiers((prev) =>
-      prev.map((t) => {
+  const updateTierFeature = (tierId: string, featIdx: number, patch: Partial<TierFeature>) => {
+    setTiers(prev =>
+      prev.map(t => {
         if (t.id !== tierId) return t;
-        const nextFeats = t.features.map((f, idx) =>
-          idx === featIdx ? { ...f, ...patch } : f
-        );
+        const nextFeats = t.features.map((f, idx) => (idx === featIdx ? { ...f, ...patch } : f));
         return { ...t, features: nextFeats };
       })
     );
   };
 
   const addTierFeature = (tierId: string) => {
-    setTiers((prev) =>
-      prev.map((t) =>
+    setTiers(prev =>
+      prev.map(t =>
         t.id === tierId
-          ? {
-              ...t,
-              features: [
-                ...t.features,
-                { text: 'New tier perk included', included: true },
-              ],
-            }
+          ? { ...t, features: [...t.features, { text: 'New tier perk included', included: true }] }
           : t
       )
     );
   };
 
   const removeTierFeature = (tierId: string, featIdx: number) => {
-    setTiers((prev) =>
-      prev.map((t) =>
+    setTiers(prev =>
+      prev.map(t =>
         t.id === tierId
           ? { ...t, features: t.features.filter((_, idx) => idx !== featIdx) }
           : t
@@ -927,30 +735,27 @@ export default function App() {
         { text: 'Full access to exclusive uploads', included: true },
       ],
     };
-    setTiers((prev) => [...prev, newTier]);
+    setTiers(prev => [...prev, newTier]);
     setEditingTierId(newId);
   };
 
   const deleteTier = (id: string) => {
     if (tiers.length <= 1) return;
-    setTiers((prev) => prev.filter((t) => t.id !== id));
+    setTiers(prev => prev.filter(t => t.id !== id));
     if (editingTierId === id) setEditingTierId(null);
   };
 
   // --- FAQ CRUD HELPERS ---
   const updateFaq = (idx: number, patch: Partial<FaqItem>) => {
-    setFaqs((prev) => prev.map((f, i) => (i === idx ? { ...f, ...patch } : f)));
+    setFaqs(prev => prev.map((f, i) => (i === idx ? { ...f, ...patch } : f)));
   };
 
   const addFaq = () => {
-    setFaqs((prev) => [
-      ...prev,
-      { q: 'New Question?', a: 'Write your answer here.' },
-    ]);
+    setFaqs(prev => [...prev, { q: 'New Question?', a: 'Write your answer here.' }]);
   };
 
   const deleteFaq = (idx: number) => {
-    setFaqs((prev) => prev.filter((_, i) => i !== idx));
+    setFaqs(prev => prev.filter((_, i) => i !== idx));
   };
 
   const handleResetAll = () => {
@@ -970,11 +775,7 @@ const DEFAULT_STATS: StatBox[] = ${JSON.stringify(stats, null, 2)};
 
 const DEFAULT_TIERS: PricingTier[] = ${JSON.stringify(tiers, null, 2)};
 
-const DEFAULT_COMMUNITY_CARDS: CommunityCard[] = ${JSON.stringify(
-      communityCards,
-      null,
-      2
-    )};
+const DEFAULT_COMMUNITY_CARDS: CommunityCard[] = ${JSON.stringify(communityCards, null, 2)};
 
 const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
   };
@@ -1012,9 +813,7 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
           <div className="max-w-6xl mx-auto flex flex-wrap items-center justify-center sm:justify-between gap-2 text-center">
             <div className="flex items-center gap-2 font-medium">
               {config.urgencyBadge && (
-                <span
-                  className={`inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-bold bg-gradient-to-r ${theme.barGradient} text-white animate-pulse`}
-                >
+                <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-bold bg-gradient-to-r ${theme.barGradient} text-white animate-pulse`}>
                   {config.urgencyBadge}
                 </span>
               )}
@@ -1022,14 +821,9 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
             </div>
             <div className="flex items-center gap-3">
               {config.showUrgencyTimer && (
-                <div
-                  className={`flex items-center gap-1.5 bg-black/50 border ${theme.badgeBorder} px-2.5 py-1 rounded-md font-mono text-xs ${theme.accentText}`}
-                >
+                <div className={`flex items-center gap-1.5 bg-black/50 border ${theme.badgeBorder} px-2.5 py-1 rounded-md font-mono text-xs ${theme.accentText}`}>
                   <Clock className="w-3.5 h-3.5" />
-                  <span>
-                    {formatTime(timeLeft.hours)}:{formatTime(timeLeft.minutes)}:
-                    {formatTime(timeLeft.seconds)}
-                  </span>
+                  <span>{formatTime(timeLeft.hours)}:{formatTime(timeLeft.minutes)}:{formatTime(timeLeft.seconds)}</span>
                 </div>
               )}
               {config.urgencyCtaText && (
@@ -1048,26 +842,18 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
       {/* NAVIGATION HEADER */}
       <header className="relative z-20 max-w-6xl mx-auto px-4 py-5 flex items-center justify-between border-b border-white/5">
         <div className="flex items-center gap-3">
-          <div
-            className={`relative w-10 h-10 ${radiusBtn} bg-gradient-to-tr ${theme.barGradient} p-0.5 shadow-lg`}
-          >
-            <div
-              className={`w-full h-full bg-[#0c0c14] ${radiusBtn} flex items-center justify-center font-black text-lg bg-clip-text text-transparent bg-gradient-to-r ${theme.barGradient}`}
-            >
-              {config.brandPrefix[0] || 'C'}
-              {config.brandAccent[0] || 'V'}
+          <div className={`relative w-10 h-10 ${radiusBtn} bg-gradient-to-tr ${theme.barGradient} p-0.5 shadow-lg`}>
+            <div className={`w-full h-full bg-[#0c0c14] ${radiusBtn} flex items-center justify-center font-black text-lg bg-clip-text text-transparent bg-gradient-to-r ${theme.barGradient}`}>
+              {(config.brandPrefix[0] || 'C')}{(config.brandAccent[0] || 'V')}
             </div>
             <span className="absolute -bottom-1 -right-1 w-3.5 h-3.5 bg-emerald-500 border-2 border-[#07070c] rounded-full" />
           </div>
           <div>
             <div className="flex items-center gap-2">
               <span className="font-extrabold text-lg tracking-tight text-white">
-                {config.brandPrefix}
-                <span className={theme.primaryText}>{config.brandAccent}</span>
+                {config.brandPrefix}<span className={theme.primaryText}>{config.brandAccent}</span>
               </span>
-              <span
-                className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded ${theme.badgeBg} ${theme.accentText} border ${theme.badgeBorder}`}
-              >
+              <span className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded ${theme.badgeBg} ${theme.accentText} border ${theme.badgeBorder}`}>
                 {config.brandBadge}
               </span>
             </div>
@@ -1115,9 +901,7 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
             {config.weeklyVisitors} Weekly Reddit Visitors
           </span>
           <span className="text-white/20">|</span>
-          <span
-            className={`flex items-center gap-1.5 text-xs font-semibold ${theme.accentText}`}
-          >
+          <span className={`flex items-center gap-1.5 text-xs font-semibold ${theme.accentText}`}>
             <Crown className="w-3.5 h-3.5" />
             {config.vipCount} VIPs
           </span>
@@ -1125,9 +909,7 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
 
         <h1 className="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight max-w-4xl mx-auto leading-[1.08] mb-6">
           {config.heroTitleStart}
-          <span
-            className={`bg-clip-text text-transparent bg-gradient-to-r ${theme.barGradient}`}
-          >
+          <span className={`bg-clip-text text-transparent bg-gradient-to-r ${theme.barGradient}`}>
             {config.heroTitleHighlight}
           </span>
           {config.heroTitleEnd}
@@ -1161,17 +943,13 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
 
         {/* Community Milestone Progress Bar */}
         {config.showGoalBar && (
-          <div
-            className={`max-w-md mx-auto bg-[#11111a]/90 border border-white/10 ${radiusCard} p-4 shadow-xl`}
-          >
+          <div className={`max-w-md mx-auto bg-[#11111a]/90 border border-white/10 ${radiusCard} p-4 shadow-xl`}>
             <div className="flex justify-between items-center text-xs font-bold mb-2">
               <span className="text-slate-300 flex items-center gap-1.5">
                 <Flame className="w-4 h-4 text-orange-400 fill-orange-400" />
                 {config.goalTitle}
               </span>
-              <span className={theme.accentText}>
-                {config.vipCount} / {config.vipGoal} VIPs
-              </span>
+              <span className={theme.accentText}>{config.vipCount} / {config.vipGoal} VIPs</span>
             </div>
             <div className="w-full h-3 bg-black/60 rounded-full overflow-hidden border border-white/5 p-0.5">
               <div
@@ -1182,8 +960,7 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
               </div>
             </div>
             <p className="text-[11px] text-slate-400 mt-2 text-left">
-              🎁 <strong className="text-slate-200">Next Goal Bonus:</strong>{' '}
-              {config.goalBonusText}
+              🎁 <strong className="text-slate-200">Next Goal Bonus:</strong> {config.goalBonusText}
             </p>
           </div>
         )}
@@ -1191,13 +968,8 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
 
       {/* 3. FREE DISCORD COMMUNITY SECTION */}
       {config.showCommunitySection && (
-        <section
-          id="community-section"
-          className="relative z-10 max-w-6xl mx-auto px-4 py-10"
-        >
-          <div
-            className={`${radiusCard} bg-gradient-to-br from-[#5865F2]/15 via-[#11111e] to-[#0c0c16] border border-[#5865F2]/35 p-6 sm:p-10 shadow-2xl`}
-          >
+        <section id="community-section" className="relative z-10 max-w-6xl mx-auto px-4 py-10">
+          <div className={`${radiusCard} bg-gradient-to-br from-[#5865F2]/15 via-[#11111e] to-[#0c0c16] border border-[#5865F2]/35 p-6 sm:p-10 shadow-2xl`}>
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8 mb-10">
               <div className="max-w-2xl">
                 {config.communityBadge && (
@@ -1233,14 +1005,9 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
               {communityCards.map((card) => (
-                <div
-                  key={card.id}
-                  className={`bg-black/40 border border-white/10 p-5 ${radiusCard}`}
-                >
+                <div key={card.id} className={`bg-black/40 border border-white/10 p-5 ${radiusCard}`}>
                   {renderCommunityCardIcon(card.icon)}
-                  <h3 className="font-bold text-white text-base mb-1">
-                    {card.title}
-                  </h3>
+                  <h3 className="font-bold text-white text-base mb-1">{card.title}</h3>
                   <p className="text-xs text-slate-400 leading-relaxed">
                     {card.description}
                   </p>
@@ -1255,34 +1022,21 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
       {config.showStatsBanner && (
         <section className="relative z-10 max-w-6xl mx-auto px-4 pt-14 pb-4">
           <div className="text-center mb-5">
-            <h3
-              className={`text-sm sm:text-base font-black uppercase tracking-[0.2em] ${theme.accentText}`}
-            >
+            <h3 className={`text-sm sm:text-base font-black uppercase tracking-[0.2em] ${theme.accentText}`}>
               {config.statsTitle}
             </h3>
           </div>
-          <div
-            className={`grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5 bg-gradient-to-b from-white/[0.04] to-transparent border border-white/10 ${radiusCard} p-4 sm:p-6 backdrop-blur-xl`}
-          >
+          <div className={`grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5 bg-gradient-to-b from-white/[0.04] to-transparent border border-white/10 ${radiusCard} p-4 sm:p-6 backdrop-blur-xl`}>
             {stats.map((box) => (
-              <div
-                key={box.id}
-                className={`p-4 ${radiusBtn} bg-black/40 border border-white/5 text-center`}
-              >
+              <div key={box.id} className={`p-4 ${radiusBtn} bg-black/40 border border-white/5 text-center`}>
                 <div className="text-2xl sm:text-4xl font-black text-white mb-1 flex items-center justify-center gap-1.5">
                   {renderStatIcon(box.icon)}
                   <span>{box.value}</span>
                 </div>
-                <div
-                  className={`text-xs sm:text-sm font-bold ${statColorClass(
-                    box.icon
-                  )} uppercase tracking-wider`}
-                >
+                <div className={`text-xs sm:text-sm font-bold ${statColorClass(box.icon)} uppercase tracking-wider`}>
                   {box.label}
                 </div>
-                <p className="text-[11px] text-slate-400 mt-1">
-                  {box.sublabel}
-                </p>
+                <p className="text-[11px] text-slate-400 mt-1">{box.sublabel}</p>
               </div>
             ))}
           </div>
@@ -1290,14 +1044,9 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
       )}
 
       {/* 5. OPTIONAL PAID VIP TIERS SECTION */}
-      <section
-        id="pricing-section"
-        className="relative z-10 max-w-6xl mx-auto px-4 py-12"
-      >
+      <section id="pricing-section" className="relative z-10 max-w-6xl mx-auto px-4 py-12">
         <div className="text-center max-w-3xl mx-auto mb-12">
-          <div
-            className={`inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest ${theme.accentText} mb-2`}
-          >
+          <div className={`inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest ${theme.accentText} mb-2`}>
             <Crown className="w-4 h-4" /> {config.pricingBadge}
           </div>
           <h2 className="text-3xl sm:text-5xl font-black text-white mb-4">
@@ -1306,12 +1055,11 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
           <p className="text-slate-400 text-sm sm:text-base mb-6">
             {config.pricingSubtitle}
           </p>
+
         </div>
 
         {/* Dynamic Paid Tiers Grid */}
-        <div
-          className={`grid grid-cols-1 ${gridColsClass} gap-6 items-stretch`}
-        >
+        <div className={`grid grid-cols-1 ${gridColsClass} gap-6 items-stretch`}>
           {tiers.map((tier) => {
             const displayPrice = tier.price;
 
@@ -1325,40 +1073,24 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
                 }`}
               >
                 {tier.isPopular && tier.popularBanner && (
-                  <div
-                    className={`absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-gradient-to-r ${theme.barGradient} text-white text-xs font-black uppercase tracking-wider shadow-lg flex items-center gap-1.5 whitespace-nowrap`}
-                  >
+                  <div className={`absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-gradient-to-r ${theme.barGradient} text-white text-xs font-black uppercase tracking-wider shadow-lg flex items-center gap-1.5 whitespace-nowrap`}>
                     <Flame className="w-3.5 h-3.5 fill-white" />
                     {tier.popularBanner}
                   </div>
                 )}
 
                 <div>
-                  <div
-                    className={`flex items-center justify-between gap-2 mb-4 ${
-                      tier.isPopular ? 'mt-2' : ''
-                    }`}
-                  >
-                    <span
-                      className={`text-base font-black uppercase tracking-wider flex items-center gap-1.5 ${
-                        tier.isPopular ? theme.accentText : 'text-white'
-                      }`}
-                    >
-                      {tier.isPopular && (
-                        <Crown
-                          className={`w-5 h-5 ${theme.accentText} shrink-0`}
-                        />
-                      )}
+                  <div className={`flex items-center justify-between gap-2 mb-4 ${tier.isPopular ? 'mt-2' : ''}`}>
+                    <span className={`text-base font-black uppercase tracking-wider flex items-center gap-1.5 ${tier.isPopular ? theme.accentText : 'text-white'}`}>
+                      {tier.isPopular && <Crown className={`w-5 h-5 ${theme.accentText} shrink-0`} />}
                       {tier.name}
                     </span>
                     {tier.badge && (
-                      <span
-                        className={`px-2.5 py-1 rounded text-[11px] font-bold shrink-0 ${
-                          tier.isPopular
-                            ? `${theme.badgeBg} ${theme.accentText} border ${theme.badgeBorder}`
-                            : 'bg-white/5 text-slate-300 border border-white/10'
-                        }`}
-                      >
+                      <span className={`px-2.5 py-1 rounded text-[11px] font-bold shrink-0 ${
+                        tier.isPopular
+                          ? `${theme.badgeBg} ${theme.accentText} border ${theme.badgeBorder}`
+                          : 'bg-white/5 text-slate-300 border border-white/10'
+                      }`}>
                         {tier.badge}
                       </span>
                     )}
@@ -1371,22 +1103,12 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
                           ${tier.originalPrice}
                         </span>
                       )}
-                      <span
-                        className={`${
-                          tier.isPopular ? 'text-5xl' : 'text-4xl'
-                        } font-black text-white`}
-                      >
+                      <span className={`${tier.isPopular ? 'text-5xl' : 'text-4xl'} font-black text-white`}>
                         ${displayPrice}
                       </span>
                       <span className="text-slate-400 text-sm">/ month</span>
                     </div>
-                    <p
-                      className={`text-xs mt-2 ${
-                        tier.isPopular
-                          ? `${theme.accentText} font-medium`
-                          : 'text-slate-400'
-                      }`}
-                    >
+                    <p className={`text-xs mt-2 ${tier.isPopular ? `${theme.accentText} font-medium` : 'text-slate-400'}`}>
                       {tier.description}
                     </p>
                   </div>
@@ -1405,15 +1127,11 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
                       >
                         {feat.included ? (
                           tier.isPopular ? (
-                            <div
-                              className={`p-0.5 rounded-full bg-gradient-to-r ${theme.barGradient} text-white shrink-0 mt-0.5`}
-                            >
+                            <div className={`p-0.5 rounded-full bg-gradient-to-r ${theme.barGradient} text-white shrink-0 mt-0.5`}>
                               <Check className="w-3.5 h-3.5" />
                             </div>
                           ) : (
-                            <Check
-                              className={`w-4 h-4 ${theme.accentText} shrink-0 mt-0.5`}
-                            />
+                            <Check className={`w-4 h-4 ${theme.accentText} shrink-0 mt-0.5`} />
                           )
                         ) : (
                           <X className="w-4 h-4 text-rose-500/70 shrink-0 mt-0.5" />
@@ -1451,20 +1169,14 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
         </div>
 
         {/* Free Discord Banner Underneath Pricing */}
-        <div
-          className={`mt-10 ${radiusCard} bg-[#10101c] border border-[#5865F2]/30 p-5 sm:p-6 flex flex-col sm:flex-row items-center justify-between gap-4`}
-        >
+        <div className={`mt-10 ${radiusCard} bg-[#10101c] border border-[#5865F2]/30 p-5 sm:p-6 flex flex-col sm:flex-row items-center justify-between gap-4`}>
           <div className="flex items-center gap-3 text-center sm:text-left">
             <div className="w-11 h-11 rounded-xl bg-[#5865F2]/20 border border-[#5865F2]/40 flex items-center justify-center text-[#99A4FF] shrink-0 hidden sm:flex">
               <Users className="w-5 h-5" />
             </div>
             <div>
-              <h4 className="font-bold text-white text-sm sm:text-base">
-                {config.bottomBannerTitle}
-              </h4>
-              <p className="text-xs text-slate-400">
-                {config.bottomBannerSubtitle}
-              </p>
+              <h4 className="font-bold text-white text-sm sm:text-base">{config.bottomBannerTitle}</h4>
+              <p className="text-xs text-slate-400">{config.bottomBannerSubtitle}</p>
             </div>
           </div>
           <a
@@ -1486,7 +1198,9 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
             <h2 className="text-2xl sm:text-4xl font-black text-white mb-2">
               {config.faqTitle}
             </h2>
-            <p className="text-slate-400 text-sm">{config.faqSubtitle}</p>
+            <p className="text-slate-400 text-sm">
+              {config.faqSubtitle}
+            </p>
           </div>
 
           <div className="space-y-3">
@@ -1502,13 +1216,7 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
                     className="w-full px-6 py-4 text-left flex items-center justify-between gap-4 font-bold text-white hover:opacity-80 transition"
                   >
                     <span className="text-sm sm:text-base">{faq.q}</span>
-                    {isOpen ? (
-                      <ChevronUp
-                        className={`w-5 h-5 ${theme.accentText} shrink-0`}
-                      />
-                    ) : (
-                      <ChevronDown className="w-5 h-5 text-slate-400 shrink-0" />
-                    )}
+                    {isOpen ? <ChevronUp className={`w-5 h-5 ${theme.accentText} shrink-0`} /> : <ChevronDown className="w-5 h-5 text-slate-400 shrink-0" />}
                   </button>
                   {isOpen && (
                     <div className="px-6 pb-5 text-xs sm:text-sm text-slate-300 leading-relaxed border-t border-white/5 pt-3">
@@ -1526,31 +1234,14 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
       <footer className="relative z-10 border-t border-white/10 bg-[#050509] py-10 px-4 text-center text-xs text-slate-500">
         <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
-            <span className="font-bold text-white">
-              {config.brandPrefix}
-              <span className={theme.primaryText}>{config.brandAccent}</span>
-            </span>
+            <span className="font-bold text-white">{config.brandPrefix}<span className={theme.primaryText}>{config.brandAccent}</span></span>
             <span>•</span>
             <span>{config.footerTagline}</span>
           </div>
           <div className="flex items-center gap-4">
-            <a
-              href={config.discordInviteUrl}
-              target="_blank"
-              rel="noreferrer"
-              className="hover:text-white transition"
-            >
-              Discord Server
-            </a>
+            <a href={config.discordInviteUrl} target="_blank" rel="noreferrer" className="hover:text-white transition">Discord Server</a>
             <span>•</span>
-            <a
-              href={config.redditUrl}
-              target="_blank"
-              rel="noreferrer"
-              className="hover:text-white transition"
-            >
-              {config.redditLabel}
-            </a>
+            <a href={config.redditUrl} target="_blank" rel="noreferrer" className="hover:text-white transition">{config.redditLabel}</a>
           </div>
         </div>
       </footer>
@@ -1558,18 +1249,12 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
       {/* LIVE SOCIAL PROOF FLOATING TOAST (BIGGER & HIGH VISIBILITY) */}
       {config.showSocialToast && (
         <div
-          className={`fixed bottom-5 left-5 z-30 w-[calc(100vw-2.5rem)] max-w-[360px] sm:max-w-[420px] bg-[#131324]/95 backdrop-blur-xl border-2 ${
-            theme.borderGlow
-          } ${radiusCard} p-4 sm:p-5 shadow-[0_16px_50px_rgba(0,0,0,0.9)] transition-all duration-500 pointer-events-auto ${
-            showToast
-              ? 'translate-y-0 opacity-100 scale-100'
-              : 'translate-y-6 opacity-0 scale-95 pointer-events-none'
+          className={`fixed bottom-5 left-5 z-30 w-[calc(100vw-2.5rem)] max-w-[360px] sm:max-w-[420px] bg-[#131324]/95 backdrop-blur-xl border-2 ${theme.borderGlow} ${radiusCard} p-4 sm:p-5 shadow-[0_16px_50px_rgba(0,0,0,0.9)] transition-all duration-500 pointer-events-auto ${
+            showToast ? 'translate-y-0 opacity-100 scale-100' : 'translate-y-6 opacity-0 scale-95 pointer-events-none'
           }`}
         >
           <div className="flex items-center gap-4">
-            <div
-              className={`w-12 h-12 sm:w-14 sm:h-14 ${radiusBtn} bg-gradient-to-br ${theme.barGradient} flex items-center justify-center shrink-0 shadow-lg`}
-            >
+            <div className={`w-12 h-12 sm:w-14 sm:h-14 ${radiusBtn} bg-gradient-to-br ${theme.barGradient} flex items-center justify-center shrink-0 shadow-lg`}>
               {currentToast.isVip ? (
                 <Crown className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
               ) : (
@@ -1578,22 +1263,14 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
             </div>
             <div className="min-w-0 flex-1">
               <div className="flex items-center gap-2 mb-0.5">
-                <span className="font-black text-sm sm:text-base text-white truncate">
-                  {currentToast.user}
-                </span>
+                <span className="font-black text-sm sm:text-base text-white truncate">{currentToast.user}</span>
                 <span className="inline-flex items-center gap-1 text-[11px] sm:text-xs text-emerald-400 font-bold shrink-0">
                   <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
                   {currentToast.time}
                 </span>
               </div>
-              <p
-                className={`${theme.accentText} font-bold text-xs sm:text-sm leading-snug`}
-              >
-                {currentToast.action}
-              </p>
-              <p className="text-[11px] sm:text-xs text-slate-300 mt-1">
-                {currentToast.note}
-              </p>
+              <p className={`${theme.accentText} font-bold text-xs sm:text-sm leading-snug`}>{currentToast.action}</p>
+              <p className="text-[11px] sm:text-xs text-slate-300 mt-1">{currentToast.note}</p>
             </div>
           </div>
         </div>
@@ -1625,10 +1302,7 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
                 onClick={() => setShowCustomizer(true)}
                 className={`px-4 py-2.5 rounded-full bg-slate-900/95 hover:bg-slate-800 ${theme.accentText} border ${theme.badgeBorder} shadow-2xl flex items-center gap-2 text-xs font-bold backdrop-blur-md transition`}
               >
-                <Settings
-                  className="w-4 h-4 animate-spin"
-                  style={{ animationDuration: '6s' }}
-                />
+                <Settings className="w-4 h-4 animate-spin" style={{ animationDuration: '6s' }} />
                 <span>Visual Studio Editor</span>
               </button>
             </div>
@@ -1639,9 +1313,7 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
                 <div className="flex items-center gap-2 font-bold text-white text-sm">
                   <Settings className={`w-4 h-4 ${theme.accentText}`} />
                   <span>CaptionVibes Studio</span>
-                  <span className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-semibold">
-                    Auto-Saved
-                  </span>
+                  <span className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-semibold">Auto-Saved</span>
                 </div>
                 <div className="flex items-center gap-1.5">
                   <button
@@ -1695,129 +1367,74 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
                 {activeTab === 'style' && (
                   <div className="space-y-4">
                     <div>
-                      <label className="block text-[11px] font-bold text-slate-300 mb-2 uppercase tracking-wider">
-                        Tema Colore
-                      </label>
+                      <label className="block text-[11px] font-bold text-slate-300 mb-2 uppercase tracking-wider">Tema Colore</label>
                       <div className="grid grid-cols-5 gap-2">
                         {(Object.keys(THEMES) as ThemeKey[]).map((key) => (
                           <button
                             key={key}
                             onClick={() => setConfig({ ...config, theme: key })}
                             className={`p-1.5 rounded-xl border text-center transition ${
-                              config.theme === key
-                                ? 'border-white bg-white/10 scale-105'
-                                : 'border-white/10 hover:border-white/30'
+                              config.theme === key ? 'border-white bg-white/10 scale-105' : 'border-white/10 hover:border-white/30'
                             }`}
                           >
-                            <div
-                              className={`w-full h-6 rounded-lg bg-gradient-to-r ${THEMES[key].swatch} mb-1`}
-                            />
-                            <span className="text-[9px] font-semibold text-slate-300 block truncate">
-                              {THEMES[key].name.split(' ')[0]}
-                            </span>
+                            <div className={`w-full h-6 rounded-lg bg-gradient-to-r ${THEMES[key].swatch} mb-1`} />
+                            <span className="text-[9px] font-semibold text-slate-300 block truncate">{THEMES[key].name.split(' ')[0]}</span>
                           </button>
                         ))}
                       </div>
                     </div>
 
                     <div>
-                      <label className="block text-[11px] font-bold text-slate-300 mb-2 uppercase tracking-wider">
-                        Stile Bordi & Bottoni
-                      </label>
+                      <label className="block text-[11px] font-bold text-slate-300 mb-2 uppercase tracking-wider">Stile Bordi & Bottoni</label>
                       <div className="grid grid-cols-3 gap-2">
-                        {(['sharp', 'rounded', 'pill'] as const).map(
-                          (style) => (
-                            <button
-                              key={style}
-                              onClick={() =>
-                                setConfig({ ...config, cardStyle: style })
-                              }
-                              className={`py-2 rounded-lg border font-bold capitalize transition ${
-                                config.cardStyle === style
-                                  ? `${theme.borderGlow} ${theme.badgeBg} text-white`
-                                  : 'border-white/10 bg-black/30 text-slate-400 hover:text-white'
-                              }`}
-                            >
-                              {style}
-                            </button>
-                          )
-                        )}
+                        {(['sharp', 'rounded', 'pill'] as const).map((style) => (
+                          <button
+                            key={style}
+                            onClick={() => setConfig({ ...config, cardStyle: style })}
+                            className={`py-2 rounded-lg border font-bold capitalize transition ${
+                              config.cardStyle === style
+                                ? `${theme.borderGlow} ${theme.badgeBg} text-white`
+                                : 'border-white/10 bg-black/30 text-slate-400 hover:text-white'
+                            }`}
+                          >
+                            {style}
+                          </button>
+                        ))}
                       </div>
                     </div>
 
                     <div>
                       <div className="flex justify-between text-[11px] mb-1">
-                        <span className="font-bold text-slate-300 uppercase tracking-wider">
-                          Intensità Neon Sfondo
-                        </span>
-                        <span className={theme.accentText}>
-                          {config.glowOpacity}%
-                        </span>
+                        <span className="font-bold text-slate-300 uppercase tracking-wider">Intensità Neon Sfondo</span>
+                        <span className={theme.accentText}>{config.glowOpacity}%</span>
                       </div>
                       <input
                         type="range"
                         min={0}
                         max={40}
                         value={config.glowOpacity}
-                        onChange={(e) =>
-                          setConfig({
-                            ...config,
-                            glowOpacity: Number(e.target.value),
-                          })
-                        }
+                        onChange={(e) => setConfig({ ...config, glowOpacity: Number(e.target.value) })}
                         className="w-full accent-pink-500"
                       />
                     </div>
 
                     <div className="pt-2 border-t border-white/10">
-                      <label className="block text-[11px] font-bold text-slate-300 mb-2 uppercase tracking-wider">
-                        Mostra / Nascondi Sezioni
-                      </label>
+                      <label className="block text-[11px] font-bold text-slate-300 mb-2 uppercase tracking-wider">Mostra / Nascondi Sezioni</label>
                       <div className="space-y-2">
                         {[
-                          {
-                            key: 'showUrgencyBar',
-                            label: 'Barra Urgenza in alto (Timer)',
-                          },
-                          {
-                            key: 'showGoalBar',
-                            label: 'Barra Obiettivo VIP (Hero)',
-                          },
-                          {
-                            key: 'showCommunitySection',
-                            label: 'Sezione "Free Discord Community"',
-                          },
-                          {
-                            key: 'showStatsBanner',
-                            label: 'Sezione "CaptionVibes Current Vault"',
-                          },
-                          {
-                            key: 'showFaqSection',
-                            label: 'Sezione FAQ in fondo',
-                          },
-                          {
-                            key: 'showSocialToast',
-                            label: 'Popup Notifiche in basso a sinistra',
-                          },
+                          { key: 'showUrgencyBar', label: 'Barra Urgenza in alto (Timer)' },
+                          { key: 'showGoalBar', label: 'Barra Obiettivo VIP (Hero)' },
+                          { key: 'showCommunitySection', label: 'Sezione "Free Discord Community"' },
+                          { key: 'showStatsBanner', label: 'Sezione "CaptionVibes Current Vault"' },
+                          { key: 'showFaqSection', label: 'Sezione FAQ in fondo' },
+                          { key: 'showSocialToast', label: 'Popup Notifiche in basso a sinistra' },
                         ].map((toggle) => (
-                          <label
-                            key={toggle.key}
-                            className="flex items-center justify-between bg-black/30 border border-white/5 px-3 py-2 rounded-lg cursor-pointer hover:border-white/15"
-                          >
-                            <span className="text-slate-200">
-                              {toggle.label}
-                            </span>
+                          <label key={toggle.key} className="flex items-center justify-between bg-black/30 border border-white/5 px-3 py-2 rounded-lg cursor-pointer hover:border-white/15">
+                            <span className="text-slate-200">{toggle.label}</span>
                             <input
                               type="checkbox"
-                              checked={Boolean(
-                                config[toggle.key as keyof SiteConfig]
-                              )}
-                              onChange={(e) =>
-                                setConfig({
-                                  ...config,
-                                  [toggle.key]: e.target.checked,
-                                })
-                              }
+                              checked={Boolean(config[toggle.key as keyof SiteConfig])}
+                              onChange={(e) => setConfig({ ...config, [toggle.key]: e.target.checked })}
                               className="w-4 h-4 accent-pink-500"
                             />
                           </label>
@@ -1832,34 +1449,20 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
                   <div className="space-y-3">
                     <div className="grid grid-cols-2 gap-2">
                       <div>
-                        <label className="block text-[11px] text-slate-400 mb-1">
-                          Brand (Parte 1)
-                        </label>
+                        <label className="block text-[11px] text-slate-400 mb-1">Brand (Parte 1)</label>
                         <input
                           type="text"
                           value={config.brandPrefix}
-                          onChange={(e) =>
-                            setConfig({
-                              ...config,
-                              brandPrefix: e.target.value,
-                            })
-                          }
+                          onChange={(e) => setConfig({ ...config, brandPrefix: e.target.value })}
                           className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1.5 text-white"
                         />
                       </div>
                       <div>
-                        <label className="block text-[11px] text-slate-400 mb-1">
-                          Brand (Colorata)
-                        </label>
+                        <label className="block text-[11px] text-slate-400 mb-1">Brand (Colorata)</label>
                         <input
                           type="text"
                           value={config.brandAccent}
-                          onChange={(e) =>
-                            setConfig({
-                              ...config,
-                              brandAccent: e.target.value,
-                            })
-                          }
+                          onChange={(e) => setConfig({ ...config, brandAccent: e.target.value })}
                           className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1.5 text-white"
                         />
                       </div>
@@ -1867,233 +1470,144 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
 
                     <div className="grid grid-cols-2 gap-2">
                       <div>
-                        <label className="block text-[11px] text-slate-400 mb-1">
-                          Badge Header
-                        </label>
+                        <label className="block text-[11px] text-slate-400 mb-1">Badge Header</label>
                         <input
                           type="text"
                           value={config.brandBadge}
-                          onChange={(e) =>
-                            setConfig({ ...config, brandBadge: e.target.value })
-                          }
+                          onChange={(e) => setConfig({ ...config, brandBadge: e.target.value })}
                           className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1.5 text-white"
                         />
                       </div>
                       <div>
-                        <label className="block text-[11px] text-slate-400 mb-1">
-                          Membri Discord (Badge)
-                        </label>
+                        <label className="block text-[11px] text-slate-400 mb-1">Membri Discord (Badge)</label>
                         <input
                           type="text"
                           value={config.discordMembersLabel}
-                          onChange={(e) =>
-                            setConfig({
-                              ...config,
-                              discordMembersLabel: e.target.value,
-                            })
-                          }
+                          onChange={(e) => setConfig({ ...config, discordMembersLabel: e.target.value })}
                           className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1.5 text-white"
                         />
                       </div>
                     </div>
 
                     <div>
-                      <label className="block text-[11px] text-slate-400 mb-1">
-                        Sottotitolo Logo (Header)
-                      </label>
+                      <label className="block text-[11px] text-slate-400 mb-1">Sottotitolo Logo (Header)</label>
                       <input
                         type="text"
                         value={config.brandSubtext}
-                        onChange={(e) =>
-                          setConfig({ ...config, brandSubtext: e.target.value })
-                        }
+                        onChange={(e) => setConfig({ ...config, brandSubtext: e.target.value })}
                         className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1.5 text-white"
                       />
                     </div>
 
                     <div className="pt-2 border-t border-white/10 space-y-2">
-                      <label className="block text-[11px] font-bold text-slate-300 uppercase">
-                        Barra in Alto (Urgency Bar)
-                      </label>
+                      <label className="block text-[11px] font-bold text-slate-300 uppercase">Barra in Alto (Urgency Bar)</label>
                       <div className="grid grid-cols-2 gap-2">
                         <div>
-                          <label className="block text-[10px] text-slate-400 mb-0.5">
-                            Badge (es. ⚡ VIP BONUS)
-                          </label>
+                          <label className="block text-[10px] text-slate-400 mb-0.5">Badge (es. ⚡ VIP BONUS)</label>
                           <input
                             type="text"
                             value={config.urgencyBadge}
-                            onChange={(e) =>
-                              setConfig({
-                                ...config,
-                                urgencyBadge: e.target.value,
-                              })
-                            }
+                            onChange={(e) => setConfig({ ...config, urgencyBadge: e.target.value })}
                             className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1.5 text-white"
                           />
                         </div>
                         <div>
-                          <label className="block text-[10px] text-slate-400 mb-0.5">
-                            Testo Link Destra
-                          </label>
+                          <label className="block text-[10px] text-slate-400 mb-0.5">Testo Link Destra</label>
                           <input
                             type="text"
                             value={config.urgencyCtaText}
-                            onChange={(e) =>
-                              setConfig({
-                                ...config,
-                                urgencyCtaText: e.target.value,
-                              })
-                            }
+                            onChange={(e) => setConfig({ ...config, urgencyCtaText: e.target.value })}
                             className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1.5 text-white"
                           />
                         </div>
                       </div>
                       <div>
-                        <label className="block text-[10px] text-slate-400 mb-0.5">
-                          Testo Centrale Barra
-                        </label>
+                        <label className="block text-[10px] text-slate-400 mb-0.5">Testo Centrale Barra</label>
                         <input
                           type="text"
                           value={config.urgencyText}
-                          onChange={(e) =>
-                            setConfig({
-                              ...config,
-                              urgencyText: e.target.value,
-                            })
-                          }
+                          onChange={(e) => setConfig({ ...config, urgencyText: e.target.value })}
                           className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1.5 text-white"
                         />
                       </div>
                       <label className="flex items-center justify-between bg-black/30 border border-white/5 px-3 py-1.5 rounded-lg cursor-pointer">
-                        <span className="text-[11px] text-slate-200">
-                          Mostra Timer (02:47:19)
-                        </span>
+                        <span className="text-[11px] text-slate-200">Mostra Timer (02:47:19)</span>
                         <input
                           type="checkbox"
                           checked={config.showUrgencyTimer}
-                          onChange={(e) =>
-                            setConfig({
-                              ...config,
-                              showUrgencyTimer: e.target.checked,
-                            })
-                          }
+                          onChange={(e) => setConfig({ ...config, showUrgencyTimer: e.target.checked })}
                           className="w-4 h-4 accent-pink-500"
                         />
                       </label>
                     </div>
 
                     <div className="pt-2 border-t border-white/10 space-y-2">
-                      <label className="block text-[11px] font-bold text-slate-300 uppercase">
-                        Titolo Hero (3 parti)
-                      </label>
+                      <label className="block text-[11px] font-bold text-slate-300 uppercase">Titolo Hero (3 parti)</label>
                       <input
                         type="text"
                         value={config.heroTitleStart}
-                        onChange={(e) =>
-                          setConfig({
-                            ...config,
-                            heroTitleStart: e.target.value,
-                          })
-                        }
+                        onChange={(e) => setConfig({ ...config, heroTitleStart: e.target.value })}
                         className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1.5 text-white"
                       />
                       <input
                         type="text"
                         value={config.heroTitleHighlight}
-                        onChange={(e) =>
-                          setConfig({
-                            ...config,
-                            heroTitleHighlight: e.target.value,
-                          })
-                        }
+                        onChange={(e) => setConfig({ ...config, heroTitleHighlight: e.target.value })}
                         className="w-full bg-black/50 border border-pink-500/40 rounded-lg px-2.5 py-1.5 text-pink-300 font-bold"
                       />
                       <input
                         type="text"
                         value={config.heroTitleEnd}
-                        onChange={(e) =>
-                          setConfig({ ...config, heroTitleEnd: e.target.value })
-                        }
+                        onChange={(e) => setConfig({ ...config, heroTitleEnd: e.target.value })}
                         className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1.5 text-white"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-[11px] text-slate-400 mb-1">
-                        Sottotitolo Hero
-                      </label>
+                      <label className="block text-[11px] text-slate-400 mb-1">Sottotitolo Hero</label>
                       <textarea
                         rows={3}
                         value={config.heroSubtitle}
-                        onChange={(e) =>
-                          setConfig({ ...config, heroSubtitle: e.target.value })
-                        }
+                        onChange={(e) => setConfig({ ...config, heroSubtitle: e.target.value })}
                         className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1.5 text-white"
                       />
                     </div>
 
                     <div className="grid grid-cols-2 gap-2">
                       <div>
-                        <label className="block text-[11px] text-slate-400 mb-1">
-                          Bottone Primario (Discord)
-                        </label>
+                        <label className="block text-[11px] text-slate-400 mb-1">Bottone Primario (Discord)</label>
                         <input
                           type="text"
                           value={config.primaryCtaText}
-                          onChange={(e) =>
-                            setConfig({
-                              ...config,
-                              primaryCtaText: e.target.value,
-                            })
-                          }
+                          onChange={(e) => setConfig({ ...config, primaryCtaText: e.target.value })}
                           className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1.5 text-white"
                         />
                       </div>
                       <div>
-                        <label className="block text-[11px] text-slate-400 mb-1">
-                          Bottone Secondario (VIP)
-                        </label>
+                        <label className="block text-[11px] text-slate-400 mb-1">Bottone Secondario (VIP)</label>
                         <input
                           type="text"
                           value={config.secondaryCtaText}
-                          onChange={(e) =>
-                            setConfig({
-                              ...config,
-                              secondaryCtaText: e.target.value,
-                            })
-                          }
+                          onChange={(e) => setConfig({ ...config, secondaryCtaText: e.target.value })}
                           className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1.5 text-white"
                         />
                       </div>
                     </div>
 
                     <div className="pt-2 border-t border-white/10 space-y-2">
-                      <label className="block text-[11px] font-bold text-slate-300 uppercase">
-                        Sezione Free Discord
-                      </label>
+                      <label className="block text-[11px] font-bold text-slate-300 uppercase">Sezione Free Discord</label>
                       <div className="grid grid-cols-2 gap-2">
                         <input
                           type="text"
                           value={config.communityBadge}
-                          onChange={(e) =>
-                            setConfig({
-                              ...config,
-                              communityBadge: e.target.value,
-                            })
-                          }
+                          onChange={(e) => setConfig({ ...config, communityBadge: e.target.value })}
                           placeholder="Badge (es. Free Discord Community)"
                           className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1.5 text-white"
                         />
                         <input
                           type="text"
                           value={config.communityCtaText}
-                          onChange={(e) =>
-                            setConfig({
-                              ...config,
-                              communityCtaText: e.target.value,
-                            })
-                          }
+                          onChange={(e) => setConfig({ ...config, communityCtaText: e.target.value })}
                           placeholder="Testo bottone Discord"
                           className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1.5 text-white"
                         />
@@ -2101,71 +1615,41 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
                       <input
                         type="text"
                         value={config.communityTitle}
-                        onChange={(e) =>
-                          setConfig({
-                            ...config,
-                            communityTitle: e.target.value,
-                          })
-                        }
+                        onChange={(e) => setConfig({ ...config, communityTitle: e.target.value })}
                         placeholder="Titolo sezione Discord"
                         className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1.5 text-white font-bold"
                       />
                       <textarea
                         rows={2}
                         value={config.communitySubtitle}
-                        onChange={(e) =>
-                          setConfig({
-                            ...config,
-                            communitySubtitle: e.target.value,
-                          })
-                        }
+                        onChange={(e) => setConfig({ ...config, communitySubtitle: e.target.value })}
                         placeholder="Descrizione sezione Discord"
                         className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1.5 text-white"
                       />
                       <input
                         type="text"
                         value={config.communityCtaSubtext}
-                        onChange={(e) =>
-                          setConfig({
-                            ...config,
-                            communityCtaSubtext: e.target.value,
-                          })
-                        }
+                        onChange={(e) => setConfig({ ...config, communityCtaSubtext: e.target.value })}
                         placeholder="Testo sotto il bottone"
                         className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1.5 text-slate-300"
                       />
 
                       <div className="pt-2 space-y-2">
-                        <label className="block text-[10px] font-bold text-slate-400 uppercase">
-                          I 3 Riquadri Discord
-                        </label>
+                        <label className="block text-[10px] font-bold text-slate-400 uppercase">I 3 Riquadri Discord</label>
                         {communityCards.map((card, i) => (
-                          <div
-                            key={card.id}
-                            className="bg-black/40 border border-white/10 rounded-xl p-2.5 space-y-1.5"
-                          >
-                            <div className="text-[10px] font-bold text-slate-400 uppercase">
-                              Riquadro #{i + 1}
-                            </div>
+                          <div key={card.id} className="bg-black/40 border border-white/10 rounded-xl p-2.5 space-y-1.5">
+                            <div className="text-[10px] font-bold text-slate-400 uppercase">Riquadro #{i + 1}</div>
                             <input
                               type="text"
                               value={card.title}
-                              onChange={(e) =>
-                                updateCommunityCard(card.id, {
-                                  title: e.target.value,
-                                })
-                              }
+                              onChange={(e) => updateCommunityCard(card.id, { title: e.target.value })}
                               placeholder="Titolo riquadro"
                               className="w-full bg-black/60 border border-white/15 rounded-lg px-2.5 py-1 text-white font-bold"
                             />
                             <textarea
                               rows={2}
                               value={card.description}
-                              onChange={(e) =>
-                                updateCommunityCard(card.id, {
-                                  description: e.target.value,
-                                })
-                              }
+                              onChange={(e) => updateCommunityCard(card.id, { description: e.target.value })}
                               placeholder="Descrizione riquadro"
                               className="w-full bg-black/60 border border-white/15 rounded-lg px-2.5 py-1 text-slate-300"
                             />
@@ -2175,110 +1659,68 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
                     </div>
 
                     <div>
-                      <label className="block text-[11px] text-slate-400 mb-1">
-                        Link Invito Discord Gratis
-                      </label>
+                      <label className="block text-[11px] text-slate-400 mb-1">Link Invito Discord Gratis</label>
                       <input
                         type="text"
                         value={config.discordInviteUrl}
-                        onChange={(e) =>
-                          setConfig({
-                            ...config,
-                            discordInviteUrl: e.target.value,
-                          })
-                        }
+                        onChange={(e) => setConfig({ ...config, discordInviteUrl: e.target.value })}
                         className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1.5 text-white"
                       />
                     </div>
 
                     <div className="pt-2 border-t border-white/10 space-y-2">
-                      <label className="block text-[11px] font-bold text-slate-300 uppercase">
-                        Intestazione Sezione Prezzi
-                      </label>
+                      <label className="block text-[11px] font-bold text-slate-300 uppercase">Intestazione Sezione Prezzi</label>
                       <input
                         type="text"
                         value={config.pricingBadge}
-                        onChange={(e) =>
-                          setConfig({ ...config, pricingBadge: e.target.value })
-                        }
+                        onChange={(e) => setConfig({ ...config, pricingBadge: e.target.value })}
                         placeholder="Badge (es. Optional VIP Upgrades)"
                         className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1.5 text-white"
                       />
                       <input
                         type="text"
                         value={config.pricingTitle}
-                        onChange={(e) =>
-                          setConfig({ ...config, pricingTitle: e.target.value })
-                        }
+                        onChange={(e) => setConfig({ ...config, pricingTitle: e.target.value })}
                         placeholder="Titolo Prezzi"
                         className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1.5 text-white font-bold"
                       />
                       <textarea
                         rows={2}
                         value={config.pricingSubtitle}
-                        onChange={(e) =>
-                          setConfig({
-                            ...config,
-                            pricingSubtitle: e.target.value,
-                          })
-                        }
+                        onChange={(e) => setConfig({ ...config, pricingSubtitle: e.target.value })}
                         placeholder="Sottotitolo Prezzi"
                         className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1.5 text-white"
                       />
                     </div>
 
                     <div className="pt-2 border-t border-white/10 space-y-2">
-                      <label className="block text-[11px] font-bold text-slate-300 uppercase">
-                        Banner Discord Sotto i Prezzi
-                      </label>
+                      <label className="block text-[11px] font-bold text-slate-300 uppercase">Banner Discord Sotto i Prezzi</label>
                       <input
                         type="text"
                         value={config.bottomBannerTitle}
-                        onChange={(e) =>
-                          setConfig({
-                            ...config,
-                            bottomBannerTitle: e.target.value,
-                          })
-                        }
+                        onChange={(e) => setConfig({ ...config, bottomBannerTitle: e.target.value })}
                         className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1.5 text-white"
                       />
                       <input
                         type="text"
                         value={config.bottomBannerSubtitle}
-                        onChange={(e) =>
-                          setConfig({
-                            ...config,
-                            bottomBannerSubtitle: e.target.value,
-                          })
-                        }
+                        onChange={(e) => setConfig({ ...config, bottomBannerSubtitle: e.target.value })}
                         className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1.5 text-slate-300"
                       />
                       <input
                         type="text"
                         value={config.bottomBannerCta}
-                        onChange={(e) =>
-                          setConfig({
-                            ...config,
-                            bottomBannerCta: e.target.value,
-                          })
-                        }
+                        onChange={(e) => setConfig({ ...config, bottomBannerCta: e.target.value })}
                         className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1.5 text-white"
                       />
                     </div>
 
                     <div className="pt-2 border-t border-white/10 space-y-2">
-                      <label className="block text-[11px] font-bold text-slate-300 uppercase">
-                        Footer & Reddit
-                      </label>
+                      <label className="block text-[11px] font-bold text-slate-300 uppercase">Footer & Reddit</label>
                       <input
                         type="text"
                         value={config.footerTagline}
-                        onChange={(e) =>
-                          setConfig({
-                            ...config,
-                            footerTagline: e.target.value,
-                          })
-                        }
+                        onChange={(e) => setConfig({ ...config, footerTagline: e.target.value })}
                         placeholder="Testo Footer"
                         className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1.5 text-white"
                       />
@@ -2286,21 +1728,14 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
                         <input
                           type="text"
                           value={config.redditLabel}
-                          onChange={(e) =>
-                            setConfig({
-                              ...config,
-                              redditLabel: e.target.value,
-                            })
-                          }
+                          onChange={(e) => setConfig({ ...config, redditLabel: e.target.value })}
                           placeholder="Testo link Reddit"
                           className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1.5 text-white"
                         />
                         <input
                           type="text"
                           value={config.redditUrl}
-                          onChange={(e) =>
-                            setConfig({ ...config, redditUrl: e.target.value })
-                          }
+                          onChange={(e) => setConfig({ ...config, redditUrl: e.target.value })}
                           placeholder="URL Reddit"
                           className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1.5 text-white"
                         />
@@ -2313,98 +1748,59 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
                 {activeTab === 'stats' && (
                   <div className="space-y-4">
                     <div>
-                      <label className="block text-[11px] text-slate-400 mb-1">
-                        Membri Discord (Badge Hero)
-                      </label>
+                      <label className="block text-[11px] text-slate-400 mb-1">Membri Discord (Badge Hero)</label>
                       <input
                         type="text"
                         value={config.discordMembersLabel}
-                        onChange={(e) =>
-                          setConfig({
-                            ...config,
-                            discordMembersLabel: e.target.value,
-                          })
-                        }
+                        onChange={(e) => setConfig({ ...config, discordMembersLabel: e.target.value })}
                         className="w-full bg-black/50 border border-emerald-500/40 rounded-lg px-2.5 py-1.5 text-emerald-300 font-bold"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-[11px] text-slate-400 mb-1">
-                        Titolo Sezione Vault (sopra ai 4 box)
-                      </label>
+                      <label className="block text-[11px] text-slate-400 mb-1">Titolo Sezione Vault (sopra ai 4 box)</label>
                       <input
                         type="text"
                         value={config.statsTitle}
-                        onChange={(e) =>
-                          setConfig({ ...config, statsTitle: e.target.value })
-                        }
+                        onChange={(e) => setConfig({ ...config, statsTitle: e.target.value })}
                         className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1.5 text-white font-bold"
                       />
                     </div>
 
                     <div className="grid grid-cols-2 gap-2">
                       <div>
-                        <label className="block text-[11px] text-slate-400 mb-1">
-                          VIP Attivi
-                        </label>
+                        <label className="block text-[11px] text-slate-400 mb-1">VIP Attivi</label>
                         <input
                           type="number"
                           value={config.vipCount}
-                          onChange={(e) =>
-                            setConfig({
-                              ...config,
-                              vipCount: Number(e.target.value),
-                            })
-                          }
+                          onChange={(e) => setConfig({ ...config, vipCount: Number(e.target.value) })}
                           className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1.5 text-white"
                         />
                       </div>
                       <div>
-                        <label className="block text-[11px] text-slate-400 mb-1">
-                          Obiettivo VIP
-                        </label>
+                        <label className="block text-[11px] text-slate-400 mb-1">Obiettivo VIP</label>
                         <input
                           type="number"
                           value={config.vipGoal}
-                          onChange={(e) =>
-                            setConfig({
-                              ...config,
-                              vipGoal: Number(e.target.value),
-                            })
-                          }
+                          onChange={(e) => setConfig({ ...config, vipGoal: Number(e.target.value) })}
                           className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1.5 text-white"
                         />
                       </div>
                       <div>
-                        <label className="block text-[11px] text-slate-400 mb-1">
-                          Posti Rimasti
-                        </label>
+                        <label className="block text-[11px] text-slate-400 mb-1">Posti Rimasti</label>
                         <input
                           type="number"
                           value={config.spotsLeft}
-                          onChange={(e) =>
-                            setConfig({
-                              ...config,
-                              spotsLeft: Number(e.target.value),
-                            })
-                          }
+                          onChange={(e) => setConfig({ ...config, spotsLeft: Number(e.target.value) })}
                           className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1.5 text-white"
                         />
                       </div>
                       <div>
-                        <label className="block text-[11px] text-slate-400 mb-1">
-                          Visite/Settimana
-                        </label>
+                        <label className="block text-[11px] text-slate-400 mb-1">Visite/Settimana</label>
                         <input
                           type="text"
                           value={config.weeklyVisitors}
-                          onChange={(e) =>
-                            setConfig({
-                              ...config,
-                              weeklyVisitors: e.target.value,
-                            })
-                          }
+                          onChange={(e) => setConfig({ ...config, weeklyVisitors: e.target.value })}
                           className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1.5 text-white"
                         />
                       </div>
@@ -2412,64 +1808,42 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
 
                     <div className="space-y-2">
                       <div>
-                        <label className="block text-[11px] text-slate-400 mb-1">
-                          Titolo Barra Obiettivo
-                        </label>
+                        <label className="block text-[11px] text-slate-400 mb-1">Titolo Barra Obiettivo</label>
                         <input
                           type="text"
                           value={config.goalTitle}
-                          onChange={(e) =>
-                            setConfig({ ...config, goalTitle: e.target.value })
-                          }
+                          onChange={(e) => setConfig({ ...config, goalTitle: e.target.value })}
                           className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1.5 text-white"
                         />
                       </div>
                       <div>
-                        <label className="block text-[11px] text-slate-400 mb-1">
-                          Testo Bonus Obiettivo
-                        </label>
+                        <label className="block text-[11px] text-slate-400 mb-1">Testo Bonus Obiettivo</label>
                         <input
                           type="text"
                           value={config.goalBonusText}
-                          onChange={(e) =>
-                            setConfig({
-                              ...config,
-                              goalBonusText: e.target.value,
-                            })
-                          }
+                          onChange={(e) => setConfig({ ...config, goalBonusText: e.target.value })}
                           className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1.5 text-white"
                         />
                       </div>
                     </div>
 
                     <div className="pt-2 border-t border-white/10 space-y-2.5">
-                      <label className="block text-[11px] font-bold text-slate-300 uppercase tracking-wider">
-                        I 4 Box Statistiche
-                      </label>
+                      <label className="block text-[11px] font-bold text-slate-300 uppercase tracking-wider">I 4 Box Statistiche</label>
                       {stats.map((box, i) => (
-                        <div
-                          key={box.id}
-                          className="bg-black/40 border border-white/10 rounded-xl p-2.5 space-y-2"
-                        >
-                          <div className="text-[10px] font-bold text-slate-400 uppercase">
-                            Box #{i + 1}
-                          </div>
+                        <div key={box.id} className="bg-black/40 border border-white/10 rounded-xl p-2.5 space-y-2">
+                          <div className="text-[10px] font-bold text-slate-400 uppercase">Box #{i + 1}</div>
                           <div className="grid grid-cols-3 gap-2">
                             <input
                               type="text"
                               value={box.value}
-                              onChange={(e) =>
-                                updateStat(box.id, { value: e.target.value })
-                              }
+                              onChange={(e) => updateStat(box.id, { value: e.target.value })}
                               placeholder="Numero"
                               className="bg-black/60 border border-white/15 rounded-lg px-2 py-1 text-white font-bold"
                             />
                             <input
                               type="text"
                               value={box.label}
-                              onChange={(e) =>
-                                updateStat(box.id, { label: e.target.value })
-                              }
+                              onChange={(e) => updateStat(box.id, { label: e.target.value })}
                               placeholder="Titolo"
                               className="col-span-2 bg-black/60 border border-white/15 rounded-lg px-2 py-1 text-white"
                             />
@@ -2477,9 +1851,7 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
                           <input
                             type="text"
                             value={box.sublabel}
-                            onChange={(e) =>
-                              updateStat(box.id, { sublabel: e.target.value })
-                            }
+                            onChange={(e) => updateStat(box.id, { sublabel: e.target.value })}
                             placeholder="Sottotitolo"
                             className="w-full bg-black/60 border border-white/15 rounded-lg px-2 py-1 text-slate-300"
                           />
@@ -2493,9 +1865,7 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
                 {activeTab === 'tiers' && (
                   <div className="space-y-3">
                     <div className="flex items-center justify-between">
-                      <span className="text-[11px] font-bold text-slate-300 uppercase">
-                        Tiers a Pagamento ({tiers.length})
-                      </span>
+                      <span className="text-[11px] font-bold text-slate-300 uppercase">Tiers a Pagamento ({tiers.length})</span>
                       <button
                         onClick={addNewTier}
                         className={`px-2.5 py-1 rounded-lg bg-gradient-to-r ${theme.barGradient} text-white font-bold flex items-center gap-1`}
@@ -2508,30 +1878,15 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
                       {tiers.map((tier) => {
                         const isEditing = editingTierId === tier.id;
                         return (
-                          <div
-                            key={tier.id}
-                            className={`bg-black/40 border rounded-xl overflow-hidden ${
-                              tier.isPopular
-                                ? theme.borderGlow
-                                : 'border-white/10'
-                            }`}
-                          >
+                          <div key={tier.id} className={`bg-black/40 border rounded-xl overflow-hidden ${tier.isPopular ? theme.borderGlow : 'border-white/10'}`}>
                             <div className="flex items-center justify-between px-3 py-2.5">
                               <button
-                                onClick={() =>
-                                  setEditingTierId(isEditing ? null : tier.id)
-                                }
+                                onClick={() => setEditingTierId(isEditing ? null : tier.id)}
                                 className="text-left font-bold text-white flex items-center gap-2 flex-1 truncate pr-2"
                               >
-                                {tier.isPopular && (
-                                  <Crown
-                                    className={`w-3.5 h-3.5 ${theme.accentText} shrink-0`}
-                                  />
-                                )}
+                                {tier.isPopular && <Crown className={`w-3.5 h-3.5 ${theme.accentText} shrink-0`} />}
                                 <span className="truncate">{tier.name}</span>
-                                <span className="text-slate-400 font-normal">
-                                  (${tier.price})
-                                </span>
+                                <span className="text-slate-400 font-normal">(${tier.price})</span>
                               </button>
                               <div className="flex items-center gap-1">
                                 {tiers.length > 1 && (
@@ -2544,16 +1899,10 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
                                   </button>
                                 )}
                                 <button
-                                  onClick={() =>
-                                    setEditingTierId(isEditing ? null : tier.id)
-                                  }
+                                  onClick={() => setEditingTierId(isEditing ? null : tier.id)}
                                   className="p-1 text-slate-400 hover:text-white"
                                 >
-                                  {isEditing ? (
-                                    <ChevronUp className="w-4 h-4" />
-                                  ) : (
-                                    <ChevronDown className="w-4 h-4" />
-                                  )}
+                                  {isEditing ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
                                 </button>
                               </div>
                             </div>
@@ -2562,32 +1911,20 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
                               <div className="p-3 pt-2 border-t border-white/10 space-y-2.5 bg-black/25">
                                 <div className="grid grid-cols-2 gap-2">
                                   <div>
-                                    <label className="block text-[10px] text-slate-400 mb-0.5">
-                                      Nome Tier
-                                    </label>
+                                    <label className="block text-[10px] text-slate-400 mb-0.5">Nome Tier</label>
                                     <input
                                       type="text"
                                       value={tier.name}
-                                      onChange={(e) =>
-                                        updateTier(tier.id, {
-                                          name: e.target.value,
-                                        })
-                                      }
+                                      onChange={(e) => updateTier(tier.id, { name: e.target.value })}
                                       className="w-full bg-black/60 border border-white/15 rounded-lg px-2 py-1 text-white font-bold"
                                     />
                                   </div>
                                   <div>
-                                    <label className="block text-[10px] text-slate-400 mb-0.5">
-                                      Badge Etichetta
-                                    </label>
+                                    <label className="block text-[10px] text-slate-400 mb-0.5">Badge Etichetta</label>
                                     <input
                                       type="text"
                                       value={tier.badge}
-                                      onChange={(e) =>
-                                        updateTier(tier.id, {
-                                          badge: e.target.value,
-                                        })
-                                      }
+                                      onChange={(e) => updateTier(tier.id, { badge: e.target.value })}
                                       className="w-full bg-black/60 border border-white/15 rounded-lg px-2 py-1 text-white"
                                     />
                                   </div>
@@ -2595,32 +1932,20 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
 
                                 <div className="grid grid-cols-2 gap-2">
                                   <div>
-                                    <label className="block text-[10px] text-slate-400 mb-0.5">
-                                      Prezzo ($)
-                                    </label>
+                                    <label className="block text-[10px] text-slate-400 mb-0.5">Prezzo ($)</label>
                                     <input
                                       type="text"
                                       value={tier.price}
-                                      onChange={(e) =>
-                                        updateTier(tier.id, {
-                                          price: e.target.value,
-                                        })
-                                      }
+                                      onChange={(e) => updateTier(tier.id, { price: e.target.value })}
                                       className="w-full bg-black/60 border border-white/15 rounded-lg px-2 py-1 text-white"
                                     />
                                   </div>
                                   <div>
-                                    <label className="block text-[10px] text-slate-400 mb-0.5">
-                                      Prezzo Barrato (opz.)
-                                    </label>
+                                    <label className="block text-[10px] text-slate-400 mb-0.5">Prezzo Barrato (opz.)</label>
                                     <input
                                       type="text"
                                       value={tier.originalPrice}
-                                      onChange={(e) =>
-                                        updateTier(tier.id, {
-                                          originalPrice: e.target.value,
-                                        })
-                                      }
+                                      onChange={(e) => updateTier(tier.id, { originalPrice: e.target.value })}
                                       placeholder="es. 34.99"
                                       className="w-full bg-black/60 border border-white/15 rounded-lg px-2 py-1 text-white"
                                     />
@@ -2628,85 +1953,53 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
                                 </div>
 
                                 <div>
-                                  <label className="block text-[10px] text-slate-400 mb-0.5">
-                                    Descrizione
-                                  </label>
+                                  <label className="block text-[10px] text-slate-400 mb-0.5">Descrizione</label>
                                   <input
                                     type="text"
                                     value={tier.description}
-                                    onChange={(e) =>
-                                      updateTier(tier.id, {
-                                        description: e.target.value,
-                                      })
-                                    }
+                                    onChange={(e) => updateTier(tier.id, { description: e.target.value })}
                                     className="w-full bg-black/60 border border-white/15 rounded-lg px-2 py-1 text-white"
                                   />
                                 </div>
 
                                 <div className="grid grid-cols-2 gap-2">
                                   <div>
-                                    <label className="block text-[10px] text-slate-400 mb-0.5">
-                                      Testo Bottone
-                                    </label>
+                                    <label className="block text-[10px] text-slate-400 mb-0.5">Testo Bottone</label>
                                     <input
                                       type="text"
                                       value={tier.ctaText}
-                                      onChange={(e) =>
-                                        updateTier(tier.id, {
-                                          ctaText: e.target.value,
-                                        })
-                                      }
+                                      onChange={(e) => updateTier(tier.id, { ctaText: e.target.value })}
                                       className="w-full bg-black/60 border border-white/15 rounded-lg px-2 py-1 text-white"
                                     />
                                   </div>
                                   <div>
-                                    <label className="block text-[10px] text-slate-400 mb-0.5">
-                                      Link Checkout
-                                    </label>
+                                    <label className="block text-[10px] text-slate-400 mb-0.5">Link Checkout</label>
                                     <input
                                       type="text"
                                       value={tier.checkoutUrl}
-                                      onChange={(e) =>
-                                        updateTier(tier.id, {
-                                          checkoutUrl: e.target.value,
-                                        })
-                                      }
+                                      onChange={(e) => updateTier(tier.id, { checkoutUrl: e.target.value })}
                                       className="w-full bg-black/60 border border-white/15 rounded-lg px-2 py-1 text-white"
                                     />
                                   </div>
                                 </div>
 
                                 <label className="flex items-center justify-between bg-black/40 border border-white/10 rounded-lg px-2.5 py-1.5 cursor-pointer">
-                                  <span className="text-[11px] font-bold text-slate-200">
-                                    Evidenzia come "Più Popolare"
-                                  </span>
+                                  <span className="text-[11px] font-bold text-slate-200">Evidenzia come "Più Popolare"</span>
                                   <input
                                     type="checkbox"
                                     checked={tier.isPopular}
-                                    onChange={(e) =>
-                                      updateTier(tier.id, {
-                                        isPopular: e.target.checked,
-                                        popularBanner:
-                                          tier.popularBanner || 'MOST POPULAR',
-                                      })
-                                    }
+                                    onChange={(e) => updateTier(tier.id, { isPopular: e.target.checked, popularBanner: tier.popularBanner || 'MOST POPULAR' })}
                                     className="w-4 h-4 accent-pink-500"
                                   />
                                 </label>
 
                                 {tier.isPopular && (
                                   <div>
-                                    <label className="block text-[10px] text-slate-400 mb-0.5">
-                                      Testo Nastro in alto
-                                    </label>
+                                    <label className="block text-[10px] text-slate-400 mb-0.5">Testo Nastro in alto</label>
                                     <input
                                       type="text"
                                       value={tier.popularBanner}
-                                      onChange={(e) =>
-                                        updateTier(tier.id, {
-                                          popularBanner: e.target.value,
-                                        })
-                                      }
+                                      onChange={(e) => updateTier(tier.id, { popularBanner: e.target.value })}
                                       className="w-full bg-black/60 border border-white/15 rounded-lg px-2 py-1 text-white"
                                     />
                                   </div>
@@ -2714,9 +2007,7 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
 
                                 <div className="pt-2 border-t border-white/10 space-y-1.5">
                                   <div className="flex items-center justify-between">
-                                    <span className="text-[10px] font-bold text-slate-400 uppercase">
-                                      Vantaggi inclusi / esclusi
-                                    </span>
+                                    <span className="text-[10px] font-bold text-slate-400 uppercase">Vantaggi inclusi / esclusi</span>
                                     <button
                                       onClick={() => addTierFeature(tier.id)}
                                       className="text-[10px] font-bold text-emerald-400 hover:text-emerald-300 flex items-center gap-0.5"
@@ -2726,16 +2017,9 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
                                   </div>
 
                                   {tier.features.map((feat, fIdx) => (
-                                    <div
-                                      key={fIdx}
-                                      className="flex items-center gap-1.5"
-                                    >
+                                    <div key={fIdx} className="flex items-center gap-1.5">
                                       <button
-                                        onClick={() =>
-                                          updateTierFeature(tier.id, fIdx, {
-                                            included: !feat.included,
-                                          })
-                                        }
+                                        onClick={() => updateTierFeature(tier.id, fIdx, { included: !feat.included })}
                                         title="Clicca per cambiare tra Incluso (✓) ed Escluso (✗)"
                                         className={`p-1 rounded border shrink-0 ${
                                           feat.included
@@ -2743,26 +2027,16 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
                                             : 'bg-rose-500/20 border-rose-500/40 text-rose-400'
                                         }`}
                                       >
-                                        {feat.included ? (
-                                          <Check className="w-3 h-3" />
-                                        ) : (
-                                          <X className="w-3 h-3" />
-                                        )}
+                                        {feat.included ? <Check className="w-3 h-3" /> : <X className="w-3 h-3" />}
                                       </button>
                                       <input
                                         type="text"
                                         value={feat.text}
-                                        onChange={(e) =>
-                                          updateTierFeature(tier.id, fIdx, {
-                                            text: e.target.value,
-                                          })
-                                        }
+                                        onChange={(e) => updateTierFeature(tier.id, fIdx, { text: e.target.value })}
                                         className="flex-1 bg-black/60 border border-white/15 rounded px-2 py-1 text-[11px] text-white"
                                       />
                                       <button
-                                        onClick={() =>
-                                          removeTierFeature(tier.id, fIdx)
-                                        }
+                                        onClick={() => removeTierFeature(tier.id, fIdx)}
                                         className="p-1 text-slate-500 hover:text-rose-400 shrink-0"
                                       >
                                         <Trash2 className="w-3 h-3" />
@@ -2786,27 +2060,21 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
                       <input
                         type="text"
                         value={config.faqTitle}
-                        onChange={(e) =>
-                          setConfig({ ...config, faqTitle: e.target.value })
-                        }
+                        onChange={(e) => setConfig({ ...config, faqTitle: e.target.value })}
                         placeholder="Titolo Sezione FAQ"
                         className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1.5 text-white font-bold"
                       />
                       <input
                         type="text"
                         value={config.faqSubtitle}
-                        onChange={(e) =>
-                          setConfig({ ...config, faqSubtitle: e.target.value })
-                        }
+                        onChange={(e) => setConfig({ ...config, faqSubtitle: e.target.value })}
                         placeholder="Sottotitolo FAQ"
                         className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1.5 text-slate-300"
                       />
                     </div>
 
                     <div className="flex items-center justify-between pt-2 border-t border-white/10">
-                      <span className="text-[11px] font-bold text-slate-300 uppercase">
-                        Domande ({faqs.length})
-                      </span>
+                      <span className="text-[11px] font-bold text-slate-300 uppercase">Domande ({faqs.length})</span>
                       <button
                         onClick={addFaq}
                         className={`px-2.5 py-1 rounded-lg bg-gradient-to-r ${theme.barGradient} text-white font-bold flex items-center gap-1`}
@@ -2817,14 +2085,9 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
 
                     <div className="space-y-2.5">
                       {faqs.map((faq, idx) => (
-                        <div
-                          key={idx}
-                          className="bg-black/40 border border-white/10 rounded-xl p-2.5 space-y-2"
-                        >
+                        <div key={idx} className="bg-black/40 border border-white/10 rounded-xl p-2.5 space-y-2">
                           <div className="flex items-center justify-between">
-                            <span className="text-[10px] font-bold text-slate-400 uppercase">
-                              FAQ #{idx + 1}
-                            </span>
+                            <span className="text-[10px] font-bold text-slate-400 uppercase">FAQ #{idx + 1}</span>
                             <button
                               onClick={() => deleteFaq(idx)}
                               className="p-1 text-slate-400 hover:text-rose-400"
@@ -2835,18 +2098,14 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
                           <input
                             type="text"
                             value={faq.q}
-                            onChange={(e) =>
-                              updateFaq(idx, { q: e.target.value })
-                            }
+                            onChange={(e) => updateFaq(idx, { q: e.target.value })}
                             placeholder="Domanda"
                             className="w-full bg-black/60 border border-white/15 rounded-lg px-2.5 py-1 text-white font-bold"
                           />
                           <textarea
                             rows={2}
                             value={faq.a}
-                            onChange={(e) =>
-                              updateFaq(idx, { a: e.target.value })
-                            }
+                            onChange={(e) => updateFaq(idx, { a: e.target.value })}
                             placeholder="Risposta"
                             className="w-full bg-black/60 border border-white/15 rounded-lg px-2.5 py-1 text-slate-300"
                           />
@@ -2860,43 +2119,20 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
                 {activeTab === 'export' && (
                   <div className="space-y-3">
                     <p className="text-slate-300 leading-relaxed">
-                      Tutte le modifiche vengono salvate in automatico nel
-                      browser. Quando sei pronto a{' '}
-                      <strong>pubblicare la versione definitiva</strong>:
+                      Tutte le modifiche vengono salvate in automatico nel browser. Quando sei pronto a <strong>pubblicare la versione definitiva</strong>:
                     </p>
                     <ol className="list-decimal list-inside space-y-1 text-slate-400">
-                      <li>
-                        Clicca <strong>Copia Configurazione</strong> qui sotto.
-                      </li>
-                      <li>
-                        Incollala in{' '}
-                        <code className="text-pink-300">src/App.tsx</code> al
-                        posto dei blocchi{' '}
-                        <code className="text-pink-300">DEFAULT_*</code>.
-                      </li>
-                      <li>
-                        Imposta{' '}
-                        <code className="text-emerald-400">
-                          ENABLE_OWNER_CUSTOMIZER = false
-                        </code>{' '}
-                        in riga 13.
-                      </li>
+                      <li>Clicca <strong>Copia Configurazione</strong> qui sotto.</li>
+                      <li>Incollala in <code className="text-pink-300">src/App.tsx</code> al posto dei blocchi <code className="text-pink-300">DEFAULT_*</code>.</li>
+                      <li>Imposta <code className="text-emerald-400">ENABLE_OWNER_CUSTOMIZER = false</code> in riga 13.</li>
                     </ol>
 
                     <button
                       onClick={copyExportCode}
                       className={`w-full py-2.5 rounded-xl font-black text-white bg-gradient-to-r ${theme.buttonGradient} flex items-center justify-center gap-2 shadow-lg`}
                     >
-                      {copiedFlag ? (
-                        <CheckCircle2 className="w-4 h-4" />
-                      ) : (
-                        <Copy className="w-4 h-4" />
-                      )}
-                      <span>
-                        {copiedFlag
-                          ? 'Copiato negli appunti!'
-                          : 'Copia Configurazione Pronta'}
-                      </span>
+                      {copiedFlag ? <CheckCircle2 className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+                      <span>{copiedFlag ? 'Copiato negli appunti!' : 'Copia Configurazione Pronta'}</span>
                     </button>
 
                     <pre className="bg-black/70 border border-white/10 rounded-xl p-2.5 text-[10px] text-slate-300 max-h-40 overflow-auto font-mono">
@@ -2912,4 +2148,3 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
     </div>
   );
 }
-s;
