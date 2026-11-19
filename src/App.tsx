@@ -735,16 +735,27 @@ export default function App() {
     return () => clearInterval(timer);
   }, []);
 
-  // Live Social Proof Ticker Rotation (Random Nicknames)
+  // Live Social Proof Ticker Rotation (Less frequent so it feels natural and non-intrusive)
   useEffect(() => {
-    const toastInterval = setInterval(() => {
-      setShowToast(false);
-      setTimeout(() => {
-        setCurrentToast((prev) => createRandomToast(prev.user));
-        setShowToast(true);
-      }, 600);
-    }, 6500);
-    return () => clearInterval(toastInterval);
+    let hideTimeout: ReturnType<typeof setTimeout> | undefined;
+    let showTimeout: ReturnType<typeof setTimeout> | undefined;
+
+    const scheduleNext = () => {
+      hideTimeout = setTimeout(() => {
+        setShowToast(false);
+        showTimeout = setTimeout(() => {
+          setCurrentToast((prev) => createRandomToast(prev.user));
+          setShowToast(true);
+          scheduleNext();
+        }, 12500);
+      }, 5500);
+    };
+
+    scheduleNext();
+    return () => {
+      if (hideTimeout) clearTimeout(hideTimeout);
+      if (showTimeout) clearTimeout(showTimeout);
+    };
   }, []);
 
   const theme = THEMES[config.theme] || THEMES.crimson;
@@ -977,8 +988,15 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
               )}
               {config.urgencyCtaText && (
                 <button
-                  onClick={() => scrollToSection('pricing-section')}
-                  className={`hidden md:inline-flex items-center gap-1 text-xs font-bold ${theme.accentText} hover:text-white transition`}
+                  type="button"
+                  onClick={() => {
+                    setActiveSection('vip');
+                    setTimeout(() => {
+                      const target = document.getElementById('pricing-section') || document.getElementById('hub-tabs');
+                      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }, 50);
+                  }}
+                  className={`hidden md:inline-flex items-center gap-1 text-xs font-bold ${theme.accentText} hover:text-white transition cursor-pointer`}
                 >
                   {config.urgencyCtaText} <ArrowRight className="w-3.5 h-3.5" />
                 </button>
@@ -1010,39 +1028,16 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
           </div>
         </div>
 
-        <div className="flex items-center gap-3 sm:gap-6">
-          {config.showCommunitySection && (
-            <button
-              type="button"
-              onClick={() => { setActiveSection('discord'); scrollToSection('hub-tabs'); }}
-              className="text-xs sm:text-sm text-slate-300 hover:text-white transition font-medium"
-            >
-              Discord
-            </button>
-          )}
-          <button
-            type="button"
-            onClick={() => { setActiveSection('vip'); scrollToSection('hub-tabs'); }}
-            className="text-xs sm:text-sm text-slate-300 hover:text-white transition font-medium"
-          >
-            VIP Tiers
-          </button>
-          <button
-            type="button"
-            onClick={() => { setActiveSection('reddit'); scrollToSection('hub-tabs'); }}
-            className="hidden sm:inline-block text-xs sm:text-sm text-slate-300 hover:text-white transition font-medium"
-          >
-            Reddit
-          </button>
+        <div className="flex items-center shrink-0">
           <a
             href={config.discordInviteUrl}
             target="_blank"
             rel="noreferrer"
-            className={`px-4 py-2 ${radiusBtn} text-xs sm:text-sm font-bold bg-[#5865F2] hover:bg-[#4752C4] text-white flex items-center gap-1.5 shadow-lg shadow-[#5865F2]/25 transition`}
+            className={`px-3.5 sm:px-4 py-2 ${radiusBtn} text-xs sm:text-sm font-bold bg-[#5865F2] hover:bg-[#4752C4] text-white flex items-center gap-1.5 shadow-lg shadow-[#5865F2]/25 transition whitespace-nowrap`}
           >
-            <Users className="w-3.5 h-3.5" />
+            <Users className="w-3.5 h-3.5 shrink-0" />
             <span>Join Discord</span>
-            <ExternalLink className="w-3 h-3 opacity-80" />
+            <ExternalLink className="w-3 h-3 opacity-80 shrink-0" />
           </a>
         </div>
       </header>
@@ -1094,8 +1089,14 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
 
           <button
             type="button"
-            onClick={() => { setActiveSection('vip'); scrollToSection('hub-tabs'); }}
-            className={`w-full sm:w-auto px-7 py-4 ${radiusBtn} font-bold text-base bg-white/5 hover:bg-white/10 text-slate-200 border border-white/15 transition flex items-center justify-center gap-2`}
+            onClick={() => {
+              setActiveSection('vip');
+              setTimeout(() => {
+                const target = document.getElementById('pricing-section') || document.getElementById('hub-tabs');
+                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }, 50);
+            }}
+            className={`w-full sm:w-auto px-7 py-4 ${radiusBtn} font-bold text-base bg-white/5 hover:bg-white/10 text-slate-200 border border-white/15 transition flex items-center justify-center gap-2 cursor-pointer`}
           >
             <Crown className={`w-5 h-5 ${theme.accentText}`} />
             <span>{config.secondaryCtaText}</span>
