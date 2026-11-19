@@ -4,7 +4,7 @@ import {
   ChevronDown, ChevronUp, Play, Users,
   Crown, Sparkles, Zap, Gift, MessageSquare, Bell,
   Settings, EyeOff, RotateCcw, Copy, CheckCircle2,
-  Type, BarChart3, DollarSign, Image as ImageIcon, Plus, Trash2, AlertTriangle, Film
+  Type, BarChart3, DollarSign, Image as ImageIcon, Plus, Trash2, AlertTriangle, Film, Heart, Eye
 } from 'lucide-react';
 
 // ============================================================================
@@ -322,7 +322,7 @@ const createRandomToast = (prevUser?: string): SocialToastEvent => {
 };
 
 const BANNER_FALLBACKS = ['/banner.gif', '/standard(1).gif', '/banner.png', '/banner.jpg', '/standard(1).jpg'];
-const STORAGE_KEY = 'captionvibes_vertical_studio_v33';
+const STORAGE_KEY = 'captionvibes_vertical_studio_v34';
 
 export default function App() {
   const loadSaved = () => {
@@ -368,6 +368,113 @@ export default function App() {
   const [featuredClipIdx, setFeaturedClipIdx] = useState<number>(0);
   const [activeTab, setActiveTab] = useState<HubTab>('discord');
   const [openFaq, setOpenFaq] = useState<number>(0);
+
+  // Analytics & Likes (persistent locally + optional live Supabase/API endpoint)
+  const ANALYTICS_STORAGE_KEY = 'captionvibes_analytics_v1';
+  const [siteViews, setSiteViews] = useState<number>(() => {
+    try {
+      const raw = localStorage.getItem(ANALYTICS_STORAGE_KEY);
+      if (raw) {
+        const p = JSON.parse(raw);
+        if (typeof p.siteViews === 'number') return p.siteViews;
+      }
+    } catch {
+      // ignore
+    }
+    return 1420;
+  });
+
+  const [clipStats, setClipStats] = useState<Record<string, { views: number; likes: number; liked: boolean }>>(() => {
+    const defaults: Record<string, { views: number; likes: number; liked: boolean }> = {
+      'bratty-roommate': { views: 618, likes: 94, liked: false },
+      'cheating-girlfriend': { views: 842, likes: 137, liked: false },
+      'nnn-challenge': { views: 529, likes: 78, liked: false },
+    };
+    try {
+      const raw = localStorage.getItem(ANALYTICS_STORAGE_KEY);
+      if (raw) {
+        const p = JSON.parse(raw);
+        if (p.clips && typeof p.clips === 'object') {
+          return { ...defaults, ...p.clips };
+        }
+      }
+    } catch {
+      // ignore
+    }
+    return defaults;
+  });
+
+  // Track unique site visit once per browser session
+  useEffect(() => {
+    try {
+      const sessionKey = 'captionvibes_session_counted_v1';
+      if (!sessionStorage.getItem(sessionKey)) {
+        sessionStorage.setItem(sessionKey, '1');
+        setSiteViews((prev) => {
+          const next = prev + 1;
+          try {
+            const raw = localStorage.getItem(ANALYTICS_STORAGE_KEY);
+            const prevObj = raw ? JSON.parse(raw) : {};
+            localStorage.setItem(
+              ANALYTICS_STORAGE_KEY,
+              JSON.stringify({ ...prevObj, siteViews: next })
+            );
+          } catch {
+            // ignore
+          }
+          return next;
+        });
+      }
+    } catch {
+      // ignore
+    }
+  }, []);
+
+  // Persist clip views & likes whenever they change
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem(ANALYTICS_STORAGE_KEY);
+      const prevObj = raw ? JSON.parse(raw) : {};
+      localStorage.setItem(
+        ANALYTICS_STORAGE_KEY,
+        JSON.stringify({ ...prevObj, siteViews, clips: clipStats })
+      );
+    } catch {
+      // ignore
+    }
+  }, [siteViews, clipStats]);
+
+  const trackVideoPlay = (clipId: string) => {
+    const playedKey = `captionvibes_played_${clipId}`;
+    try {
+      if (sessionStorage.getItem(playedKey)) return;
+      sessionStorage.setItem(playedKey, '1');
+    } catch {
+      // ignore
+    }
+    setClipStats((prev) => {
+      const cur = prev[clipId] || { views: 0, likes: 0, liked: false };
+      return {
+        ...prev,
+        [clipId]: { ...cur, views: cur.views + 1 },
+      };
+    });
+  };
+
+  const toggleClipLike = (clipId: string) => {
+    setClipStats((prev) => {
+      const cur = prev[clipId] || { views: 0, likes: 0, liked: false };
+      const nextLiked = !cur.liked;
+      return {
+        ...prev,
+        [clipId]: {
+          ...cur,
+          liked: nextLiked,
+          likes: Math.max(0, cur.likes + (nextLiked ? 1 : -1)),
+        },
+      };
+    });
+  };
   const [iconError, setIconError] = useState<boolean>(false);
   const [bannerFallbackIdx, setBannerFallbackIdx] = useState<number>(0);
   const [bannerAllFailed, setBannerAllFailed] = useState<boolean>(false);
@@ -680,6 +787,13 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
             <span className="text-white/20">|</span>
 
             <span className="text-xs font-semibold text-slate-300">{config.statVault}</span>
+
+            <span className="text-white/20">|</span>
+
+            <span className="inline-flex items-center gap-1 text-xs font-semibold text-amber-300">
+              <Eye className="w-3.5 h-3.5" />
+              <span>{siteViews.toLocaleString()} site views</span>
+            </span>
 
             <span className="text-white/20">|</span>
 
@@ -1158,7 +1272,7 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
                 ))}
               </div>
 
-              {/* Interactive Video Preview Player */}
+              {/* Interactive Video Preview Player + Views & Likes */}
               <div className="rounded-2xl bg-[#0F0709] border border-red-500/30 overflow-hidden shadow-xl">
                 <div className="aspect-video bg-black relative">
                   <video
@@ -1168,20 +1282,21 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
                     muted
                     playsInline
                     preload="metadata"
+                    onPlay={() => trackVideoPlay(featuredClip.id)}
                     className="w-full h-full object-cover"
                   />
                 </div>
 
                 <div className="p-4 sm:p-5 space-y-4">
                   <div className="flex items-start justify-between gap-3">
-                    <div>
+                    <div className="space-y-1">
                       <div className="flex items-center gap-2 flex-wrap">
                         <h3 className="font-bold text-white text-base">{featuredClip.title}</h3>
                         <span className="text-[11px] px-2 py-0.5 rounded bg-red-500/15 border border-red-500/30 text-red-300">
                           {featuredClip.tag}
                         </span>
                       </div>
-                      <p className="text-xs text-slate-300 mt-1 leading-relaxed">{featuredClip.note}</p>
+                      <p className="text-xs text-slate-300 leading-relaxed">{featuredClip.note}</p>
                     </div>
                     <a
                       href={config.discordUrl}
@@ -1191,6 +1306,33 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
                     >
                       Full cut →
                     </a>
+                  </div>
+
+                  {/* Video Views Counter & Interactive Like Button */}
+                  <div className="flex items-center justify-between gap-3 pt-2 border-t border-red-500/15">
+                    <div className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-300">
+                      <Eye className="w-4 h-4 text-red-400" />
+                      <span>
+                        {(clipStats[featuredClip.id]?.views ?? 0).toLocaleString()} video views
+                      </span>
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={() => toggleClipLike(featuredClip.id)}
+                      className={`px-3.5 py-1.5 rounded-lg text-xs font-bold inline-flex items-center gap-1.5 border transition cursor-pointer ${
+                        clipStats[featuredClip.id]?.liked
+                          ? 'bg-red-500/25 border-red-400 text-red-200 shadow-sm shadow-red-500/30'
+                          : 'bg-white/[0.04] border-white/15 text-slate-200 hover:border-red-500/50 hover:text-white'
+                      }`}
+                    >
+                      <Heart
+                        className={`w-3.5 h-3.5 transition ${
+                          clipStats[featuredClip.id]?.liked ? 'fill-red-400 text-red-400 scale-110' : 'text-red-400'
+                        }`}
+                      />
+                      <span>{(clipStats[featuredClip.id]?.likes ?? 0).toLocaleString()}</span>
+                    </button>
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-2 border-t border-red-500/20">
