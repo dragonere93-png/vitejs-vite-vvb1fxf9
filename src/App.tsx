@@ -167,7 +167,7 @@ const DEFAULT_PREVIEW_GIFS: PreviewGifItem[] = [
     title: 'Bratty Roommate',
     tag: 'Teasing kink',
     duration: '~1m Clip',
-    gifUrl: '/SHORTVIDEO118(1).mp4',
+    gifUrl: '/TEASER2(1).mp4',
     note: 'You had this gamer girl roommate; there was only one computer in the house, and after a long day at work, you just wanted to relax and play. Unfortunately, she wanted to use it too, by any means...'
   },
   {
@@ -183,7 +183,7 @@ const DEFAULT_PREVIEW_GIFS: PreviewGifItem[] = [
     title: 'NNN Challenge',
     tag: 'Interactive',
     duration: '~1m Clip',
-    gifUrl: '/TEASER2(1).mp4',
+    gifUrl: '/SHORTVIDEO118(1).mp4',
     note: 'Interactive challenge: pick who you lose NNN to and see how long your streak survives when the pressure hits.'
   }
 ];
