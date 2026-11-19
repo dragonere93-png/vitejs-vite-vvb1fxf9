@@ -150,6 +150,44 @@ interface FaqItem {
   a: string;
 }
 
+interface PreviewGifItem {
+  id: string;
+  title: string;
+  tag: string;
+  duration: string;
+  gifUrl: string;
+  note: string;
+}
+
+type HubSection = 'discord' | 'vip' | 'reddit' | 'promo';
+
+const DEFAULT_PREVIEW_GIFS: PreviewGifItem[] = [
+  {
+    id: 'gif-quick',
+    title: 'Bratty Roommate',
+    tag: 'Teasing kink',
+    duration: '3s GIF',
+    gifUrl: '',
+    note: 'You had this gamer girl roommate; there was only one computer in the house, and after a long day at work, you just wanted to relax and play. Unfortunately, she wanted to use it too, but she had a solution...'
+  },
+  {
+    id: 'gif-reels',
+    title: 'Cheating Girlfriend',
+    tag: 'Cheating kink',
+    duration: '4s GIF',
+    gifUrl: '',
+    note: '"Baby I love you but, I can\'t have sex with you! You are too ugly and have such a small dick... you can watch me suck and ride your manly bully cock instead 😇"'
+  },
+  {
+    id: 'gif-long',
+    title: 'NNN Challenge',
+    tag: 'Interactive',
+    duration: '3s GIF',
+    gifUrl: '',
+    note: 'How long can you actually hold out? Pick who you lose NNN to and see which temptation breaks your streak first.'
+  }
+];
+
 interface SiteConfig {
   // Brand & Copy
   brandPrefix: string;
@@ -190,6 +228,51 @@ interface SiteConfig {
   bottomBannerSubtitle: string;
   bottomBannerCta: string;
 
+  // Reddit Tab Copy
+  redditBadge: string;
+  redditTitle: string;
+  redditSubtitle: string;
+  redditCtaText: string;
+  redditSecondaryCtaText: string;
+  redditCard1Title: string;
+  redditCard1Desc: string;
+  redditCard2Title: string;
+  redditCard2Desc: string;
+  redditCard3Title: string;
+  redditCard3Desc: string;
+
+  // Sponsor / Promo Tab Copy (4th Tab)
+  promoBadge: string;
+  promoTitle: string;
+  promoSubtitle: string;
+  promoCtaText: string;
+  promoSecondaryCtaText: string;
+  promoPaymentUrl: string;
+  promoRule1Title: string;
+  promoRule1Desc: string;
+  promoRule2Title: string;
+  promoRule2Desc: string;
+  promoRule3Title: string;
+  promoRule3Desc: string;
+  promoSlotPrice: string;
+  promoWhyTitle: string;
+  promoWhy1: string;
+  promoWhy2: string;
+  promoWhy3: string;
+  promoPaymentNoteTitle: string;
+  promoPaymentNoteDesc: string;
+
+  // Warning Banner Copy (Join Discord First)
+  warningTitle: string;
+  warningBody: string;
+  warningCtaText: string;
+
+  // GIF Previews Header Copy
+  gifSectionBadge: string;
+  gifSectionTitle: string;
+  gifSectionSubtitle: string;
+  gifCardCtaText: string;
+
   // FAQ & Footer
   faqTitle: string;
   faqSubtitle: string;
@@ -201,6 +284,7 @@ interface SiteConfig {
   vipCount: number;
   vipGoal: number;
   weeklyVisitors: string;
+  weeklyVisitorsSuffix: string;
   spotsLeft: number;
   discordInviteUrl: string;
   defaultCheckoutUrl: string;
@@ -248,6 +332,43 @@ const DEFAULT_CONFIG: SiteConfig = {
   "bottomBannerTitle": "discord link",
   "bottomBannerSubtitle": "click here to join the discord server",
   "bottomBannerCta": "Join Free Discord",
+  "redditBadge": "Official Subreddit",
+  "redditTitle": "r/CaptionVibesHub",
+  "redditSubtitle": "Browse recent caption posts, community updates, and thread discussions on Reddit — then jump into the free Discord server for weekly full drops and reels.",
+  "redditCtaText": "Open r/CaptionVibesHub",
+  "redditSecondaryCtaText": "Go to Discord",
+  "redditCard1Title": "Daily Feed & Teasers",
+  "redditCard1Desc": "7760 weekly Reddit visitors discover captions here before moving over to the Discord hub.",
+  "redditCard2Title": "Full Versions on Discord",
+  "redditCard2Desc": "Reddit posts highlight concepts and quick previews while full uploads and weekly drops live in Discord.",
+  "redditCard3Title": "Optional VIP Support",
+  "redditCard3Desc": "Want the full vault and reels archive? Switch to the VIP tab after joining Discord first.",
+  "promoBadge": "Creator Sponsorships",
+  "promoTitle": "Sponsored Caption Placements",
+  "promoSubtitle": "New to making captions and want visibility in front of an active audience? Submit your clip — I publish it with full credits to your name/link.",
+  "promoCtaText": "Pay & Submit Promo",
+  "promoSecondaryCtaText": "Ask on Discord First",
+  "promoPaymentUrl": "https://upgrade.chat/captionvibes/p/captionvibespromo",
+  "promoRule1Title": "1. Quality & Vibe Fit",
+  "promoRule1Desc": "Your video must match the hub's style, pacing, and rules. Low-effort or off-theme clips can be declined with no hard feelings.",
+  "promoRule2Title": "2. Full Credits Included",
+  "promoRule2Desc": "I post your video and include clear credits for your creator name or agreed link so viewers know who made it.",
+  "promoRule3Title": "3. Limited Slots & No Guaranteed Reach",
+  "promoRule3Desc": "Slots are capped so the feed never feels spammy. Publication and credits are guaranteed; algorithm reach, views, or conversions vary.",
+  "promoSlotPrice": "€20 / Slot",
+  "promoWhyTitle": "Why €20 Can Be Worth It for a New Caption Creator",
+  "promoWhy1": "Active Reach Instead of Zero: Skip the cold start with ~14M total views, 400k–1.5M weekly views, ~1,600 Discord members, and nearly 1,000 Reddit followers.",
+  "promoWhy2": "Direct Credit & Visibility: Your video is published with clear credits to your creator name or agreed link in front of viewers already into this format.",
+  "promoWhy3": "Low-Friction Test: A €20 single slot lets newer creators test audience reaction and style fit without locking into expensive campaigns or guessing alone.",
+  "promoPaymentNoteTitle": "How Payment Works (€20 Single Slot)",
+  "promoPaymentNoteDesc": "DM me on Discord first to send your clip and credits for approval. Once approved, pay €20 via the checkout link to lock your slot before I publish.",
+  "warningTitle": "⚠️ IMPORTANT: Join the Discord Server FIRST!",
+  "warningBody": "You must join our free Discord server BEFORE upgrading so the bot can assign your VIP role automatically in 5 seconds. If you purchase before joining, you'll need to DM me privately on Discord so I can activate it manually (which can take anywhere from 10 minutes to 10 hours).",
+  "warningCtaText": "Join Discord First",
+  "gifSectionBadge": "Short Preview Clips (3–4s GIFs)",
+  "gifSectionTitle": "Vault Sneak Peeks",
+  "gifSectionSubtitle": "Lightweight 3–4s loops • Full drops in Discord",
+  "gifCardCtaText": "Watch full version on Discord",
   "faqTitle": "FAQ",
   "faqSubtitle": "Most common questions I get in private",
   "footerTagline": "18+ Adult Anime & Caption Community",
@@ -256,6 +377,7 @@ const DEFAULT_CONFIG: SiteConfig = {
   "vipCount": 84,
   "vipGoal": 100,
   "weeklyVisitors": "7760",
+  "weeklyVisitorsSuffix": "Weekly Reddit Visitors",
   "spotsLeft": 0,
   "discordInviteUrl": "https://discord.gg/captionvibes",
   "defaultCheckoutUrl": "https://discord.gg/captionvibes",
@@ -519,10 +641,10 @@ export default function App() {
       const parsed = JSON.parse(raw);
       if (!parsed[key]) return fallback;
       const merged = { ...fallback, ...parsed[key] };
-      // Ripulisce eventuali placeholder salvati per errore
+      // Ripulisce eventuali placeholder o stringhe vuote su campi nuovi
       for (const k of Object.keys(merged)) {
-        if (typeof merged[k] === 'string' && merged[k].startsWith('{config.')) {
-          merged[k] = fallback[k];
+        if (typeof merged[k] === 'string' && (merged[k].startsWith('{config.') || merged[k].trim() === '')) {
+          if (fallback[k]) merged[k] = fallback[k];
         }
       }
       return merged;
@@ -531,7 +653,7 @@ export default function App() {
     }
   }
 
-  function loadSavedArr<T>(key: 'stats' | 'tiers' | 'faqs' | 'communityCards', fallback: T[]): T[] {
+  function loadSavedArr<T>(key: 'stats' | 'tiers' | 'faqs' | 'communityCards' | 'previewGifs', fallback: T[]): T[] {
     try {
       const raw = getRawSaved();
       if (!raw) return fallback;
@@ -559,6 +681,29 @@ export default function App() {
   const [currentToast, setCurrentToast] = useState<SocialToastEvent>(() => createRandomToast());
   const [showToast, setShowToast] = useState(true);
   const [openFaq, setOpenFaq] = useState<number>(0);
+  const [activeSection, setActiveSection] = useState<HubSection>('discord');
+  const [previewGifs, setPreviewGifs] = useState<PreviewGifItem[]>(() => {
+    const loaded = loadSavedArr('previewGifs', DEFAULT_PREVIEW_GIFS);
+    const oldTitles = ['Quick Caption Teaser #01', 'CaptionVibes Reel Preview', 'Full Vault Sneak Peek'];
+    const oldNotes = [
+      'Fast-paced caption sample — full drop inside Discord.',
+      'Vertical reel snippet — more drops weekly.',
+      'Preview of uncut & extended caption edits.'
+    ];
+    return loaded.map((item, idx) => {
+      const def = DEFAULT_PREVIEW_GIFS[idx] || DEFAULT_PREVIEW_GIFS[0];
+      const nextTitle = (!item.title || oldTitles.includes(item.title)) ? def.title : item.title;
+      const nextTag = (!item.tag || ['Quick Videos', 'Reels Archive', 'Long & VIP'].includes(item.tag)) ? def.tag : item.tag;
+      const nextNote = (!item.note || oldNotes.includes(item.note) || item.note === 'Cheating girlfriend') ? def.note : item.note;
+      return {
+        ...def,
+        ...item,
+        title: nextTitle,
+        tag: nextTag,
+        note: nextNote,
+      };
+    });
+  });
 
   // Customizer States
   const [showCustomizer, setShowCustomizer] = useState(false);
@@ -570,7 +715,7 @@ export default function App() {
   // Auto-save to localStorage
   useEffect(() => {
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify({ config, stats, tiers, communityCards, faqs }));
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({ config, stats, tiers, communityCards, previewGifs, faqs }));
     } catch {
       // Ignore storage quota errors
     }
@@ -763,6 +908,7 @@ export default function App() {
     setStats(DEFAULT_STATS);
     setTiers(DEFAULT_TIERS);
     setCommunityCards(DEFAULT_COMMUNITY_CARDS);
+    setPreviewGifs(DEFAULT_PREVIEW_GIFS);
     setFaqs(DEFAULT_FAQS);
     localStorage.removeItem(STORAGE_KEY);
   };
@@ -776,6 +922,8 @@ const DEFAULT_STATS: StatBox[] = ${JSON.stringify(stats, null, 2)};
 const DEFAULT_TIERS: PricingTier[] = ${JSON.stringify(tiers, null, 2)};
 
 const DEFAULT_COMMUNITY_CARDS: CommunityCard[] = ${JSON.stringify(communityCards, null, 2)};
+
+const DEFAULT_PREVIEW_GIFS: PreviewGifItem[] = ${JSON.stringify(previewGifs, null, 2)};
 
 const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
   };
@@ -864,17 +1012,26 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
         <div className="flex items-center gap-3 sm:gap-6">
           {config.showCommunitySection && (
             <button
-              onClick={() => scrollToSection('community-section')}
+              type="button"
+              onClick={() => { setActiveSection('discord'); scrollToSection('hub-tabs'); }}
               className="text-xs sm:text-sm text-slate-300 hover:text-white transition font-medium"
             >
-              Free Discord
+              Discord
             </button>
           )}
           <button
-            onClick={() => scrollToSection('pricing-section')}
+            type="button"
+            onClick={() => { setActiveSection('vip'); scrollToSection('hub-tabs'); }}
             className="text-xs sm:text-sm text-slate-300 hover:text-white transition font-medium"
           >
             VIP Tiers
+          </button>
+          <button
+            type="button"
+            onClick={() => { setActiveSection('reddit'); scrollToSection('hub-tabs'); }}
+            className="hidden sm:inline-block text-xs sm:text-sm text-slate-300 hover:text-white transition font-medium"
+          >
+            Reddit
           </button>
           <a
             href={config.discordInviteUrl}
@@ -898,7 +1055,7 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
           </span>
           <span className="text-white/20">|</span>
           <span className="flex items-center gap-1.5 text-xs font-semibold text-slate-300">
-            {config.weeklyVisitors} Weekly Reddit Visitors
+            {config.weeklyVisitors} {config.weeklyVisitorsSuffix}
           </span>
           <span className="text-white/20">|</span>
           <span className={`flex items-center gap-1.5 text-xs font-semibold ${theme.accentText}`}>
@@ -933,7 +1090,8 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
           </a>
 
           <button
-            onClick={() => scrollToSection('pricing-section')}
+            type="button"
+            onClick={() => { setActiveSection('vip'); scrollToSection('hub-tabs'); }}
             className={`w-full sm:w-auto px-7 py-4 ${radiusBtn} font-bold text-base bg-white/5 hover:bg-white/10 text-slate-200 border border-white/15 transition flex items-center justify-center gap-2`}
           >
             <Crown className={`w-5 h-5 ${theme.accentText}`} />
@@ -966,265 +1124,559 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
         )}
       </section>
 
-      {/* 3. FREE DISCORD COMMUNITY SECTION */}
-      {config.showCommunitySection && (
-        <section id="community-section" className="relative z-10 max-w-6xl mx-auto px-4 py-10">
-          <div className={`${radiusCard} bg-gradient-to-br from-[#5865F2]/15 via-[#11111e] to-[#0c0c16] border border-[#5865F2]/35 p-6 sm:p-10 shadow-2xl`}>
-            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8 mb-10">
-              <div className="max-w-2xl">
-                {config.communityBadge && (
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#5865F2]/20 border border-[#5865F2]/40 text-[#99A4FF] text-xs font-bold uppercase tracking-wider mb-3">
-                    <Users className="w-3.5 h-3.5" /> {config.communityBadge}
-                  </div>
-                )}
-                <h2 className="text-3xl sm:text-4xl font-black text-white mb-3">
-                  {config.communityTitle}
-                </h2>
-                <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
-                  {config.communitySubtitle}
-                </p>
-              </div>
+      {/* 3. SECTION SWITCHER: DISCORD | VIP | REDDIT */}
+      <section id="hub-tabs" className="relative z-10 max-w-6xl mx-auto px-4 pt-2 pb-12">
+        <div className="max-w-2xl mx-auto mb-10">
+          <div className={`grid grid-cols-2 sm:grid-cols-4 gap-2 p-1.5 bg-[#10101b] border border-white/10 ${radiusCard} shadow-2xl`}>
+            <button
+              type="button"
+              onClick={() => setActiveSection('discord')}
+              className={`py-3 px-3 ${radiusBtn} font-black text-xs sm:text-sm uppercase tracking-wider flex items-center justify-center gap-2 transition ${
+                activeSection === 'discord'
+                  ? 'bg-[#5865F2] text-white shadow-lg shadow-[#5865F2]/30'
+                  : 'text-slate-300 hover:text-white hover:bg-white/5'
+              }`}
+            >
+              <Users className="w-4 h-4 shrink-0" />
+              <span>DISCORD</span>
+            </button>
 
-              <div className="shrink-0">
-                <a
-                  href={config.discordInviteUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className={`w-full sm:w-auto px-7 py-4 ${radiusBtn} font-black text-base bg-[#5865F2] hover:bg-[#4752C4] text-white shadow-[0_0_30px_rgba(88,101,242,0.4)] flex items-center justify-center gap-2 transition transform hover:-translate-y-0.5`}
-                >
-                  <span>{config.communityCtaText}</span>
-                  <ExternalLink className="w-4 h-4" />
-                </a>
-                {config.communityCtaSubtext && (
-                  <p className="text-[11px] text-slate-400 text-center mt-2">
-                    {config.communityCtaSubtext}
-                  </p>
-                )}
-              </div>
+            <button
+              type="button"
+              onClick={() => setActiveSection('vip')}
+              className={`py-3 px-3 ${radiusBtn} font-black text-xs sm:text-sm uppercase tracking-wider flex items-center justify-center gap-2 transition ${
+                activeSection === 'vip'
+                  ? `bg-gradient-to-r ${theme.buttonGradient} text-white shadow-lg`
+                  : 'text-slate-300 hover:text-white hover:bg-white/5'
+              }`}
+            >
+              <Crown className="w-4 h-4 shrink-0" />
+              <span>VIP</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setActiveSection('reddit')}
+              className={`py-3 px-3 ${radiusBtn} font-black text-xs sm:text-sm uppercase tracking-wider flex items-center justify-center gap-2 transition ${
+                activeSection === 'reddit'
+                  ? 'bg-[#FF4500] text-white shadow-lg shadow-[#FF4500]/30'
+                  : 'text-slate-300 hover:text-white hover:bg-white/5'
+              }`}
+            >
+              <Sparkles className="w-4 h-4 shrink-0" />
+              <span>REDDIT</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setActiveSection('promo')}
+              className={`py-3 px-3 ${radiusBtn} font-black text-xs sm:text-sm uppercase tracking-wider flex items-center justify-center gap-2 transition ${
+                activeSection === 'promo'
+                  ? 'bg-amber-500 text-slate-950 shadow-lg shadow-amber-500/30'
+                  : 'text-slate-300 hover:text-white hover:bg-white/5'
+              }`}
+            >
+              <Zap className="w-4 h-4 shrink-0" />
+              <span>PROMO</span>
+            </button>
+          </div>
+        </div>
+
+        {/* VAULT STATS ALWAYS ACCESSIBLE & COMPACT ABOVE ACTIVE TAB */}
+        {config.showStatsBanner && (
+          <div className="mb-10">
+            <div className="text-center mb-4">
+              <h3 className={`text-xs sm:text-sm font-black uppercase tracking-[0.2em] ${theme.accentText}`}>
+                {config.statsTitle}
+              </h3>
             </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-              {communityCards.map((card) => (
-                <div key={card.id} className={`bg-black/40 border border-white/10 p-5 ${radiusCard}`}>
-                  {renderCommunityCardIcon(card.icon)}
-                  <h3 className="font-bold text-white text-base mb-1">{card.title}</h3>
-                  <p className="text-xs text-slate-400 leading-relaxed">
-                    {card.description}
-                  </p>
+            <div className={`grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 bg-gradient-to-b from-white/[0.04] to-transparent border border-white/10 ${radiusCard} p-3 sm:p-5 backdrop-blur-xl`}>
+              {stats.map((box) => (
+                <div key={box.id} className={`p-3.5 ${radiusBtn} bg-black/40 border border-white/5 text-center`}>
+                  <div className="text-xl sm:text-3xl font-black text-white mb-1 flex items-center justify-center gap-1.5">
+                    {renderStatIcon(box.icon)}
+                    <span>{box.value}</span>
+                  </div>
+                  <div className={`text-xs font-bold ${statColorClass(box.icon)} uppercase tracking-wider`}>
+                    {box.label}
+                  </div>
+                  <p className="text-[11px] text-slate-400 mt-0.5">{box.sublabel}</p>
                 </div>
               ))}
             </div>
           </div>
-        </section>
-      )}
+        )}
 
-      {/* 4. CAPTIONVIBES CURRENT VAULT STATS (DIRETTAMENTE SOPRA AI TIER) */}
-      {config.showStatsBanner && (
-        <section className="relative z-10 max-w-6xl mx-auto px-4 pt-14 pb-4">
-          <div className="text-center mb-5">
-            <h3 className={`text-sm sm:text-base font-black uppercase tracking-[0.2em] ${theme.accentText}`}>
-              {config.statsTitle}
-            </h3>
-          </div>
-          <div className={`grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5 bg-gradient-to-b from-white/[0.04] to-transparent border border-white/10 ${radiusCard} p-4 sm:p-6 backdrop-blur-xl`}>
-            {stats.map((box) => (
-              <div key={box.id} className={`p-4 ${radiusBtn} bg-black/40 border border-white/5 text-center`}>
-                <div className="text-2xl sm:text-4xl font-black text-white mb-1 flex items-center justify-center gap-1.5">
-                  {renderStatIcon(box.icon)}
-                  <span>{box.value}</span>
-                </div>
-                <div className={`text-xs sm:text-sm font-bold ${statColorClass(box.icon)} uppercase tracking-wider`}>
-                  {box.label}
-                </div>
-                <p className="text-[11px] text-slate-400 mt-1">{box.sublabel}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-      )}
-
-      {/* 5. OPTIONAL PAID VIP TIERS SECTION */}
-      <section id="pricing-section" className="relative z-10 max-w-6xl mx-auto px-4 py-12">
-        <div className="text-center max-w-3xl mx-auto mb-12">
-          <div className={`inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest ${theme.accentText} mb-2`}>
-            <Crown className="w-4 h-4" /> {config.pricingBadge}
-          </div>
-          <h2 className="text-3xl sm:text-5xl font-black text-white mb-4">
-            {config.pricingTitle}
-          </h2>
-          <p className="text-slate-400 text-sm sm:text-base mb-6">
-            {config.pricingSubtitle}
-          </p>
-
-        </div>
-
-        {/* IMPORTANT WARNING: JOIN DISCORD FIRST */}
-        <div className={`max-w-4xl mx-auto mb-12 ${radiusCard} bg-amber-500/10 border-2 border-amber-500/70 p-5 sm:p-6 shadow-[0_0_35px_rgba(245,158,11,0.18)]`}>
-          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-            <div className="w-12 h-12 rounded-xl bg-amber-500/20 border border-amber-500/50 flex items-center justify-center text-amber-400 shrink-0">
-              <AlertTriangle className="w-6 h-6" />
-            </div>
-            <div className="flex-1 text-left">
-              <h3 className="text-base sm:text-lg font-black uppercase tracking-wide text-amber-400 mb-1">
-                ⚠️ IMPORTANT: Join the Discord Server FIRST!
-              </h3>
-              <p className="text-xs sm:text-sm text-slate-200 leading-relaxed">
-                You <strong className="text-white underline">must join our free Discord server BEFORE upgrading</strong> so the bot can assign your VIP role automatically in 5 seconds.
-                If you purchase before joining, you&apos;ll need to <strong className="text-amber-300">DM me privately on Discord</strong> so I can activate it manually (which can take anywhere from <strong className="text-white">10 minutes to 10 hours</strong>).
-              </p>
-            </div>
-            <a
-              href={config.discordInviteUrl}
-              target="_blank"
-              rel="noreferrer"
-              className={`w-full sm:w-auto px-5 py-3 ${radiusBtn} font-black text-xs sm:text-sm bg-[#5865F2] hover:bg-[#4752C4] text-white flex items-center justify-center gap-1.5 shrink-0 shadow-lg shadow-[#5865F2]/30 transition`}
-            >
-              <span>Join Discord First</span>
-              <ArrowRight className="w-4 h-4" />
-            </a>
-          </div>
-        </div>
-
-        {/* Dynamic Paid Tiers Grid */}
-        <div className={`grid grid-cols-1 ${gridColsClass} gap-6 items-stretch`}>
-          {tiers.map((tier) => {
-            const displayPrice = tier.price;
-
-            return (
-              <div
-                key={tier.id}
-                className={`${radiusCard} p-6 sm:p-8 flex flex-col justify-between relative transition ${
-                  tier.isPopular
-                    ? `bg-gradient-to-b from-[#1d1128] via-[#130d1c] to-[#0d0a14] border-2 ${theme.borderGlow} shadow-2xl transform lg:-translate-y-3`
-                    : 'bg-[#12121e] border border-white/15 hover:border-white/25'
-                }`}
-              >
-                {tier.isPopular && tier.popularBanner && (
-                  <div className="absolute -top-4 inset-x-0 flex justify-center pointer-events-none">
-                    <div className={`px-4 py-1 rounded-full bg-gradient-to-r ${theme.barGradient} text-white text-xs font-black uppercase tracking-wider shadow-lg flex items-center gap-1.5 whitespace-nowrap`}>
-                      <Flame className="w-3.5 h-3.5 fill-white" />
-                      {tier.popularBanner}
-                    </div>
+        {/* TAB 1: DISCORD HUB + 3-4s GIF PREVIEWS */}
+        {activeSection === 'discord' && (
+          <div id="community-section" className="space-y-10">
+            {config.showCommunitySection && (
+              <div className={`${radiusCard} bg-gradient-to-br from-[#5865F2]/15 via-[#11111e] to-[#0c0c16] border border-[#5865F2]/35 p-6 sm:p-8 shadow-2xl`}>
+                <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 mb-8">
+                  <div className="max-w-2xl">
+                    {config.communityBadge && (
+                      <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#5865F2]/20 border border-[#5865F2]/40 text-[#99A4FF] text-xs font-bold uppercase tracking-wider mb-3">
+                        <Users className="w-3.5 h-3.5" /> {config.communityBadge}
+                      </div>
+                    )}
+                    <h2 className="text-2xl sm:text-4xl font-black text-white mb-2">
+                      {config.communityTitle}
+                    </h2>
+                    <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
+                      {config.communitySubtitle}
+                    </p>
                   </div>
-                )}
 
-                <div>
-                  <div className={`flex items-center justify-between gap-2 mb-4 ${tier.isPopular ? 'mt-2' : ''}`}>
-                    <span className={`text-base font-black uppercase tracking-wider flex items-center gap-1.5 ${tier.isPopular ? theme.accentText : 'text-white'}`}>
-                      {tier.isPopular && <Crown className={`w-5 h-5 ${theme.accentText} shrink-0`} />}
-                      {tier.name}
-                    </span>
-                    {tier.badge && (
-                      <span className={`px-2.5 py-1 rounded text-[11px] font-bold shrink-0 ${
-                        tier.isPopular
-                          ? `${theme.badgeBg} ${theme.accentText} border ${theme.badgeBorder}`
-                          : 'bg-white/5 text-slate-300 border border-white/10'
-                      }`}>
-                        {tier.badge}
-                      </span>
+                  <div className="shrink-0">
+                    <a
+                      href={config.discordInviteUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className={`w-full sm:w-auto px-7 py-4 ${radiusBtn} font-black text-base bg-[#5865F2] hover:bg-[#4752C4] text-white shadow-[0_0_30px_rgba(88,101,242,0.4)] flex items-center justify-center gap-2 transition transform hover:-translate-y-0.5`}
+                    >
+                      <span>{config.communityCtaText}</span>
+                      <ExternalLink className="w-4 h-4" />
+                    </a>
+                    {config.communityCtaSubtext && (
+                      <p className="text-[11px] text-slate-400 text-center mt-2">
+                        {config.communityCtaSubtext}
+                      </p>
                     )}
                   </div>
-
-                  <div className="mb-6">
-                    <div className="flex items-baseline gap-2.5 flex-wrap">
-                      {tier.originalPrice && (
-                        <span className="text-lg font-bold text-slate-500 line-through">
-                          ${tier.originalPrice}
-                        </span>
-                      )}
-                      <span className={`${tier.isPopular ? 'text-5xl' : 'text-4xl'} font-black text-white`}>
-                        ${displayPrice}
-                      </span>
-                      <span className="text-slate-400 text-sm">/ month</span>
-                    </div>
-                    <p className={`text-xs mt-2 ${tier.isPopular ? `${theme.accentText} font-medium` : 'text-slate-400'}`}>
-                      {tier.description}
-                    </p>
-                  </div>
-
-                  <ul className="space-y-3.5 text-sm mb-8">
-                    {tier.features.map((feat, idx) => (
-                      <li
-                        key={idx}
-                        className={`flex items-start gap-2.5 ${
-                          feat.included
-                            ? tier.isPopular
-                              ? 'text-white font-medium'
-                              : 'text-slate-200'
-                            : 'text-slate-500 line-through'
-                        }`}
-                      >
-                        {feat.included ? (
-                          tier.isPopular ? (
-                            <div className={`p-0.5 rounded-full bg-gradient-to-r ${theme.barGradient} text-white shrink-0 mt-0.5`}>
-                              <Check className="w-3.5 h-3.5" />
-                            </div>
-                          ) : (
-                            <Check className={`w-4 h-4 ${theme.accentText} shrink-0 mt-0.5`} />
-                          )
-                        ) : (
-                          <X className="w-4 h-4 text-rose-500/70 shrink-0 mt-0.5" />
-                        )}
-                        <span>{feat.text}</span>
-                      </li>
-                    ))}
-                  </ul>
                 </div>
 
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+                  {communityCards.map((card) => (
+                    <div key={card.id} className={`bg-black/40 border border-white/10 p-5 ${radiusCard}`}>
+                      {renderCommunityCardIcon(card.icon)}
+                      <h3 className="font-bold text-white text-base mb-1">{card.title}</h3>
+                      <p className="text-xs text-slate-400 leading-relaxed">
+                        {card.description}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* 3-4s GIF / IMAGE PREVIEW STRIP */}
+            <div className={`${radiusCard} bg-[#10101b] border border-white/10 p-6 sm:p-8`}>
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-6">
                 <div>
-                  <a
-                    href={tier.checkoutUrl || config.defaultCheckoutUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                    className={`w-full py-3.5 ${radiusBtn} font-black text-sm sm:text-base flex items-center justify-center gap-2 transition ${
+                  <span className={`text-[11px] font-bold uppercase tracking-widest ${theme.accentText}`}>
+                    {config.gifSectionBadge}
+                  </span>
+                  <h3 className="text-xl sm:text-2xl font-black text-white mt-0.5">
+                    {config.gifSectionTitle}
+                  </h3>
+                </div>
+                <span className="text-xs text-slate-400">
+                  {config.gifSectionSubtitle}
+                </span>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+                {previewGifs.map((item) => (
+                  <div key={item.id} className={`${radiusCard} bg-black/45 border border-white/10 overflow-hidden flex flex-col`}>
+                    <div className="aspect-video bg-[#171726] relative flex items-center justify-center border-b border-white/10 overflow-hidden">
+                      {item.gifUrl ? (
+                        <img
+                          src={item.gifUrl}
+                          alt={item.title}
+                          loading="lazy"
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <div className="text-center p-4">
+                          <Clapperboard className={`w-7 h-7 ${theme.accentText} mx-auto mb-1.5 opacity-80`} />
+                          <div className="text-xs font-bold text-slate-300">{item.duration} Slot</div>
+                          <div className="text-[11px] text-slate-500 mt-0.5">Put GIF URL in gifUrl</div>
+                        </div>
+                      )}
+                      <span className="absolute top-2.5 left-2.5 px-2.5 py-0.5 rounded bg-black/75 border border-white/10 text-[10px] font-bold text-white">
+                        {item.tag}
+                      </span>
+                      <span className="absolute bottom-2.5 right-2.5 px-2 py-0.5 rounded bg-black/75 text-[10px] font-mono text-slate-300">
+                        {item.duration}
+                      </span>
+                    </div>
+                    <div className="p-4 flex-1 flex flex-col justify-between">
+                      <div>
+                        <div className="flex items-baseline justify-between gap-2 flex-wrap mb-1.5">
+                          <h4 className="font-bold text-white text-sm">{item.title}</h4>
+                          <span className={`text-[11px] font-bold ${theme.accentText}`}>
+                            {item.tag}
+                          </span>
+                        </div>
+                        <p className="text-xs text-slate-400 leading-relaxed">{item.note}</p>
+                      </div>
+                      <a
+                        href={config.discordInviteUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className={`mt-3 inline-flex items-center gap-1 text-xs font-bold ${theme.accentText} hover:text-white transition`}
+                      >
+                        <span>{config.gifCardCtaText}</span>
+                        <ArrowRight className="w-3.5 h-3.5" />
+                      </a>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* TAB 2: VIP TIERS + MANDATORY JOIN DISCORD FIRST WARNING */}
+        {activeSection === 'vip' && (
+          <div id="pricing-section" className="space-y-10">
+            <div className="text-center max-w-3xl mx-auto">
+              <div className={`inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest ${theme.accentText} mb-2`}>
+                <Crown className="w-4 h-4" /> {config.pricingBadge}
+              </div>
+              <h2 className="text-3xl sm:text-4xl font-black text-white mb-3">
+                {config.pricingTitle}
+              </h2>
+              <p className="text-slate-400 text-sm sm:text-base">
+                {config.pricingSubtitle}
+              </p>
+            </div>
+
+            {/* IMPORTANT WARNING: JOIN DISCORD FIRST */}
+            <div className={`max-w-4xl mx-auto ${radiusCard} bg-amber-500/10 border-2 border-amber-500/70 p-5 sm:p-6 shadow-[0_0_35px_rgba(245,158,11,0.18)]`}>
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                <div className="w-12 h-12 rounded-xl bg-amber-500/20 border border-amber-500/50 flex items-center justify-center text-amber-400 shrink-0">
+                  <AlertTriangle className="w-6 h-6" />
+                </div>
+                <div className="flex-1 text-left">
+                  <h3 className="text-base sm:text-lg font-black uppercase tracking-wide text-amber-400 mb-1">
+                    ⚠️ IMPORTANT: Join the Discord Server FIRST!
+                  </h3>
+                  <p className="text-xs sm:text-sm text-slate-200 leading-relaxed">
+                    You <strong className="text-white underline">must join our free Discord server BEFORE upgrading</strong> so the bot can assign your VIP role automatically in 5 seconds.
+                    If you purchase before joining, you&apos;ll need to <strong className="text-amber-300">DM me privately on Discord</strong> so I can activate it manually (which can take anywhere from <strong className="text-white">10 minutes to 10 hours</strong>).
+                  </p>
+                </div>
+                <a
+                  href={config.discordInviteUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className={`w-full sm:w-auto px-5 py-3 ${radiusBtn} font-black text-xs sm:text-sm bg-[#5865F2] hover:bg-[#4752C4] text-white flex items-center justify-center gap-1.5 shrink-0 shadow-lg shadow-[#5865F2]/30 transition`}
+                >
+                  <span>{config.warningCtaText}</span>
+                  <ArrowRight className="w-4 h-4" />
+                </a>
+              </div>
+            </div>
+
+            {/* Dynamic Paid Tiers Grid */}
+            <div className={`grid grid-cols-1 ${gridColsClass} gap-6 items-stretch`}>
+              {tiers.map((tier) => {
+                const displayPrice = tier.price;
+
+                return (
+                  <div
+                    key={tier.id}
+                    className={`${radiusCard} p-6 sm:p-8 flex flex-col justify-between relative transition ${
                       tier.isPopular
-                        ? `bg-gradient-to-r ${theme.buttonGradient} text-white ${theme.buttonShadow} transform hover:scale-[1.01]`
-                        : 'bg-white/10 hover:bg-white/15 text-white border border-white/15'
+                        ? `bg-gradient-to-b from-[#1d1128] via-[#130d1c] to-[#0d0a14] border-2 ${theme.borderGlow} shadow-2xl transform lg:-translate-y-2`
+                        : 'bg-[#12121e] border border-white/15 hover:border-white/25'
                     }`}
                   >
-                    <Unlock className="w-4 h-4" />
-                    <span>{tier.ctaText}</span>
+                    {tier.isPopular && tier.popularBanner && (
+                      <div className="absolute -top-4 inset-x-0 flex justify-center pointer-events-none">
+                        <div className={`px-4 py-1 rounded-full bg-gradient-to-r ${theme.barGradient} text-white text-xs font-black uppercase tracking-wider shadow-lg flex items-center gap-1.5 whitespace-nowrap`}>
+                          <Flame className="w-3.5 h-3.5 fill-white" />
+                          {tier.popularBanner}
+                        </div>
+                      </div>
+                    )}
+
+                    <div>
+                      <div className={`flex items-center justify-between gap-2 mb-4 ${tier.isPopular ? 'mt-2' : ''}`}>
+                        <span className={`text-base font-black uppercase tracking-wider flex items-center gap-1.5 ${tier.isPopular ? theme.accentText : 'text-white'}`}>
+                          {tier.isPopular && <Crown className={`w-5 h-5 ${theme.accentText} shrink-0`} />}
+                          {tier.name}
+                        </span>
+                        {tier.badge && (
+                          <span className={`px-2.5 py-1 rounded text-[11px] font-bold shrink-0 ${
+                            tier.isPopular
+                              ? `${theme.badgeBg} ${theme.accentText} border ${theme.badgeBorder}`
+                              : 'bg-white/5 text-slate-300 border border-white/10'
+                          }`}>
+                            {tier.badge}
+                          </span>
+                        )}
+                      </div>
+
+                      <div className="mb-6">
+                        <div className="flex items-baseline gap-2.5 flex-wrap">
+                          {tier.originalPrice && (
+                            <span className="text-lg font-bold text-slate-500 line-through">
+                              ${tier.originalPrice}
+                            </span>
+                          )}
+                          <span className={`${tier.isPopular ? 'text-5xl' : 'text-4xl'} font-black text-white`}>
+                            ${displayPrice}
+                          </span>
+                          <span className="text-slate-400 text-sm">/ month</span>
+                        </div>
+                        <p className={`text-xs mt-2 ${tier.isPopular ? `${theme.accentText} font-medium` : 'text-slate-400'}`}>
+                          {tier.description}
+                        </p>
+                      </div>
+
+                      <ul className="space-y-3.5 text-sm mb-8">
+                        {tier.features.map((feat, idx) => (
+                          <li
+                            key={idx}
+                            className={`flex items-start gap-2.5 ${
+                              feat.included
+                                ? tier.isPopular
+                                  ? 'text-white font-medium'
+                                  : 'text-slate-200'
+                                : 'text-slate-500 line-through'
+                            }`}
+                          >
+                            {feat.included ? (
+                              tier.isPopular ? (
+                                <div className={`p-0.5 rounded-full bg-gradient-to-r ${theme.barGradient} text-white shrink-0 mt-0.5`}>
+                                  <Check className="w-3.5 h-3.5" />
+                                </div>
+                              ) : (
+                                <Check className={`w-4 h-4 ${theme.accentText} shrink-0 mt-0.5`} />
+                              )
+                            ) : (
+                              <X className="w-4 h-4 text-rose-500/70 shrink-0 mt-0.5" />
+                            )}
+                            <span>{feat.text}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    <div>
+                      <a
+                        href={tier.checkoutUrl || config.defaultCheckoutUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className={`w-full py-3.5 ${radiusBtn} font-black text-sm sm:text-base flex items-center justify-center gap-2 transition ${
+                          tier.isPopular
+                            ? `bg-gradient-to-r ${theme.buttonGradient} text-white ${theme.buttonShadow} transform hover:scale-[1.01]`
+                            : 'bg-white/10 hover:bg-white/15 text-white border border-white/15'
+                        }`}
+                      >
+                        <Unlock className="w-4 h-4" />
+                        <span>{tier.ctaText}</span>
+                      </a>
+                      {tier.isPopular && (
+                        <p className="text-[11px] text-center text-slate-400 mt-2.5 flex items-center justify-center gap-1">
+                          <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+                          Instant automated Discord unlock • Cancel anytime
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Free Discord Banner Underneath Pricing */}
+            <div className={`${radiusCard} bg-[#10101c] border border-[#5865F2]/30 p-5 sm:p-6 flex flex-col sm:flex-row items-center justify-between gap-4`}>
+              <div className="flex items-center gap-3 text-center sm:text-left">
+                <div className="w-11 h-11 rounded-xl bg-[#5865F2]/20 border border-[#5865F2]/40 flex items-center justify-center text-[#99A4FF] shrink-0 hidden sm:flex">
+                  <Users className="w-5 h-5" />
+                </div>
+                <div>
+                  <h4 className="font-bold text-white text-sm sm:text-base">{config.bottomBannerTitle}</h4>
+                  <p className="text-xs text-slate-400">{config.bottomBannerSubtitle}</p>
+                </div>
+              </div>
+              <a
+                href={config.discordInviteUrl}
+                target="_blank"
+                rel="noreferrer"
+                className={`px-5 py-2.5 ${radiusBtn} font-bold text-xs sm:text-sm bg-[#5865F2] hover:bg-[#4752C4] text-white flex items-center gap-1.5 shrink-0 transition`}
+              >
+                <span>{config.bottomBannerCta}</span>
+                <ArrowRight className="w-4 h-4" />
+              </a>
+            </div>
+          </div>
+        )}
+
+        {/* TAB 3: REDDIT HUB */}
+        {activeSection === 'reddit' && (
+          <div id="reddit-section" className="space-y-8">
+            <div className={`${radiusCard} bg-gradient-to-br from-[#FF4500]/15 via-[#11111e] to-[#0c0c16] border border-[#FF4500]/35 p-6 sm:p-8 shadow-2xl`}>
+              <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+                <div className="max-w-2xl">
+                  {config.redditBadge && (
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FF4500]/20 border border-[#FF4500]/40 text-[#FF8A5B] text-xs font-bold uppercase tracking-wider mb-3">
+                      <Sparkles className="w-3.5 h-3.5" /> {config.redditBadge}
+                    </div>
+                  )}
+                  <h2 className="text-2xl sm:text-4xl font-black text-white mb-2">
+                    {config.redditTitle}
+                  </h2>
+                  <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
+                    {config.redditSubtitle}
+                  </p>
+                </div>
+
+                <div className="flex flex-col sm:flex-row gap-3 shrink-0">
+                  <a
+                    href={config.redditUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className={`px-6 py-4 ${radiusBtn} font-black text-sm sm:text-base bg-[#FF4500] hover:bg-[#E03D00] text-white shadow-lg shadow-[#FF4500]/30 flex items-center justify-center gap-2 transition`}
+                  >
+                    <span>{config.redditCtaText}</span>
+                    <ExternalLink className="w-4 h-4" />
                   </a>
-                  {tier.isPopular && (
-                    <p className="text-[11px] text-center text-slate-400 mt-2.5 flex items-center justify-center gap-1">
-                      <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-                      Instant automated Discord unlock • Cancel anytime
-                    </p>
+                  {config.redditSecondaryCtaText && (
+                    <button
+                      type="button"
+                      onClick={() => setActiveSection('discord')}
+                      className={`px-5 py-4 ${radiusBtn} font-bold text-sm bg-white/5 hover:bg-white/10 text-slate-200 border border-white/15 flex items-center justify-center gap-1.5 transition`}
+                    >
+                      <span>{config.redditSecondaryCtaText}</span>
+                      <ArrowRight className="w-4 h-4" />
+                    </button>
                   )}
                 </div>
               </div>
-            );
-          })}
-        </div>
 
-        {/* Free Discord Banner Underneath Pricing */}
-        <div className={`mt-10 ${radiusCard} bg-[#10101c] border border-[#5865F2]/30 p-5 sm:p-6 flex flex-col sm:flex-row items-center justify-between gap-4`}>
-          <div className="flex items-center gap-3 text-center sm:text-left">
-            <div className="w-11 h-11 rounded-xl bg-[#5865F2]/20 border border-[#5865F2]/40 flex items-center justify-center text-[#99A4FF] shrink-0 hidden sm:flex">
-              <Users className="w-5 h-5" />
-            </div>
-            <div>
-              <h4 className="font-bold text-white text-sm sm:text-base">{config.bottomBannerTitle}</h4>
-              <p className="text-xs text-slate-400">{config.bottomBannerSubtitle}</p>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mt-8">
+                <div className={`bg-black/40 border border-white/10 p-5 ${radiusCard}`}>
+                  <h3 className="font-bold text-white text-sm mb-1">{config.redditCard1Title}</h3>
+                  <p className="text-xs text-slate-400 leading-relaxed">
+                    {config.redditCard1Desc}
+                  </p>
+                </div>
+                <div className={`bg-black/40 border border-white/10 p-5 ${radiusCard}`}>
+                  <h3 className="font-bold text-white text-sm mb-1">{config.redditCard2Title}</h3>
+                  <p className="text-xs text-slate-400 leading-relaxed">
+                    {config.redditCard2Desc}
+                  </p>
+                </div>
+                <div className={`bg-black/40 border border-white/10 p-5 ${radiusCard}`}>
+                  <h3 className="font-bold text-white text-sm mb-1">{config.redditCard3Title}</h3>
+                  <p className="text-xs text-slate-400 leading-relaxed">
+                    {config.redditCard3Desc}
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
-          <a
-            href={config.discordInviteUrl}
-            target="_blank"
-            rel="noreferrer"
-            className={`px-5 py-2.5 ${radiusBtn} font-bold text-xs sm:text-sm bg-[#5865F2] hover:bg-[#4752C4] text-white flex items-center gap-1.5 shrink-0 transition`}
-          >
-            <span>{config.bottomBannerCta}</span>
-            <ArrowRight className="w-4 h-4" />
-          </a>
-        </div>
+        )}
+
+
+        {/* TAB 4: SPONSORSHIP / PROMO RULES */}
+        {activeSection === 'promo' && (
+          <div id="promo-section" className="space-y-8">
+            <div className={`${radiusCard} bg-gradient-to-br from-amber-500/15 via-[#11111e] to-[#0c0c16] border border-amber-500/35 p-6 sm:p-8 shadow-2xl`}>
+              <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+                <div className="max-w-2xl">
+                  {config.promoBadge && (
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/20 border border-amber-500/40 text-amber-300 text-xs font-bold uppercase tracking-wider mb-3">
+                      <Zap className="w-3.5 h-3.5" /> {config.promoBadge}
+                    </div>
+                  )}
+                  <h2 className="text-2xl sm:text-4xl font-black text-white mb-2">
+                    {config.promoTitle}
+                  </h2>
+                  <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
+                    {config.promoSubtitle}
+                  </p>
+                </div>
+
+                <div className="flex flex-col sm:flex-row gap-3 shrink-0">
+                  <a
+                    href={config.promoPaymentUrl || "https://upgrade.chat/captionvibes/p/captionvibespromo"}
+                    target="_blank"
+                    rel="noreferrer"
+                    className={`px-6 py-4 ${radiusBtn} font-black text-sm sm:text-base bg-amber-500 hover:bg-amber-400 text-slate-950 shadow-lg shadow-amber-500/25 flex items-center justify-center gap-2 transition`}
+                  >
+                    <span>{config.promoCtaText}</span>
+                    <ExternalLink className="w-4 h-4" />
+                  </a>
+                  {config.promoSecondaryCtaText && (
+                    <a
+                      href={config.discordInviteUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className={`px-5 py-4 ${radiusBtn} font-bold text-sm bg-white/5 hover:bg-white/10 text-slate-200 border border-white/15 flex items-center justify-center gap-1.5 transition`}
+                    >
+                      <span>{config.promoSecondaryCtaText}</span>
+                      <ArrowRight className="w-4 h-4" />
+                    </a>
+                  )}
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mt-8">
+                <div className={`bg-black/40 border border-white/10 p-5 ${radiusCard}`}>
+                  <h3 className="font-bold text-white text-sm mb-1">{config.promoRule1Title}</h3>
+                  <p className="text-xs text-slate-400 leading-relaxed">
+                    {config.promoRule1Desc}
+                  </p>
+                </div>
+                <div className={`bg-black/40 border border-white/10 p-5 ${radiusCard}`}>
+                  <h3 className="font-bold text-white text-sm mb-1">{config.promoRule2Title}</h3>
+                  <p className="text-xs text-slate-400 leading-relaxed">
+                    {config.promoRule2Desc}
+                  </p>
+                </div>
+                <div className={`bg-black/40 border border-white/10 p-5 ${radiusCard}`}>
+                  <h3 className="font-bold text-white text-sm mb-1">{config.promoRule3Title}</h3>
+                  <p className="text-xs text-slate-400 leading-relaxed">
+                    {config.promoRule3Desc}
+                  </p>
+                </div>
+              </div>
+
+              <div className={`mt-6 ${radiusCard} bg-black/45 border border-white/10 p-5`}>
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
+                  <h4 className="font-black text-white text-sm sm:text-base">
+                    {config.promoWhyTitle || DEFAULT_CONFIG.promoWhyTitle}
+                  </h4>
+                  <span className="inline-flex items-center px-3 py-1 rounded-full bg-amber-500/20 border border-amber-500/40 text-amber-300 text-xs font-black w-fit">
+                    {config.promoSlotPrice || DEFAULT_CONFIG.promoSlotPrice}
+                  </span>
+                </div>
+                <ul className="space-y-2 text-xs text-slate-300 leading-relaxed">
+                  <li>• {config.promoWhy1 || DEFAULT_CONFIG.promoWhy1}</li>
+                  <li>• {config.promoWhy2 || DEFAULT_CONFIG.promoWhy2}</li>
+                  <li>• {config.promoWhy3 || DEFAULT_CONFIG.promoWhy3}</li>
+                </ul>
+              </div>
+
+              <div className={`mt-5 ${radiusCard} bg-black/50 border border-amber-500/25 p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3`}>
+                <div>
+                  <h4 className="font-bold text-amber-300 text-sm mb-0.5">{config.promoPaymentNoteTitle}</h4>
+                  <p className="text-xs text-slate-300 leading-relaxed">{config.promoPaymentNoteDesc}</p>
+                </div>
+                <a
+                  href={config.promoPaymentUrl || "https://upgrade.chat/captionvibes/p/captionvibespromo"}
+                  target="_blank"
+                  rel="noreferrer"
+                  className={`px-4 py-2.5 ${radiusBtn} font-bold text-xs bg-amber-500/20 hover:bg-amber-500/30 text-amber-200 border border-amber-500/40 flex items-center justify-center gap-1.5 shrink-0 transition`}
+                >
+                  <span>{config.promoCtaText}</span>
+                  <ExternalLink className="w-3.5 h-3.5" />
+                </a>
+              </div>
+            </div>
+          </div>
+        )}
       </section>
 
       {/* 6. FAQ SECTION */}
       {config.showFaqSection && (
-        <section className="relative z-10 max-w-4xl mx-auto px-4 py-16">
-          <div className="text-center mb-10">
-            <h2 className="text-2xl sm:text-4xl font-black text-white mb-2">
+        <section className="relative z-10 max-w-4xl mx-auto px-4 py-12">
+          <div className="text-center mb-8">
+            <h2 className="text-2xl sm:text-3xl font-black text-white mb-1.5">
               {config.faqTitle}
             </h2>
             <p className="text-slate-400 text-sm">
@@ -1745,6 +2197,377 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
                     </div>
 
                     <div className="pt-2 border-t border-white/10 space-y-2">
+                      <label className="block text-[11px] font-bold text-slate-300 uppercase">Warning Banner (Join Discord First)</label>
+                      <input
+                        type="text"
+                        value={config.warningTitle}
+                        onChange={(e) => setConfig({ ...config, warningTitle: e.target.value })}
+                        placeholder="Titolo Warning"
+                        className="w-full bg-black/50 border border-amber-500/40 rounded-lg px-2.5 py-1.5 text-amber-300 font-bold"
+                      />
+                      <textarea
+                        rows={3}
+                        value={config.warningBody}
+                        onChange={(e) => setConfig({ ...config, warningBody: e.target.value })}
+                        placeholder="Testo Warning"
+                        className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1.5 text-white"
+                      />
+                      <input
+                        type="text"
+                        value={config.warningCtaText}
+                        onChange={(e) => setConfig({ ...config, warningCtaText: e.target.value })}
+                        placeholder="Testo bottone Warning"
+                        className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1.5 text-white"
+                      />
+                    </div>
+
+                    <div className="pt-2 border-t border-white/10 space-y-2">
+                      <label className="block text-[11px] font-bold text-slate-300 uppercase">Sezione GIF / Preview (3–4s)</label>
+                      <div className="grid grid-cols-2 gap-2">
+                        <input
+                          type="text"
+                          value={config.gifSectionBadge}
+                          onChange={(e) => setConfig({ ...config, gifSectionBadge: e.target.value })}
+                          placeholder="Badge sezione GIF"
+                          className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1.5 text-white"
+                        />
+                        <input
+                          type="text"
+                          value={config.gifCardCtaText}
+                          onChange={(e) => setConfig({ ...config, gifCardCtaText: e.target.value })}
+                          placeholder="Testo link card GIF"
+                          className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1.5 text-white"
+                        />
+                      </div>
+                      <input
+                        type="text"
+                        value={config.gifSectionTitle}
+                        onChange={(e) => setConfig({ ...config, gifSectionTitle: e.target.value })}
+                        placeholder="Titolo sezione GIF"
+                        className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1.5 text-white font-bold"
+                      />
+                      <input
+                        type="text"
+                        value={config.gifSectionSubtitle}
+                        onChange={(e) => setConfig({ ...config, gifSectionSubtitle: e.target.value })}
+                        placeholder="Sottotitolo sezione GIF"
+                        className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1.5 text-slate-300"
+                      />
+                      {previewGifs.map((g, gIdx) => (
+                        <div key={g.id} className="bg-black/40 border border-white/10 rounded-xl p-2.5 space-y-1.5">
+                          <div className="text-[10px] font-bold text-slate-400 uppercase">GIF Card #{gIdx + 1}</div>
+                          <div className="grid grid-cols-2 gap-2">
+                            <input
+                              type="text"
+                              value={g.title}
+                              onChange={(e) => setPreviewGifs(prev => prev.map((item, i) => i === gIdx ? { ...item, title: e.target.value } : item))}
+                              placeholder="Titolo GIF"
+                              className="bg-black/60 border border-white/15 rounded-lg px-2 py-1 text-white font-bold"
+                            />
+                            <input
+                              type="text"
+                              value={g.tag}
+                              onChange={(e) => setPreviewGifs(prev => prev.map((item, i) => i === gIdx ? { ...item, tag: e.target.value } : item))}
+                              placeholder="Tag"
+                              className="bg-black/60 border border-white/15 rounded-lg px-2 py-1 text-white"
+                            />
+                          </div>
+                          <div className="grid grid-cols-3 gap-2">
+                            <input
+                              type="text"
+                              value={g.duration}
+                              onChange={(e) => setPreviewGifs(prev => prev.map((item, i) => i === gIdx ? { ...item, duration: e.target.value } : item))}
+                              placeholder="3s GIF"
+                              className="bg-black/60 border border-white/15 rounded-lg px-2 py-1 text-slate-300"
+                            />
+                            <input
+                              type="text"
+                              value={g.gifUrl}
+                              onChange={(e) => setPreviewGifs(prev => prev.map((item, i) => i === gIdx ? { ...item, gifUrl: e.target.value } : item))}
+                              placeholder="URL o /gif1.gif"
+                              className="col-span-2 bg-black/60 border border-white/15 rounded-lg px-2 py-1 text-white"
+                            />
+                          </div>
+                          <div className="flex items-center justify-between gap-2 pt-0.5">
+                            <label className="cursor-pointer inline-flex items-center gap-1 text-[10px] font-bold text-amber-300 hover:text-amber-200 bg-amber-500/10 border border-amber-500/30 px-2 py-1 rounded-md transition">
+                              <span>Carica GIF dal PC</span>
+                              <input
+                                type="file"
+                                accept="image/gif,image/webp,image/png,image/jpeg"
+                                className="hidden"
+                                onChange={(e) => {
+                                  const file = e.target.files?.[0];
+                                  if (!file) return;
+                                  const reader = new FileReader();
+                                  reader.onload = () => {
+                                    const result = typeof reader.result === 'string' ? reader.result : '';
+                                    if (!result) return;
+                                    setPreviewGifs(prev =>
+                                      prev.map((item, i) =>
+                                        i === gIdx ? { ...item, gifUrl: result } : item
+                                      )
+                                    );
+                                  };
+                                  reader.readAsDataURL(file);
+                                }}
+                              />
+                            </label>
+                            {g.gifUrl && (
+                              <button
+                                type="button"
+                                onClick={() =>
+                                  setPreviewGifs(prev =>
+                                    prev.map((item, i) => (i === gIdx ? { ...item, gifUrl: '' } : item))
+                                  )
+                                }
+                                className="text-[10px] text-rose-400 hover:text-rose-300 font-semibold"
+                              >
+                                Rimuovi
+                              </button>
+                            )}
+                          </div>
+                          <input
+                            type="text"
+                            value={g.note}
+                            onChange={(e) => setPreviewGifs(prev => prev.map((item, i) => i === gIdx ? { ...item, note: e.target.value } : item))}
+                            placeholder="Descrizione GIF"
+                            className="w-full bg-black/60 border border-white/15 rounded-lg px-2 py-1 text-slate-300"
+                          />
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className="pt-2 border-t border-white/10 space-y-2">
+                      <label className="block text-[11px] font-bold text-slate-300 uppercase">Tab Promo / Sponsorships</label>
+                      <div className="grid grid-cols-2 gap-2">
+                        <input
+                          type="text"
+                          value={config.promoBadge}
+                          onChange={(e) => setConfig({ ...config, promoBadge: e.target.value })}
+                          placeholder="Badge Promo"
+                          className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1.5 text-white"
+                        />
+                        <input
+                          type="text"
+                          value={config.promoTitle}
+                          onChange={(e) => setConfig({ ...config, promoTitle: e.target.value })}
+                          placeholder="Titolo Promo"
+                          className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1.5 text-white font-bold"
+                        />
+                      </div>
+                      <textarea
+                        rows={2}
+                        value={config.promoSubtitle}
+                        onChange={(e) => setConfig({ ...config, promoSubtitle: e.target.value })}
+                        placeholder="Descrizione Promo"
+                        className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1.5 text-white"
+                      />
+                      <div className="grid grid-cols-2 gap-2">
+                        <input
+                          type="text"
+                          value={config.promoCtaText}
+                          onChange={(e) => setConfig({ ...config, promoCtaText: e.target.value })}
+                          placeholder="Bottone Pagamento"
+                          className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1.5 text-white"
+                        />
+                        <input
+                          type="text"
+                          value={config.promoSecondaryCtaText}
+                          onChange={(e) => setConfig({ ...config, promoSecondaryCtaText: e.target.value })}
+                          placeholder="Bottone secondario"
+                          className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1.5 text-white"
+                        />
+                      </div>
+                      <input
+                        type="text"
+                        value={config.promoPaymentUrl}
+                        onChange={(e) => setConfig({ ...config, promoPaymentUrl: e.target.value })}
+                        placeholder="Link Pagamento / Checkout"
+                        className="w-full bg-black/50 border border-amber-500/40 rounded-lg px-2.5 py-1.5 text-amber-200"
+                      />
+                      <div className="grid grid-cols-3 gap-2">
+                        <input
+                          type="text"
+                          value={config.promoRule1Title}
+                          onChange={(e) => setConfig({ ...config, promoRule1Title: e.target.value })}
+                          placeholder="Regola 1 titolo"
+                          className="bg-black/50 border border-white/15 rounded-lg px-2 py-1 text-white"
+                        />
+                        <input
+                          type="text"
+                          value={config.promoRule2Title}
+                          onChange={(e) => setConfig({ ...config, promoRule2Title: e.target.value })}
+                          placeholder="Regola 2 titolo"
+                          className="bg-black/50 border border-white/15 rounded-lg px-2 py-1 text-white"
+                        />
+                        <input
+                          type="text"
+                          value={config.promoRule3Title}
+                          onChange={(e) => setConfig({ ...config, promoRule3Title: e.target.value })}
+                          placeholder="Regola 3 titolo"
+                          className="bg-black/50 border border-white/15 rounded-lg px-2 py-1 text-white"
+                        />
+                      </div>
+                      <input
+                        type="text"
+                        value={config.promoRule1Desc}
+                        onChange={(e) => setConfig({ ...config, promoRule1Desc: e.target.value })}
+                        placeholder="Regola 1 testo"
+                        className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1 text-slate-300"
+                      />
+                      <input
+                        type="text"
+                        value={config.promoRule2Desc}
+                        onChange={(e) => setConfig({ ...config, promoRule2Desc: e.target.value })}
+                        placeholder="Regola 2 testo"
+                        className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1 text-slate-300"
+                      />
+                      <input
+                        type="text"
+                        value={config.promoRule3Desc}
+                        onChange={(e) => setConfig({ ...config, promoRule3Desc: e.target.value })}
+                        placeholder="Regola 3 testo"
+                        className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1 text-slate-300"
+                      />
+                      <input
+                        type="text"
+                        value={config.promoSlotPrice}
+                        onChange={(e) => setConfig({ ...config, promoSlotPrice: e.target.value })}
+                        placeholder="Prezzo slot (es. €20 / Slot)"
+                        className="w-full bg-black/50 border border-amber-500/40 rounded-lg px-2.5 py-1 text-amber-300 font-bold"
+                      />
+                      <input
+                        type="text"
+                        value={config.promoWhyTitle}
+                        onChange={(e) => setConfig({ ...config, promoWhyTitle: e.target.value })}
+                        placeholder="Titolo box 'Perché €20'"
+                        className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1 text-white font-bold"
+                      />
+                      <textarea
+                        rows={2}
+                        value={config.promoWhy1}
+                        onChange={(e) => setConfig({ ...config, promoWhy1: e.target.value })}
+                        placeholder="Motivo 1"
+                        className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1 text-slate-300"
+                      />
+                      <textarea
+                        rows={2}
+                        value={config.promoWhy2}
+                        onChange={(e) => setConfig({ ...config, promoWhy2: e.target.value })}
+                        placeholder="Motivo 2"
+                        className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1 text-slate-300"
+                      />
+                      <textarea
+                        rows={2}
+                        value={config.promoWhy3}
+                        onChange={(e) => setConfig({ ...config, promoWhy3: e.target.value })}
+                        placeholder="Motivo 3"
+                        className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1 text-slate-300"
+                      />
+                      <input
+                        type="text"
+                        value={config.promoPaymentNoteTitle}
+                        onChange={(e) => setConfig({ ...config, promoPaymentNoteTitle: e.target.value })}
+                        placeholder="Titolo box pagamento"
+                        className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1 text-white font-bold"
+                      />
+                      <textarea
+                        rows={2}
+                        value={config.promoPaymentNoteDesc}
+                        onChange={(e) => setConfig({ ...config, promoPaymentNoteDesc: e.target.value })}
+                        placeholder="Spiegazione pagamento"
+                        className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1 text-slate-300"
+                      />
+                    </div>
+
+                    <div className="pt-2 border-t border-white/10 space-y-2">
+                      <label className="block text-[11px] font-bold text-slate-300 uppercase">Tab Reddit</label>
+                      <div className="grid grid-cols-2 gap-2">
+                        <input
+                          type="text"
+                          value={config.redditBadge}
+                          onChange={(e) => setConfig({ ...config, redditBadge: e.target.value })}
+                          placeholder="Badge Reddit"
+                          className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1.5 text-white"
+                        />
+                        <input
+                          type="text"
+                          value={config.redditTitle}
+                          onChange={(e) => setConfig({ ...config, redditTitle: e.target.value })}
+                          placeholder="Titolo Reddit"
+                          className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1.5 text-white font-bold"
+                        />
+                      </div>
+                      <textarea
+                        rows={2}
+                        value={config.redditSubtitle}
+                        onChange={(e) => setConfig({ ...config, redditSubtitle: e.target.value })}
+                        placeholder="Descrizione Reddit"
+                        className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1.5 text-white"
+                      />
+                      <div className="grid grid-cols-2 gap-2">
+                        <input
+                          type="text"
+                          value={config.redditCtaText}
+                          onChange={(e) => setConfig({ ...config, redditCtaText: e.target.value })}
+                          placeholder="Bottone Reddit"
+                          className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1.5 text-white"
+                        />
+                        <input
+                          type="text"
+                          value={config.redditSecondaryCtaText}
+                          onChange={(e) => setConfig({ ...config, redditSecondaryCtaText: e.target.value })}
+                          placeholder="Bottone secondario"
+                          className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1.5 text-white"
+                        />
+                      </div>
+                      <div className="grid grid-cols-3 gap-2">
+                        <input
+                          type="text"
+                          value={config.redditCard1Title}
+                          onChange={(e) => setConfig({ ...config, redditCard1Title: e.target.value })}
+                          placeholder="Card 1 titolo"
+                          className="bg-black/50 border border-white/15 rounded-lg px-2 py-1 text-white"
+                        />
+                        <input
+                          type="text"
+                          value={config.redditCard2Title}
+                          onChange={(e) => setConfig({ ...config, redditCard2Title: e.target.value })}
+                          placeholder="Card 2 titolo"
+                          className="bg-black/50 border border-white/15 rounded-lg px-2 py-1 text-white"
+                        />
+                        <input
+                          type="text"
+                          value={config.redditCard3Title}
+                          onChange={(e) => setConfig({ ...config, redditCard3Title: e.target.value })}
+                          placeholder="Card 3 titolo"
+                          className="bg-black/50 border border-white/15 rounded-lg px-2 py-1 text-white"
+                        />
+                      </div>
+                      <input
+                        type="text"
+                        value={config.redditCard1Desc}
+                        onChange={(e) => setConfig({ ...config, redditCard1Desc: e.target.value })}
+                        placeholder="Card 1 testo"
+                        className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1 text-slate-300"
+                      />
+                      <input
+                        type="text"
+                        value={config.redditCard2Desc}
+                        onChange={(e) => setConfig({ ...config, redditCard2Desc: e.target.value })}
+                        placeholder="Card 2 testo"
+                        className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1 text-slate-300"
+                      />
+                      <input
+                        type="text"
+                        value={config.redditCard3Desc}
+                        onChange={(e) => setConfig({ ...config, redditCard3Desc: e.target.value })}
+                        placeholder="Card 3 testo"
+                        className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1 text-slate-300"
+                      />
+                    </div>
+
+                    <div className="pt-2 border-t border-white/10 space-y-2">
                       <label className="block text-[11px] font-bold text-slate-300 uppercase">Footer & Reddit</label>
                       <input
                         type="text"
@@ -1825,11 +2648,20 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
                         />
                       </div>
                       <div>
-                        <label className="block text-[11px] text-slate-400 mb-1">Visite/Settimana</label>
+                        <label className="block text-[11px] text-slate-400 mb-1">Visite/Settimana (Numero)</label>
                         <input
                           type="text"
                           value={config.weeklyVisitors}
                           onChange={(e) => setConfig({ ...config, weeklyVisitors: e.target.value })}
+                          className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1.5 text-white"
+                        />
+                      </div>
+                      <div className="col-span-2">
+                        <label className="block text-[11px] text-slate-400 mb-1">Etichetta Visite Reddit (es. Weekly Reddit Visitors)</label>
+                        <input
+                          type="text"
+                          value={config.weeklyVisitorsSuffix}
+                          onChange={(e) => setConfig({ ...config, weeklyVisitorsSuffix: e.target.value })}
                           className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1.5 text-white"
                         />
                       </div>
