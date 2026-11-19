@@ -909,7 +909,7 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
 
         <h1 className="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight max-w-4xl mx-auto leading-[1.08] mb-6">
           {config.heroTitleStart}
-          <span className={`bg-clip-text text-transparent bg-gradient-to-r ${theme.barGradient}`}>
+          <span className="bg-clip-text text-transparent bg-gradient-to-r from-rose-300 via-pink-300 to-amber-200 drop-shadow-[0_0_24px_rgba(244,63,94,0.35)]">
             {config.heroTitleHighlight}
           </span>
           {config.heroTitleEnd}
