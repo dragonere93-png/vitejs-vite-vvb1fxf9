@@ -382,7 +382,7 @@ const DEFAULT_CONFIG: SiteConfig = {
   "discordInviteUrl": "https://discord.gg/captionvibes",
   "defaultCheckoutUrl": "https://discord.gg/captionvibes",
   "theme": "crimson",
-  "glowOpacity": 0,
+  "glowOpacity": 18,
   "cardStyle": "rounded",
   "showUrgencyBar": true,
   "showSocialToast": true,
@@ -1065,9 +1065,11 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
           </span>
         </div>
 
-        <h1 className="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight max-w-4xl mx-auto leading-[1.08] mb-6">
+        <h1 className="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight max-w-4xl mx-auto leading-[1.08] mb-6 text-white">
           {config.heroTitleStart}
-          <span className="bg-clip-text text-transparent bg-gradient-to-r from-rose-300 via-pink-300 to-amber-200 drop-shadow-[0_0_24px_rgba(244,63,94,0.35)]">
+          <span
+            className="inline-block bg-gradient-to-r from-rose-300 via-pink-300 to-amber-200 bg-clip-text text-transparent [-webkit-background-clip:text] [-webkit-text-fill-color:transparent] drop-shadow-[0_0_22px_rgba(244,63,94,0.35)]"
+          >
             {config.heroTitleHighlight}
           </span>
           {config.heroTitleEnd}
