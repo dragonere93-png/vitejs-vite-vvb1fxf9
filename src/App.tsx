@@ -10,7 +10,7 @@ import {
 // ============================================================================
 // IMPOSTA SU `false` QUANDO PUBBLICHI LA VERSIONE FINALE PER NASCONDERE L'EDITOR
 // ============================================================================
-const ENABLE_OWNER_CUSTOMIZER = true;
+const ENABLE_OWNER_CUSTOMIZER = false;
 
 type HubTab = 'discord' | 'vip' | 'reddit' | 'promo' | 'vault';
 type EditorTab = 'copy' | 'media' | 'stats' | 'tiers' | 'faq' | 'export';
