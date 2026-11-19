@@ -166,25 +166,25 @@ const DEFAULT_PREVIEW_GIFS: PreviewGifItem[] = [
     id: 'gif-quick',
     title: 'Bratty Roommate',
     tag: 'Teasing kink',
-    duration: '3s GIF',
-    gifUrl: '',
-    note: 'You had this gamer girl roommate; there was only one computer in the house, and after a long day at work, you just wanted to relax and play. Unfortunately, she wanted to use it too, but she had a solution...'
+    duration: '~1m Clip',
+    gifUrl: '/SHORTVIDEO118(1).mp4',
+    note: 'You had this gamer girl roommate; there was only one computer in the house, and after a long day at work, you just wanted to relax and play. Unfortunately, she wanted to use it too, by any means...'
   },
   {
     id: 'gif-reels',
     title: 'Cheating Girlfriend',
     tag: 'Cheating kink',
-    duration: '4s GIF',
-    gifUrl: '',
+    duration: '~1m Clip',
+    gifUrl: '/CAPTIONVIBES - VIDEO 40 TRAILER(1).mp4',
     note: '"Baby I love you but, I can\'t have sex with you! You are too ugly and have such a small dick... you can watch me suck and ride your manly bully cock instead 😇"'
   },
   {
     id: 'gif-long',
     title: 'NNN Challenge',
     tag: 'Interactive',
-    duration: '3s GIF',
-    gifUrl: '',
-    note: 'How long can you actually hold out? Pick who you lose NNN to and see which temptation breaks your streak first.'
+    duration: '~1m Clip',
+    gifUrl: '/TEASER2(1).mp4',
+    note: 'Interactive challenge: pick who you lose NNN to and see how long your streak survives when the pressure hits.'
   }
 ];
 
@@ -365,9 +365,9 @@ const DEFAULT_CONFIG: SiteConfig = {
   "warningTitle": "⚠️ IMPORTANT: Join the Discord Server FIRST!",
   "warningBody": "You must join our free Discord server BEFORE upgrading so the bot can assign your VIP role automatically in 5 seconds. If you purchase before joining, you'll need to DM me privately on Discord so I can activate it manually (which can take anywhere from 10 minutes to 10 hours).",
   "warningCtaText": "Join Discord First",
-  "gifSectionBadge": "Short Preview Clips (3–4s GIFs)",
+  "gifSectionBadge": "Caption Clips (~1m Video / GIF)",
   "gifSectionTitle": "Vault Sneak Peeks",
-  "gifSectionSubtitle": "Lightweight 3–4s loops • Full drops in Discord",
+  "gifSectionSubtitle": "~1m caption previews & loops • Full drops in Discord",
   "gifCardCtaText": "Watch full version on Discord",
   "faqTitle": "FAQ",
   "faqSubtitle": "Most common questions I get in private",
@@ -701,6 +701,7 @@ export default function App() {
         title: nextTitle,
         tag: nextTag,
         note: nextNote,
+        gifUrl: item.gifUrl || def.gifUrl,
       };
     });
   });
@@ -1280,17 +1281,28 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
                   <div key={item.id} className={`${radiusCard} bg-black/45 border border-white/10 overflow-hidden flex flex-col`}>
                     <div className="aspect-video bg-[#171726] relative flex items-center justify-center border-b border-white/10 overflow-hidden">
                       {item.gifUrl ? (
-                        <img
-                          src={item.gifUrl}
-                          alt={item.title}
-                          loading="lazy"
-                          className="w-full h-full object-cover"
-                        />
+                        /(\.(mp4|webm|ogg|mov)(\?.*)?$)|(^data:video\/)/i.test(item.gifUrl) ? (
+                          <video
+                            src={item.gifUrl}
+                            controls
+                            muted
+                            playsInline
+                            preload="metadata"
+                            className="w-full h-full object-cover"
+                          />
+                        ) : (
+                          <img
+                            src={item.gifUrl}
+                            alt={item.title}
+                            loading="lazy"
+                            className="w-full h-full object-cover"
+                          />
+                        )
                       ) : (
                         <div className="text-center p-4">
                           <Clapperboard className={`w-7 h-7 ${theme.accentText} mx-auto mb-1.5 opacity-80`} />
                           <div className="text-xs font-bold text-slate-300">{item.duration} Slot</div>
-                          <div className="text-[11px] text-slate-500 mt-0.5">Put GIF URL in gifUrl</div>
+                          <div className="text-[11px] text-slate-500 mt-0.5">Put /clip1.mp4 or GIF URL</div>
                         </div>
                       )}
                       <span className="absolute top-2.5 left-2.5 px-2.5 py-0.5 rounded bg-black/75 border border-white/10 text-[10px] font-bold text-white">
@@ -2284,7 +2296,7 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
                               type="text"
                               value={g.gifUrl}
                               onChange={(e) => setPreviewGifs(prev => prev.map((item, i) => i === gIdx ? { ...item, gifUrl: e.target.value } : item))}
-                              placeholder="URL o /gif1.gif"
+                              placeholder="URL o /clip1.mp4 / /gif1.gif"
                               className="col-span-2 bg-black/60 border border-white/15 rounded-lg px-2 py-1 text-white"
                             />
                           </div>
@@ -2293,7 +2305,7 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
                               <span>Carica GIF dal PC</span>
                               <input
                                 type="file"
-                                accept="image/gif,image/webp,image/png,image/jpeg"
+                                accept="video/mp4,video/webm,video/ogg,image/gif,image/webp,image/png,image/jpeg"
                                 className="hidden"
                                 onChange={(e) => {
                                   const file = e.target.files?.[0];
