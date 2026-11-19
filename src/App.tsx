@@ -4,7 +4,7 @@ import {
   ChevronDown, ChevronUp, Play, Users,
   Crown, Sparkles, Zap, Gift, MessageSquare, Bell,
   Settings, EyeOff, RotateCcw, Copy, CheckCircle2,
-  Type, BarChart3, DollarSign, Image as ImageIcon, Plus, Trash2
+  Type, BarChart3, DollarSign, Image as ImageIcon, Plus, Trash2, AlertTriangle
 } from 'lucide-react';
 
 // ============================================================================
@@ -23,7 +23,6 @@ interface SiteConfig {
   bannerUrl: string;
   showBanner: boolean;
   showNotifications: boolean;
-  showSideDecorations: boolean;
 
   // Live Stat Pill (Hero)
   statDiscord: string;
@@ -130,7 +129,6 @@ const DEFAULT_CONFIG: SiteConfig = {
   bannerUrl: '/banner.gif',
   showBanner: true,
   showNotifications: true,
-  showSideDecorations: true,
 
   statDiscord: '1,600+ on Discord',
   statVault: '1,080+ content in vault',
@@ -324,7 +322,7 @@ const createRandomToast = (prevUser?: string): SocialToastEvent => {
 };
 
 const BANNER_FALLBACKS = ['/banner.gif', '/standard(1).gif', '/banner.png', '/banner.jpg', '/standard(1).jpg'];
-const STORAGE_KEY = 'captionvibes_vertical_studio_v31';
+const STORAGE_KEY = 'captionvibes_vertical_studio_v32';
 
 export default function App() {
   const loadSaved = () => {
@@ -546,135 +544,14 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
 
   return (
     <div className="min-h-screen bg-[#0B0710] text-[#F5EFEF] font-sans antialiased selection:bg-[#FF8A75] selection:text-[#120912] relative overflow-x-hidden">
-      {/* ==================================================================== */}
-      {/* DECORATIVE TRANSPARENT BACKGROUND & SIDE ARTWORK                     */}
-      {/* ==================================================================== */}
-      {config.showSideDecorations && (
-        <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
-          {/* Soft ambient sunset washes */}
-          <div
-            className="absolute -top-24 left-1/2 -translate-x-1/2 w-[820px] h-[420px] rounded-full blur-[130px] opacity-30"
-            style={{
-              background:
-                'radial-gradient(ellipse at center, rgba(255, 138, 117, 0.45) 0%, rgba(244, 143, 177, 0.25) 45%, rgba(11, 7, 16, 0) 75%)',
-            }}
-          />
-          <div
-            className="absolute top-[38%] -left-32 w-[420px] h-[420px] rounded-full blur-[130px] opacity-20"
-            style={{
-              background: 'radial-gradient(circle, rgba(255, 158, 199, 0.45) 0%, rgba(11, 7, 16, 0) 70%)',
-            }}
-          />
-          <div
-            className="absolute bottom-[10%] -right-32 w-[460px] h-[460px] rounded-full blur-[140px] opacity-20"
-            style={{
-              background: 'radial-gradient(circle, rgba(255, 184, 140, 0.4) 0%, rgba(11, 7, 16, 0) 70%)',
-            }}
-          />
-
-          {/* Faint architectural grid texture */}
-          <div
-            className="absolute inset-0 opacity-[0.035]"
-            style={{
-              backgroundImage:
-                'linear-gradient(to right, rgba(255,184,140,0.4) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,158,199,0.4) 1px, transparent 1px)',
-              backgroundSize: '64px 64px',
-            }}
-          />
-
-          {/* LEFT SIDE TRANSPARENT DECORATIONS (Desktop & Tablet) */}
-          <div className="hidden lg:flex fixed left-5 xl:left-10 top-0 bottom-0 flex-col items-center justify-between py-24 select-none">
-            {/* Vertical delicate line + sparkle SVG */}
-            <div className="flex flex-col items-center gap-4 opacity-25">
-              <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-                <path
-                  d="M14 2L16.4 11.6L26 14L16.4 16.4L14 26L11.6 16.4L2 14L11.6 11.6L14 2Z"
-                  fill="url(#sparkleLeft)"
-                />
-                <defs>
-                  <linearGradient id="sparkleLeft" x1="2" y1="2" x2="26" y2="26">
-                    <stop stopColor="#FFD6A5" />
-                    <stop offset="1" stopColor="#FF9EC7" />
-                  </linearGradient>
-                </defs>
-              </svg>
-              <div className="w-[1px] h-28 bg-gradient-to-b from-[#FFB88C]/60 via-[#FF9EC7]/30 to-transparent" />
-            </div>
-
-            {/* Vertical transparent brand watermark */}
-            <div
-              className="text-[11px] font-black uppercase tracking-[0.45em] text-[#FFB88C] opacity-[0.14]"
-              style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
-            >
-              CAPTIONVIBES · PRIVATE ARCHIVE · 18+
-            </div>
-
-            {/* Soft translucent cloud / crescent silhouette */}
-            <div className="flex flex-col items-center gap-3 opacity-20">
-              <div className="w-[1px] h-24 bg-gradient-to-t from-[#FF9EC7]/60 to-transparent" />
-              <svg width="44" height="44" viewBox="0 0 44 44" fill="none">
-                <circle cx="22" cy="22" r="19" stroke="#FFB88C" strokeOpacity="0.45" strokeWidth="1" strokeDasharray="3 5" />
-                <path
-                  d="M22 10L23.8 19.2L33 21L23.8 22.8L22 32L20.2 22.8L11 21L20.2 19.2L22 10Z"
-                  fill="#FF9EC7"
-                  fillOpacity="0.65"
-                />
-              </svg>
-            </div>
-          </div>
-
-          {/* RIGHT SIDE TRANSPARENT DECORATIONS (Desktop & Tablet) */}
-          <div className="hidden lg:flex fixed right-5 xl:right-10 top-0 bottom-0 flex-col items-center justify-between py-24 select-none">
-            <div className="flex flex-col items-center gap-3 opacity-20">
-              <svg width="44" height="44" viewBox="0 0 44 44" fill="none">
-                <circle cx="22" cy="22" r="19" stroke="#FF9EC7" strokeOpacity="0.45" strokeWidth="1" strokeDasharray="3 5" />
-                <path
-                  d="M22 11L23.5 19.5L32 21L23.5 22.5L22 31L20.5 22.5L12 21L20.5 19.5L22 11Z"
-                  fill="#FFD6A5"
-                  fillOpacity="0.65"
-                />
-              </svg>
-              <div className="w-[1px] h-24 bg-gradient-to-b from-[#FF9EC7]/60 to-transparent" />
-            </div>
-
-            {/* Vertical transparent Japanese/editorial accent */}
-            <div
-              className="text-[11px] font-black uppercase tracking-[0.45em] text-[#FF9EC7] opacity-[0.14]"
-              style={{ writingMode: 'vertical-rl' }}
-            >
-              SUNSET LOUNGE · DAILY DROPS · VIP
-            </div>
-
-            <div className="flex flex-col items-center gap-4 opacity-25">
-              <div className="w-[1px] h-28 bg-gradient-to-t from-[#FFB88C]/60 via-[#FF9EC7]/30 to-transparent" />
-              <svg width="24" height="24" viewBox="0 0 28 28" fill="none">
-                <path
-                  d="M14 2L16.4 11.6L26 14L16.4 16.4L14 26L11.6 16.4L2 14L11.6 11.6L14 2Z"
-                  fill="#FFB88C"
-                />
-              </svg>
-            </div>
-          </div>
-
-          {/* Faint floating icon watermark in far background (if icon loaded) */}
-          {config.iconUrl && !iconError && (
-            <>
-              <img
-                src={config.iconUrl}
-                alt=""
-                aria-hidden="true"
-                className="hidden xl:block fixed -left-24 top-[22%] w-72 h-72 rounded-full object-cover opacity-[0.06] blur-[2px] -rotate-12"
-              />
-              <img
-                src={config.iconUrl}
-                alt=""
-                aria-hidden="true"
-                className="hidden xl:block fixed -right-24 bottom-[16%] w-72 h-72 rounded-full object-cover opacity-[0.06] blur-[2px] rotate-12"
-              />
-            </>
-          )}
-        </div>
-      )}
+      {/* Clean Atmospheric Sunset Glow (melts naturally from the top banner) */}
+      <div
+        className="pointer-events-none fixed inset-x-0 top-0 h-[520px] z-0"
+        style={{
+          background:
+            'radial-gradient(ellipse 90% 60% at 50% 0%, rgba(255, 138, 117, 0.16) 0%, rgba(244, 143, 177, 0.08) 45%, rgba(11, 7, 16, 0) 80%)',
+        }}
+      />
 
       {/* HEADER — Compact & Mobile-Safe */}
       <header className="sticky top-0 z-40 bg-[#0B0710]/88 backdrop-blur-md border-b border-white/[0.08]">
@@ -738,48 +615,52 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
         </div>
       </header>
 
+      {/* FULL-BLEED INTEGRATED BANNER (Melts seamlessly into the dark background) */}
+      {config.showBanner && (
+        <div className="relative z-10 w-full h-44 sm:h-56 md:h-64 overflow-hidden">
+          {!bannerAllFailed && activeBannerSrc ? (
+            <img
+              src={activeBannerSrc}
+              alt="CaptionVibes Official Banner"
+              onError={handleBannerError}
+              className="w-full h-full object-cover object-center"
+            />
+          ) : (
+            <div
+              className="w-full h-full flex flex-col items-center justify-center text-center px-4"
+              style={{
+                backgroundImage:
+                  'linear-gradient(135deg, #2D1635 0%, #7C2D52 38%, #E06D67 72%, #FFB88C 100%)',
+              }}
+            >
+              <span className="text-2xl sm:text-4xl font-black tracking-[0.14em] text-white drop-shadow-[0_4px_18px_rgba(0,0,0,0.45)]">
+                CAPTIONVIBES
+              </span>
+            </div>
+          )}
+          {/* Top & Bottom smooth melt into #0B0710 */}
+          <div
+            className="pointer-events-none absolute inset-0"
+            style={{
+              background:
+                'linear-gradient(180deg, rgba(11,7,16,0.5) 0%, rgba(11,7,16,0.05) 30%, rgba(11,7,16,0.4) 68%, #0B0710 100%)',
+            }}
+          />
+          {/* Soft side vignettes on wide desktop screens */}
+          <div
+            className="pointer-events-none absolute inset-0 hidden sm:block"
+            style={{
+              background:
+                'linear-gradient(90deg, #0B0710 0%, rgba(11,7,16,0) 18%, rgba(11,7,16,0) 82%, #0B0710 100%)',
+            }}
+          />
+        </div>
+      )}
+
       {/* ==================================================================== */}
       {/* VERTICAL-FIRST MAIN COLUMN (MOBILE-NATIVE EXPERIENCE)                */}
       {/* ==================================================================== */}
-      <main className="relative z-10 max-w-3xl mx-auto px-4 pt-5 pb-20 space-y-8">
-        {/* 1. OFFICIAL BANNER (Always visible with smart fallback if file name differs) */}
-        {config.showBanner && (
-          <div className="relative w-full h-36 sm:h-48 md:h-56 rounded-2xl overflow-hidden border border-[#FFB88C]/30 shadow-[0_18px_50px_rgba(255,126,107,0.2)]">
-            {!bannerAllFailed && activeBannerSrc ? (
-              <img
-                src={activeBannerSrc}
-                alt="CaptionVibes Official Banner"
-                onError={handleBannerError}
-                className="w-full h-full object-cover object-center"
-              />
-            ) : (
-              /* Sunset Cloud fallback if banner file isn't in public/ yet */
-              <div
-                className="w-full h-full flex flex-col items-center justify-center text-center px-4"
-                style={{
-                  backgroundImage:
-                    'linear-gradient(135deg, #2D1635 0%, #7C2D52 38%, #E06D67 72%, #FFB88C 100%)',
-                }}
-              >
-                <span className="text-2xl sm:text-4xl font-black tracking-[0.14em] text-white drop-shadow-[0_4px_18px_rgba(0,0,0,0.45)]">
-                  CAPTIONVIBES
-                </span>
-                {ENABLE_OWNER_CUSTOMIZER && (
-                  <span className="mt-2 text-[11px] bg-black/55 text-[#FFD6A5] px-3 py-1 rounded-full border border-white/15">
-                    Carica il banner in public/banner.gif oppure da &ldquo;Modifica Sito → Media&rdquo;
-                  </span>
-                )}
-              </div>
-            )}
-            <div
-              className="pointer-events-none absolute inset-0"
-              style={{
-                background:
-                  'linear-gradient(180deg, rgba(11,7,16,0.08) 0%, rgba(11,7,16,0.05) 55%, rgba(11,7,16,0.78) 100%)',
-              }}
-            />
-          </div>
-        )}
+      <main className={`relative z-10 max-w-3xl mx-auto px-4 pb-20 space-y-8 ${config.showBanner ? '-mt-10 sm:-mt-12' : 'pt-8'}`}>
 
         {/* 2. VERTICAL HERO BLOCK (Centered & Scannable on Phone) */}
         <section className="text-center space-y-5">
@@ -1067,16 +948,30 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
                 </p>
               </div>
 
-              <div className="rounded-xl bg-[#1A1224] border border-[#FFB88C]/40 px-4 py-3 text-xs text-[#DECDE3] text-center">
-                <strong className="text-[#FFB88C]">{config.vipReminderBold}</strong> {config.vipReminderRest}{' '}
-                <a
-                  href={config.discordUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="underline text-white hover:text-[#FFA896] font-medium"
-                >
-                  Join here →
-                </a>
+              {/* HIGH-VISIBILITY YELLOW WARNING BANNER */}
+              <div className="rounded-2xl bg-yellow-400/15 border-2 border-yellow-400 p-4 sm:p-5 shadow-[0_0_32px_rgba(250,204,21,0.22)]">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3.5 text-left">
+                  <div className="w-11 h-11 rounded-xl bg-yellow-400/25 border border-yellow-400/60 flex items-center justify-center text-yellow-300 shrink-0">
+                    <AlertTriangle className="w-6 h-6" />
+                  </div>
+                  <div className="flex-1 space-y-1">
+                    <div className="text-sm sm:text-base font-black uppercase tracking-wide text-yellow-300">
+                      ⚠️ IMPORTANT: {config.vipReminderBold}!
+                    </div>
+                    <p className="text-xs sm:text-sm text-yellow-50/95 leading-relaxed">
+                      You <strong className="text-white underline">must join the free Discord server BEFORE upgrading</strong> {config.vipReminderRest} Otherwise you&apos;ll need to DM me manually (10 min – 10 hours).
+                    </p>
+                  </div>
+                  <a
+                    href={config.discordUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="w-full sm:w-auto px-4 py-2.5 rounded-xl font-black text-xs sm:text-sm bg-yellow-400 hover:bg-yellow-300 text-[#140D05] shadow-lg shadow-yellow-400/25 transition flex items-center justify-center gap-1.5 shrink-0"
+                  >
+                    <span>Join Discord First</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </a>
+                </div>
               </div>
 
               {/* Vertical-stacked on phone, clean 3-col on md+ */}
@@ -1618,16 +1513,6 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
                           type="checkbox"
                           checked={config.showBanner}
                           onChange={(e) => setConfig({ ...config, showBanner: e.target.checked })}
-                          className="w-4 h-4 accent-[#FF7E6B]"
-                        />
-                      </label>
-
-                      <label className="flex items-center justify-between bg-black/35 border border-white/10 px-3 py-2 rounded-lg cursor-pointer">
-                        <span className="text-white">Decorazioni Sfondo &amp; Lati</span>
-                        <input
-                          type="checkbox"
-                          checked={config.showSideDecorations}
-                          onChange={(e) => setConfig({ ...config, showSideDecorations: e.target.checked })}
                           className="w-4 h-4 accent-[#FF7E6B]"
                         />
                       </label>
