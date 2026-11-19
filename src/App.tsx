@@ -765,11 +765,6 @@ export default function App() {
   const radiusCard = config.cardStyle === 'sharp' ? 'rounded-md' : config.cardStyle === 'pill' ? 'rounded-[2rem]' : 'rounded-2xl';
   const radiusBtn = config.cardStyle === 'sharp' ? 'rounded-md' : config.cardStyle === 'pill' ? 'rounded-full' : 'rounded-xl';
 
-  const scrollToSection = (id: string) => {
-    const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
-  };
-
   // --- COMMUNITY CARDS HELPER ---
   const updateCommunityCard = (id: string, patch: Partial<CommunityCard>) => {
     setCommunityCards(prev => prev.map(c => (c.id === id ? { ...c, ...patch } : c)));
