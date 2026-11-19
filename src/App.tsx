@@ -4,7 +4,7 @@ import {
   ChevronDown, ChevronUp, Play, Users,
   Crown, Sparkles, Zap, Gift, MessageSquare, Bell,
   Settings, EyeOff, RotateCcw, Copy, CheckCircle2,
-  Type, BarChart3, DollarSign, Image as ImageIcon, Plus, Trash2, AlertTriangle
+  Type, BarChart3, DollarSign, Image as ImageIcon, Plus, Trash2, AlertTriangle, Film
 } from 'lucide-react';
 
 // ============================================================================
@@ -12,7 +12,7 @@ import {
 // ============================================================================
 const ENABLE_OWNER_CUSTOMIZER = true;
 
-type HubTab = 'discord' | 'vip' | 'reddit' | 'promo';
+type HubTab = 'discord' | 'vip' | 'reddit' | 'promo' | 'vault';
 type EditorTab = 'copy' | 'media' | 'stats' | 'tiers' | 'faq' | 'export';
 
 interface SiteConfig {
@@ -322,7 +322,7 @@ const createRandomToast = (prevUser?: string): SocialToastEvent => {
 };
 
 const BANNER_FALLBACKS = ['/banner.gif', '/standard(1).gif', '/banner.png', '/banner.jpg', '/standard(1).jpg'];
-const STORAGE_KEY = 'captionvibes_vertical_studio_v32';
+const STORAGE_KEY = 'captionvibes_vertical_studio_v33';
 
 export default function App() {
   const loadSaved = () => {
@@ -543,46 +543,46 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
   };
 
   return (
-    <div className="min-h-screen bg-[#0B0710] text-[#F5EFEF] font-sans antialiased selection:bg-[#FF8A75] selection:text-[#120912] relative overflow-x-hidden">
+    <div className="min-h-screen bg-[#0A0608] text-[#F5EFEF] font-sans antialiased selection:bg-red-600 selection:text-white relative overflow-x-hidden">
       {/* Clean Atmospheric Sunset Glow (melts naturally from the top banner) */}
       <div
         className="pointer-events-none fixed inset-x-0 top-0 h-[520px] z-0"
         style={{
           background:
-            'radial-gradient(ellipse 90% 60% at 50% 0%, rgba(255, 138, 117, 0.16) 0%, rgba(244, 143, 177, 0.08) 45%, rgba(11, 7, 16, 0) 80%)',
+            'radial-gradient(ellipse 90% 60% at 50% 0%, rgba(220, 38, 38, 0.22) 0%, rgba(185, 28, 28, 0.09) 45%, rgba(10, 6, 8, 0) 80%)',
         }}
       />
 
       {/* HEADER — Compact & Mobile-Safe */}
-      <header className="sticky top-0 z-40 bg-[#0B0710]/88 backdrop-blur-md border-b border-white/[0.08]">
+      <header className="sticky top-0 z-40 bg-[#0A0608]/88 backdrop-blur-md border-b border-white/[0.08]">
         <div className="max-w-3xl mx-auto px-4 h-16 flex items-center justify-between gap-3">
           <a href="#" className="flex items-center gap-2.5 min-w-0">
             <div
-              className="relative w-10 h-10 rounded-full p-[1.5px] shrink-0 shadow-[0_0_16px_rgba(255,158,199,0.35)]"
-              style={{ backgroundImage: 'linear-gradient(135deg, #FFB88C 0%, #FF7E6B 50%, #FF9EC7 100%)' }}
+              className="relative w-10 h-10 rounded-full p-[1.5px] shrink-0 shadow-[0_0_16px_rgba(239,68,68,0.4)]"
+              style={{ backgroundImage: 'linear-gradient(135deg, #F87171 0%, #DC2626 55%, #991B1B 100%)' }}
             >
               {config.iconUrl && !iconError ? (
                 <img
                   src={config.iconUrl}
                   alt="CaptionVibes Official Icon"
                   onError={() => setIconError(true)}
-                  className="w-full h-full rounded-full object-cover bg-[#150F1E]"
+                  className="w-full h-full rounded-full object-cover bg-[#150C0F]"
                 />
               ) : (
-                <div className="w-full h-full rounded-full bg-[#150F1E] flex items-center justify-center font-black text-xs text-[#FFB88C]">
+                <div className="w-full h-full rounded-full bg-[#150C0F] flex items-center justify-center font-black text-xs text-red-400">
                   CV
                 </div>
               )}
-              <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full bg-emerald-400 border-2 border-[#0B0710]" />
+              <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full bg-emerald-400 border-2 border-[#0A0608]" />
             </div>
 
             <div className="min-w-0">
               <div className="flex items-center gap-2">
                 <span className="font-bold text-base sm:text-lg tracking-tight text-white truncate">
                   {config.brandPrefix}
-                  <span className="text-[#FFA896]">{config.brandAccent}</span>
+                  <span className="text-red-400">{config.brandAccent}</span>
                 </span>
-                <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded bg-[#FF7E6B]/15 text-[#FFB88C] border border-[#FFB88C]/30 shrink-0">
+                <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded bg-red-500/15 text-red-400 border border-red-500/35 shrink-0">
                   {config.ageBadge}
                 </span>
               </div>
@@ -591,6 +591,9 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
 
           <div className="flex items-center gap-4 shrink-0">
             <nav className="hidden sm:flex items-center gap-5 text-xs font-medium text-[#B8A8C0]">
+              <button type="button" onClick={() => openTabAndScroll('vault')} className="hover:text-white transition cursor-pointer">
+                Vault
+              </button>
               <button type="button" onClick={() => openTabAndScroll('vip')} className="hover:text-white transition cursor-pointer">
                 VIP
               </button>
@@ -630,7 +633,7 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
               className="w-full h-full flex flex-col items-center justify-center text-center px-4"
               style={{
                 backgroundImage:
-                  'linear-gradient(135deg, #2D1635 0%, #7C2D52 38%, #E06D67 72%, #FFB88C 100%)',
+                  'linear-gradient(135deg, #1F090D 0%, #7F1D1D 42%, #DC2626 78%, #F87171 100%)',
               }}
             >
               <span className="text-2xl sm:text-4xl font-black tracking-[0.14em] text-white drop-shadow-[0_4px_18px_rgba(0,0,0,0.45)]">
@@ -638,12 +641,12 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
               </span>
             </div>
           )}
-          {/* Top & Bottom smooth melt into #0B0710 */}
+          {/* Top & Bottom smooth melt into #0A0608 */}
           <div
             className="pointer-events-none absolute inset-0"
             style={{
               background:
-                'linear-gradient(180deg, rgba(11,7,16,0.5) 0%, rgba(11,7,16,0.05) 30%, rgba(11,7,16,0.4) 68%, #0B0710 100%)',
+                'linear-gradient(180deg, rgba(10,6,8,0.5) 0%, rgba(10,6,8,0.05) 30%, rgba(10,6,8,0.4) 68%, #0A0608 100%)',
             }}
           />
           {/* Soft side vignettes on wide desktop screens */}
@@ -651,7 +654,7 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
             className="pointer-events-none absolute inset-0 hidden sm:block"
             style={{
               background:
-                'linear-gradient(90deg, #0B0710 0%, rgba(11,7,16,0) 18%, rgba(11,7,16,0) 82%, #0B0710 100%)',
+                'linear-gradient(90deg, #0A0608 0%, rgba(10,6,8,0) 18%, rgba(10,6,8,0) 82%, #0A0608 100%)',
             }}
           />
         </div>
@@ -709,17 +712,17 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
             <button
               type="button"
               onClick={() => openTabAndScroll('vip')}
-              className="flex-1 px-6 py-3.5 rounded-xl font-semibold text-sm sm:text-base text-[#FFEAE5] border border-[#FFA896]/40 hover:border-[#FFA896]/75 bg-[#181121] hover:bg-[#21172D] transition flex items-center justify-center gap-2 cursor-pointer"
+              className="flex-1 px-6 py-3.5 rounded-xl font-semibold text-sm sm:text-base text-red-50 border border-red-500/45 hover:border-red-400/80 bg-[#1A0D10] hover:bg-[#261116] transition flex items-center justify-center gap-2 cursor-pointer"
             >
               <span>{config.secondaryCtaText}</span>
             </button>
           </div>
 
           {/* Compact Giveaway Progress Bar */}
-          <div className="max-w-md mx-auto pt-2 text-left bg-[#140E1D]/85 border border-white/[0.08] rounded-xl p-3.5">
+          <div className="max-w-md mx-auto pt-2 text-left bg-[#150B0E]/90 border border-white/[0.08] rounded-xl p-3.5">
             <div className="flex items-center justify-between text-xs mb-2 gap-2">
               <span className="text-[#D8C8DE] font-medium">{config.goalLabel}</span>
-              <span className="text-[#FFB88C] font-bold shrink-0">
+              <span className="text-red-400 font-bold shrink-0">
                 {config.vipCurrent}/{config.vipGoal}
               </span>
             </div>
@@ -728,7 +731,7 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
                 className="h-full rounded-full transition-all duration-500"
                 style={{
                   width: `${progressPct}%`,
-                  backgroundImage: 'linear-gradient(90deg, #FF7E6B 0%, #FF9EC7 60%, #FFD6A5 100%)',
+                  backgroundImage: 'linear-gradient(90deg, #991B1B 0%, #DC2626 55%, #F87171 100%)',
                 }}
               />
             </div>
@@ -738,90 +741,16 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
           </div>
         </section>
 
-        {/* 3. FEATURED VIDEO PREVIEW CARD (Stacked vertically right below Hero) */}
-        <section className="rounded-2xl bg-[#150F1E]/95 border border-white/[0.09] overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.65)]">
-          <div className="aspect-video bg-black relative">
-            <video
-              key={featuredClip.src}
-              src={featuredClip.src}
-              controls
-              muted
-              playsInline
-              preload="metadata"
-              className="w-full h-full object-cover"
-            />
-          </div>
-
-          <div className="p-4 sm:p-5 space-y-4">
-            <div className="flex items-start justify-between gap-3">
-              <div>
-                <div className="flex items-center gap-2 flex-wrap">
-                  <h2 className="font-bold text-white text-base">{featuredClip.title}</h2>
-                  <span className="text-[11px] px-2 py-0.5 rounded bg-white/[0.06] text-[#FFB88C]">
-                    {featuredClip.tag}
-                  </span>
-                </div>
-                <p className="text-xs text-[#A897B2] mt-1 leading-relaxed">{featuredClip.note}</p>
-              </div>
-              <a
-                href={config.discordUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="text-xs font-semibold text-[#FFA896] hover:text-white transition whitespace-nowrap shrink-0 mt-0.5"
-              >
-                Full cut →
-              </a>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-2 border-t border-white/[0.07]">
-              {previewClips.map((clip, idx) => {
-                const active = idx === safeClipIdx;
-                return (
-                  <button
-                    key={clip.id}
-                    type="button"
-                    onClick={() => setFeaturedClipIdx(idx)}
-                    className={`px-3 py-2.5 rounded-lg text-left transition cursor-pointer flex items-center gap-2 ${
-                      active
-                        ? 'bg-[#261A34] text-white border border-[#FFA896]/50'
-                        : 'bg-white/[0.03] text-[#A897B2] border border-transparent hover:bg-white/[0.06] hover:text-white'
-                    }`}
-                  >
-                    <Play className={`w-3.5 h-3.5 shrink-0 ${active ? 'text-[#FFA896]' : 'opacity-50'}`} />
-                    <span className="text-xs font-medium truncate">{clip.title}</span>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-        </section>
-
-        {/* 4. VAULT NUMBERS (2x2 on Phone, 4-col on Desktop) */}
-        <section className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-          {vaultNumbers.map((item) => (
-            <div
-              key={item.id}
-              className="rounded-xl bg-[#140E1D]/90 border border-white/[0.08] p-4 text-center space-y-0.5"
-            >
-              <div className="text-xl sm:text-2xl font-extrabold text-white tracking-tight">
-                {item.value}
-              </div>
-              <div className="text-[11px] font-semibold text-[#FFA896]">{item.label}</div>
-              <div className="text-[10px] text-[#8E7D96]">{item.detail}</div>
-            </div>
-          ))}
-        </section>
-
-        {/* 5. 4-BUTTON HUB SWITCHER + COLORED PANELS */}
-        <section id="hub-tabs" className="space-y-6 pt-2">
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 p-1.5 bg-[#150F1E] border border-white/[0.08] rounded-xl">
+        {/* 3. 5-BUTTON HUB SWITCHER RIGHT BELOW HERO */}
+        <section id="hub-tabs" className="space-y-6 pt-1">
+          <div className="grid grid-cols-2 sm:grid-cols-5 gap-1.5 p-1.5 bg-[#150C0F] border border-white/[0.09] rounded-xl shadow-xl">
             <button
               type="button"
               onClick={() => setActiveTab('discord')}
-              className={`py-2.5 px-3 rounded-lg font-semibold text-xs sm:text-sm tracking-wide flex items-center justify-center gap-2 transition cursor-pointer ${
+              className={`py-2.5 px-3 rounded-lg font-semibold text-xs sm:text-sm tracking-wide flex items-center justify-center gap-1.5 transition cursor-pointer ${
                 activeTab === 'discord'
-                  ? 'bg-[#5865F2] text-white shadow-md shadow-[#5865F2]/30'
-                  : 'text-[#B8A8C0] hover:text-white hover:bg-white/[0.04]'
+                  ? 'bg-[#5865F2] text-white shadow-md shadow-[#5865F2]/35'
+                  : 'text-[#C4B5BC] hover:text-white hover:bg-white/[0.04]'
               }`}
             >
               <Users className="w-4 h-4 shrink-0" />
@@ -833,13 +762,13 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
               onClick={() => setActiveTab('vip')}
               style={
                 activeTab === 'vip'
-                  ? { backgroundImage: 'linear-gradient(90deg, #FF7E6B 0%, #F472B6 55%, #FFB88C 100%)' }
+                  ? { backgroundImage: 'linear-gradient(90deg, #B91C1C 0%, #DC2626 50%, #EF4444 100%)' }
                   : undefined
               }
-              className={`py-2.5 px-3 rounded-lg font-semibold text-xs sm:text-sm tracking-wide flex items-center justify-center gap-2 transition cursor-pointer ${
+              className={`py-2.5 px-3 rounded-lg font-semibold text-xs sm:text-sm tracking-wide flex items-center justify-center gap-1.5 transition cursor-pointer ${
                 activeTab === 'vip'
-                  ? 'text-[#160B12] shadow-md shadow-[#FF7E6B]/30'
-                  : 'text-[#B8A8C0] hover:text-white hover:bg-white/[0.04]'
+                  ? 'text-white shadow-md shadow-red-600/35'
+                  : 'text-[#C4B5BC] hover:text-white hover:bg-white/[0.04]'
               }`}
             >
               <Crown className="w-4 h-4 shrink-0" />
@@ -849,10 +778,10 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
             <button
               type="button"
               onClick={() => setActiveTab('reddit')}
-              className={`py-2.5 px-3 rounded-lg font-semibold text-xs sm:text-sm tracking-wide flex items-center justify-center gap-2 transition cursor-pointer ${
+              className={`py-2.5 px-3 rounded-lg font-semibold text-xs sm:text-sm tracking-wide flex items-center justify-center gap-1.5 transition cursor-pointer ${
                 activeTab === 'reddit'
-                  ? 'bg-[#FF4500] text-white shadow-md shadow-[#FF4500]/30'
-                  : 'text-[#B8A8C0] hover:text-white hover:bg-white/[0.04]'
+                  ? 'bg-[#FF4500] text-white shadow-md shadow-[#FF4500]/35'
+                  : 'text-[#C4B5BC] hover:text-white hover:bg-white/[0.04]'
               }`}
             >
               <Sparkles className="w-4 h-4 shrink-0" />
@@ -867,14 +796,32 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
                   ? { backgroundImage: 'linear-gradient(90deg, #F59E0B 0%, #FACC15 100%)' }
                   : undefined
               }
-              className={`py-2.5 px-3 rounded-lg font-semibold text-xs sm:text-sm tracking-wide flex items-center justify-center gap-2 transition cursor-pointer ${
+              className={`py-2.5 px-3 rounded-lg font-semibold text-xs sm:text-sm tracking-wide flex items-center justify-center gap-1.5 transition cursor-pointer ${
                 activeTab === 'promo'
-                  ? 'text-[#160B12] shadow-md shadow-amber-400/30'
-                  : 'text-[#B8A8C0] hover:text-white hover:bg-white/[0.04]'
+                  ? 'text-[#160B12] shadow-md shadow-amber-400/35'
+                  : 'text-[#C4B5BC] hover:text-white hover:bg-white/[0.04]'
               }`}
             >
               <Zap className="w-4 h-4 shrink-0" />
               <span>PROMO</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setActiveTab('vault')}
+              style={
+                activeTab === 'vault'
+                  ? { backgroundImage: 'linear-gradient(90deg, #991B1B 0%, #DC2626 55%, #EF4444 100%)' }
+                  : undefined
+              }
+              className={`col-span-2 sm:col-span-1 py-2.5 px-3 rounded-lg font-semibold text-xs sm:text-sm tracking-wide flex items-center justify-center gap-1.5 transition cursor-pointer ${
+                activeTab === 'vault'
+                  ? 'text-white shadow-md shadow-red-600/35'
+                  : 'text-[#C4B5BC] hover:text-white hover:bg-white/[0.04]'
+              }`}
+            >
+              <Film className="w-4 h-4 shrink-0" />
+              <span>VAULT</span>
             </button>
           </div>
 
@@ -981,8 +928,8 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
                     key={tier.id}
                     className={`rounded-2xl p-5 flex flex-col justify-between transition ${
                       tier.featured
-                        ? 'bg-[#1D1229] border-2 border-[#FFA896]/70 shadow-[0_18px_50px_rgba(255,126,107,0.18)]'
-                        : 'bg-[#150F1E] border border-white/[0.08]'
+                        ? 'bg-[#1C0D12] border-2 border-red-500/75 shadow-[0_18px_50px_rgba(220,38,38,0.24)]'
+                        : 'bg-[#150C0F] border border-white/[0.08]'
                     }`}
                   >
                     <div>
@@ -990,8 +937,8 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
                         <h3 className="text-base font-bold text-white">{tier.name}</h3>
                         {tier.featured && (
                           <span
-                            className="text-[10px] font-bold px-2 py-0.5 rounded-full text-[#160B12]"
-                            style={{ backgroundImage: 'linear-gradient(90deg, #FFB88C 0%, #FF9EC7 100%)' }}
+                            className="text-[10px] font-bold px-2 py-0.5 rounded-full text-white"
+                            style={{ backgroundImage: 'linear-gradient(90deg, #DC2626 0%, #EF4444 100%)' }}
                           >
                             Popular
                           </span>
@@ -1006,7 +953,7 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
                           <span className="text-3xl font-extrabold text-white tracking-tight">${tier.price}</span>
                           <span className="text-xs text-[#95849E]">/mo</span>
                         </div>
-                        <p className="text-[11px] text-[#FFA896] mt-1 font-medium">{tier.dailyNote}</p>
+                        <p className="text-[11px] text-red-400 mt-1 font-medium">{tier.dailyNote}</p>
                         <p className="text-xs text-[#B2A1BC] mt-2 leading-relaxed">{tier.description}</p>
                       </div>
 
@@ -1019,7 +966,7 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
                             }`}
                           >
                             {feat.included ? (
-                              <Check className={`w-3.5 h-3.5 shrink-0 ${tier.featured ? 'text-[#FFA896]' : 'text-[#B8A8C0]'}`} />
+                              <Check className={`w-3.5 h-3.5 shrink-0 ${tier.featured ? 'text-red-400' : 'text-[#B8A8C0]'}`} />
                             ) : (
                               <X className="w-3.5 h-3.5 shrink-0 text-[#594962]" />
                             )}
@@ -1035,12 +982,12 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
                       rel="noreferrer"
                       style={
                         tier.featured
-                          ? { backgroundImage: 'linear-gradient(90deg, #FF7E6B 0%, #F472B6 55%, #FFB88C 100%)' }
+                          ? { backgroundImage: 'linear-gradient(90deg, #B91C1C 0%, #DC2626 50%, #EF4444 100%)' }
                           : undefined
                       }
                       className={`w-full py-2.5 rounded-xl font-semibold text-xs sm:text-sm text-center transition flex items-center justify-center gap-1.5 ${
                         tier.featured
-                          ? 'text-[#160B12] hover:brightness-105'
+                          ? 'text-white hover:brightness-110 shadow-lg shadow-red-600/30'
                           : 'bg-white/[0.07] hover:bg-white/[0.12] text-white'
                       }`}
                     >
@@ -1169,6 +1116,107 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
               </div>
             </div>
           )}
+
+          {/* TAB 5: VAULT (Red themed with red outline — Stats + Video Previews together) */}
+          {activeTab === 'vault' && (
+            <div className="rounded-2xl bg-gradient-to-br from-red-600/18 via-[#190B0E] to-[#110709] border-2 border-red-500/65 shadow-[0_0_40px_rgba(220,38,38,0.2)] p-5 sm:p-7 space-y-6">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div className="space-y-1.5">
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-500/20 border border-red-500/45 text-xs font-semibold text-red-300">
+                    <Film className="w-3.5 h-3.5" />
+                    CaptionVibes Vault &amp; Previews
+                  </span>
+                  <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+                    Inside the Vault
+                  </h2>
+                </div>
+                <a
+                  href={config.discordUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-white shadow-lg shadow-red-600/30 hover:brightness-110 transition inline-flex items-center justify-center gap-1.5 shrink-0"
+                  style={{ backgroundImage: 'linear-gradient(90deg, #B91C1C 0%, #DC2626 55%, #EF4444 100%)' }}
+                >
+                  <span>Full Vault on Discord</span>
+                  <ExternalLink className="w-3.5 h-3.5" />
+                </a>
+              </div>
+
+              {/* Vault Stats Grid */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                {vaultNumbers.map((item) => (
+                  <div
+                    key={item.id}
+                    className="rounded-xl bg-[#12080A]/90 border border-red-500/35 p-3.5 text-center space-y-0.5"
+                  >
+                    <div className="text-xl sm:text-2xl font-extrabold text-white tracking-tight">
+                      {item.value}
+                    </div>
+                    <div className="text-[11px] font-semibold text-red-400">{item.label}</div>
+                    <div className="text-[10px] text-slate-400">{item.detail}</div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Interactive Video Preview Player */}
+              <div className="rounded-2xl bg-[#0F0709] border border-red-500/30 overflow-hidden shadow-xl">
+                <div className="aspect-video bg-black relative">
+                  <video
+                    key={featuredClip.src}
+                    src={featuredClip.src}
+                    controls
+                    muted
+                    playsInline
+                    preload="metadata"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+
+                <div className="p-4 sm:p-5 space-y-4">
+                  <div className="flex items-start justify-between gap-3">
+                    <div>
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <h3 className="font-bold text-white text-base">{featuredClip.title}</h3>
+                        <span className="text-[11px] px-2 py-0.5 rounded bg-red-500/15 border border-red-500/30 text-red-300">
+                          {featuredClip.tag}
+                        </span>
+                      </div>
+                      <p className="text-xs text-slate-300 mt-1 leading-relaxed">{featuredClip.note}</p>
+                    </div>
+                    <a
+                      href={config.discordUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-xs font-semibold text-red-400 hover:text-white transition whitespace-nowrap shrink-0 mt-0.5"
+                    >
+                      Full cut →
+                    </a>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-2 border-t border-red-500/20">
+                    {previewClips.map((clip, idx) => {
+                      const active = idx === safeClipIdx;
+                      return (
+                        <button
+                          key={clip.id}
+                          type="button"
+                          onClick={() => setFeaturedClipIdx(idx)}
+                          className={`px-3 py-2.5 rounded-lg text-left transition cursor-pointer flex items-center gap-2 ${
+                            active
+                              ? 'bg-red-500/20 text-white border border-red-500/60'
+                              : 'bg-white/[0.03] text-slate-300 border border-transparent hover:bg-white/[0.06] hover:text-white'
+                          }`}
+                        >
+                          <Play className={`w-3.5 h-3.5 shrink-0 ${active ? 'text-red-400' : 'opacity-50'}`} />
+                          <span className="text-xs font-medium truncate">{clip.title}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
         </section>
 
         {/* 6. FAQ — Minimal Accordion */}
@@ -1182,11 +1230,11 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
                   <button
                     type="button"
                     onClick={() => setOpenFaq(isOpen ? -1 : idx)}
-                    className="w-full text-left flex items-center justify-between gap-4 font-medium text-sm sm:text-base text-white hover:text-[#FFA896] transition cursor-pointer"
+                    className="w-full text-left flex items-center justify-between gap-4 font-medium text-sm sm:text-base text-white hover:text-red-400 transition cursor-pointer"
                   >
                     <span>{faq.q}</span>
                     {isOpen ? (
-                      <ChevronUp className="w-4 h-4 text-[#FFA896] shrink-0" />
+                      <ChevronUp className="w-4 h-4 text-red-400 shrink-0" />
                     ) : (
                       <ChevronDown className="w-4 h-4 text-[#8E7D96] shrink-0" />
                     )}
@@ -1224,7 +1272,7 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
       {/* FLOATING SOCIAL PROOF NOTIFICATIONS */}
       {config.showNotifications && !toastDismissed && (
         <div
-          className={`fixed bottom-4 left-4 z-30 w-[calc(100vw-2rem)] max-w-[320px] sm:max-w-[350px] bg-[#191124]/95 backdrop-blur-xl border border-[#FFB88C]/40 rounded-2xl p-3.5 shadow-[0_14px_45px_rgba(0,0,0,0.85)] transition-all duration-500 ${
+          className={`fixed bottom-4 left-4 z-30 w-[calc(100vw-2rem)] max-w-[320px] sm:max-w-[350px] bg-[#160B0F]/95 backdrop-blur-xl border border-red-500/40 rounded-2xl p-3.5 shadow-[0_14px_45px_rgba(0,0,0,0.85)] transition-all duration-500 ${
             showToast ? 'translate-y-0 opacity-100 scale-100' : 'translate-y-5 opacity-0 scale-95 pointer-events-none'
           }`}
         >
@@ -1233,7 +1281,7 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
               className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 shadow-md"
               style={{
                 backgroundImage: currentToast.isVip
-                  ? 'linear-gradient(135deg, #FF7E6B 0%, #F472B6 60%, #FFB88C 100%)'
+                  ? 'linear-gradient(135deg, #991B1B 0%, #DC2626 55%, #EF4444 100%)'
                   : 'linear-gradient(135deg, #5865F2 0%, #4348C6 100%)',
               }}
             >
@@ -1251,7 +1299,7 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
                   {currentToast.time}
                 </span>
               </div>
-              <p className="text-[#FF9EC7] font-semibold text-xs leading-snug">{currentToast.action}</p>
+              <p className="text-red-400 font-semibold text-xs leading-snug">{currentToast.action}</p>
               <p className="text-[11px] text-[#A897B2] truncate">{currentToast.note}</p>
             </div>
             <button
@@ -1286,25 +1334,25 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
                 type="button"
                 onClick={() => setVisitorPreview(true)}
                 title="Nascondi editor per vedere come visitatore"
-                className="p-2.5 rounded-full bg-[#150F1E]/95 hover:bg-[#221730] text-[#B8A8C0] hover:text-white border border-white/15 shadow-xl backdrop-blur-md transition cursor-pointer"
+                className="p-2.5 rounded-full bg-[#150C0F]/95 hover:bg-[#241116] text-[#B8A8C0] hover:text-white border border-white/15 shadow-xl backdrop-blur-md transition cursor-pointer"
               >
                 <EyeOff className="w-4 h-4" />
               </button>
               <button
                 type="button"
                 onClick={() => setShowEditor(true)}
-                className="px-4 py-2.5 rounded-full bg-[#150F1E]/95 hover:bg-[#221730] text-[#FFB88C] border border-[#FFB88C]/40 shadow-2xl flex items-center gap-2 text-xs font-bold backdrop-blur-md transition cursor-pointer"
+                className="px-4 py-2.5 rounded-full bg-[#150C0F]/95 hover:bg-[#241116] text-red-400 border border-red-500/40 shadow-2xl flex items-center gap-2 text-xs font-bold backdrop-blur-md transition cursor-pointer"
               >
                 <Settings className="w-4 h-4" />
                 <span>Modifica Sito</span>
               </button>
             </div>
           ) : (
-            <div className="w-[94vw] sm:w-[450px] max-h-[84vh] bg-[#120C1B]/98 backdrop-blur-xl border border-[#FFB88C]/25 rounded-2xl shadow-[0_20px_70px_rgba(0,0,0,0.92)] flex flex-col overflow-hidden text-xs">
+            <div className="w-[94vw] sm:w-[450px] max-h-[84vh] bg-[#140A0D]/98 backdrop-blur-xl border border-red-500/25 rounded-2xl shadow-[0_20px_70px_rgba(0,0,0,0.92)] flex flex-col overflow-hidden text-xs">
               {/* Editor Header */}
               <div className="flex items-center justify-between px-4 py-3 border-b border-white/10 bg-black/35">
                 <div className="flex items-center gap-2 font-bold text-white text-sm">
-                  <Settings className="w-4 h-4 text-[#FFB88C]" />
+                  <Settings className="w-4 h-4 text-red-400" />
                   <span>CaptionVibes Editor</span>
                   <span className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-semibold">
                     Auto-Saved
@@ -1350,7 +1398,7 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
                       onClick={() => setEditorTab(tab.id)}
                       className={`py-2.5 flex flex-col items-center gap-1 border-b-2 transition cursor-pointer ${
                         active
-                          ? 'border-[#FFB88C] text-white bg-white/5'
+                          ? 'border-red-500 text-white bg-white/5'
                           : 'border-transparent text-[#9E8EA8] hover:text-white'
                       }`}
                     >
@@ -1428,7 +1476,7 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
                     </div>
 
                     <div className="pt-2 border-t border-white/10 space-y-2">
-                      <label className="block text-[10px] font-bold text-[#FFB88C] uppercase">Link Principali</label>
+                      <label className="block text-[10px] font-bold text-red-400 uppercase">Link Principali</label>
                       <input
                         type="text"
                         value={config.discordUrl}
@@ -1457,7 +1505,7 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
                 {editorTab === 'media' && (
                   <div className="space-y-3.5">
                     <div className="space-y-2.5">
-                      <label className="block text-[10px] font-bold text-[#FFB88C] uppercase">Icona Ufficiale &amp; Banner GIF</label>
+                      <label className="block text-[10px] font-bold text-red-400 uppercase">Icona Ufficiale &amp; Banner GIF</label>
 
                       <div className="space-y-1.5">
                         <label className="block text-[10px] text-[#A897B2]">Percorso Icona (es. /icon.jpg)</label>
@@ -1468,7 +1516,7 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
                             onChange={(e) => setConfig({ ...config, iconUrl: e.target.value })}
                             className="flex-1 bg-black/50 border border-white/15 rounded-lg px-2.5 py-1.5 text-white"
                           />
-                          <label className="px-2.5 py-1.5 rounded-lg bg-[#FFB88C]/15 border border-[#FFB88C]/35 text-[#FFD6A5] font-bold cursor-pointer whitespace-nowrap">
+                          <label className="px-2.5 py-1.5 rounded-lg bg-red-500/15 border border-red-500/35 text-red-300 font-bold cursor-pointer whitespace-nowrap">
                             Carica
                             <input
                               type="file"
@@ -1492,7 +1540,7 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
                             onChange={(e) => setConfig({ ...config, bannerUrl: e.target.value })}
                             className="flex-1 bg-black/50 border border-white/15 rounded-lg px-2.5 py-1.5 text-white"
                           />
-                          <label className="px-2.5 py-1.5 rounded-lg bg-[#FFB88C]/15 border border-[#FFB88C]/35 text-[#FFD6A5] font-bold cursor-pointer whitespace-nowrap">
+                          <label className="px-2.5 py-1.5 rounded-lg bg-red-500/15 border border-red-500/35 text-red-300 font-bold cursor-pointer whitespace-nowrap">
                             Carica
                             <input
                               type="file"
@@ -1513,7 +1561,7 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
                           type="checkbox"
                           checked={config.showBanner}
                           onChange={(e) => setConfig({ ...config, showBanner: e.target.checked })}
-                          className="w-4 h-4 accent-[#FF7E6B]"
+                          className="w-4 h-4 accent-red-500"
                         />
                       </label>
 
@@ -1526,13 +1574,13 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
                             setToastDismissed(false);
                             setConfig({ ...config, showNotifications: e.target.checked });
                           }}
-                          className="w-4 h-4 accent-[#FF7E6B]"
+                          className="w-4 h-4 accent-red-500"
                         />
                       </label>
                     </div>
 
                     <div className="pt-2 border-t border-white/10 space-y-2.5">
-                      <label className="block text-[10px] font-bold text-[#FFB88C] uppercase">I 3 Video Preview</label>
+                      <label className="block text-[10px] font-bold text-red-400 uppercase">I 3 Video Preview</label>
                       {previewClips.map((clip, idx) => (
                         <div key={clip.id} className="bg-black/35 border border-white/10 rounded-xl p-2.5 space-y-1.5">
                           <div className="grid grid-cols-2 gap-1.5">
@@ -1566,7 +1614,7 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
                               )
                             }
                             placeholder="/video.mp4"
-                            className="w-full bg-black/60 border border-white/15 rounded px-2 py-1 text-[#FFB88C]"
+                            className="w-full bg-black/60 border border-white/15 rounded px-2 py-1 text-red-400"
                           />
                         </div>
                       ))}
@@ -1576,7 +1624,7 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
 
                 {editorTab === 'stats' && (
                   <div className="space-y-3">
-                    <label className="block text-[10px] font-bold text-[#FFB88C] uppercase">Pillola Statistiche Hero</label>
+                    <label className="block text-[10px] font-bold text-red-400 uppercase">Pillola Statistiche Hero</label>
                     <input
                       type="text"
                       value={config.statDiscord}
@@ -1618,7 +1666,7 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
                     </div>
 
                     <div className="pt-2 border-t border-white/10 space-y-2">
-                      <label className="block text-[10px] font-bold text-[#FFB88C] uppercase">4 Numeri Vault</label>
+                      <label className="block text-[10px] font-bold text-red-400 uppercase">4 Numeri Vault</label>
                       {vaultNumbers.map((item, idx) => (
                         <div key={item.id} className="grid grid-cols-3 gap-1.5 bg-black/35 border border-white/10 p-2 rounded-lg">
                           <input
@@ -1655,7 +1703,7 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
                         <div
                           key={tier.id}
                           className={`bg-black/35 border rounded-xl overflow-hidden ${
-                            tier.featured ? 'border-[#FFB88C]/50' : 'border-white/10'
+                            tier.featured ? 'border-red-500/50' : 'border-white/10'
                           }`}
                         >
                           <button
@@ -1695,7 +1743,7 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
                                 type="text"
                                 value={tier.checkoutUrl}
                                 onChange={(e) => updateTier(tier.id, { checkoutUrl: e.target.value })}
-                                className="w-full bg-black/60 border border-white/15 rounded px-2 py-1 text-[#FFB88C]"
+                                className="w-full bg-black/60 border border-white/15 rounded px-2 py-1 text-red-400"
                               />
                               <div className="pt-1.5 space-y-1">
                                 <div className="flex items-center justify-between">
@@ -1748,11 +1796,11 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
                 {editorTab === 'faq' && (
                   <div className="space-y-2.5">
                     <div className="flex items-center justify-between">
-                      <span className="text-[10px] font-bold text-[#FFB88C] uppercase">Domande FAQ ({faqs.length})</span>
+                      <span className="text-[10px] font-bold text-red-400 uppercase">Domande FAQ ({faqs.length})</span>
                       <button
                         type="button"
                         onClick={() => setFaqs((prev) => [...prev, { q: 'New question?', a: 'Answer here.' }])}
-                        className="px-2.5 py-1 rounded-lg bg-[#FF7E6B] text-[#160B12] font-bold flex items-center gap-1 cursor-pointer"
+                        className="px-2.5 py-1 rounded-lg bg-red-500 text-white font-bold flex items-center gap-1 cursor-pointer"
                       >
                         <Plus className="w-3 h-3" /> Aggiungi
                       </button>
@@ -1797,14 +1845,14 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
                     </p>
                     <ol className="list-decimal list-inside space-y-1 text-[#A897B2]">
                       <li>Clicca <strong>Copia Configurazione</strong> qui sotto.</li>
-                      <li>Incollala in <code className="text-[#FFB88C]">src/App.tsx</code> al posto dei blocchi <code className="text-[#FFB88C]">DEFAULT_*</code>.</li>
+                      <li>Incollala in <code className="text-red-400">src/App.tsx</code> al posto dei blocchi <code className="text-red-400">DEFAULT_*</code>.</li>
                       <li>Imposta <code className="text-emerald-400">ENABLE_OWNER_CUSTOMIZER = false</code> in riga 13.</li>
                     </ol>
                     <button
                       type="button"
                       onClick={copyExportCode}
-                      className="w-full py-2.5 rounded-xl font-bold text-[#160B12] flex items-center justify-center gap-2 cursor-pointer"
-                      style={{ backgroundImage: 'linear-gradient(90deg, #FF7E6B 0%, #F472B6 55%, #FFB88C 100%)' }}
+                      className="w-full py-2.5 rounded-xl font-bold text-white flex items-center justify-center gap-2 cursor-pointer"
+                      style={{ backgroundImage: 'linear-gradient(90deg, #B91C1C 0%, #DC2626 50%, #EF4444 100%)' }}
                     >
                       {copiedFlag ? <CheckCircle2 className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
                       <span>{copiedFlag ? 'Copiato negli appunti!' : 'Copia Configurazione Pronta'}</span>
