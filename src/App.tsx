@@ -737,13 +737,13 @@ export default function App() {
 
   // Live Social Proof Ticker Rotation (Less frequent so it feels natural and non-intrusive)
   useEffect(() => {
-    let hideTimeout: ReturnType<typeof setTimeout> | undefined;
-    let showTimeout: ReturnType<typeof setTimeout> | undefined;
+    let hideTimeout: number | undefined;
+    let showTimeout: number | undefined;
 
     const scheduleNext = () => {
-      hideTimeout = setTimeout(() => {
+      hideTimeout = window.setTimeout(() => {
         setShowToast(false);
-        showTimeout = setTimeout(() => {
+        showTimeout = window.setTimeout(() => {
           setCurrentToast((prev) => createRandomToast(prev.user));
           setShowToast(true);
           scheduleNext();
@@ -753,8 +753,8 @@ export default function App() {
 
     scheduleNext();
     return () => {
-      if (hideTimeout) clearTimeout(hideTimeout);
-      if (showTimeout) clearTimeout(showTimeout);
+      if (hideTimeout !== undefined) window.clearTimeout(hideTimeout);
+      if (showTimeout !== undefined) window.clearTimeout(showTimeout);
     };
   }, []);
 
