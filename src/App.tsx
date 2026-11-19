@@ -1058,7 +1058,15 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
         <h1 className="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight max-w-4xl mx-auto leading-[1.08] mb-6 text-white">
           {config.heroTitleStart}
           <span
-            className="inline-block bg-gradient-to-r from-rose-300 via-pink-300 to-amber-200 bg-clip-text text-transparent [-webkit-background-clip:text] [-webkit-text-fill-color:transparent] drop-shadow-[0_0_22px_rgba(244,63,94,0.35)]"
+            className="inline-block"
+            style={{
+              backgroundImage: 'linear-gradient(90deg, #fda4af 0%, #f9a8d4 50%, #fde68a 100%)',
+              WebkitBackgroundClip: 'text',
+              backgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              color: 'transparent',
+              filter: 'drop-shadow(0 0 22px rgba(244, 63, 94, 0.35))',
+            }}
           >
             {config.heroTitleHighlight}
           </span>
@@ -1143,9 +1151,14 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
             <button
               type="button"
               onClick={() => setActiveSection('vip')}
-              className={`py-3 px-3 ${radiusBtn} font-black text-xs sm:text-sm uppercase tracking-wider flex items-center justify-center gap-2 transition ${
+              style={
                 activeSection === 'vip'
-                  ? `bg-gradient-to-r ${theme.buttonGradient} text-white shadow-lg`
+                  ? { backgroundImage: 'linear-gradient(90deg, #dc2626 0%, #e11d48 50%, #ea580c 100%)' }
+                  : undefined
+              }
+              className={`py-3 px-3 ${radiusBtn} font-black text-xs sm:text-sm uppercase tracking-wider flex items-center justify-center gap-2 transition cursor-pointer ${
+                activeSection === 'vip'
+                  ? 'text-white shadow-lg shadow-rose-500/30'
                   : 'text-slate-300 hover:text-white hover:bg-white/5'
               }`}
             >
