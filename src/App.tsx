@@ -69,8 +69,16 @@ interface SiteConfig {
   promoTabTitle: string;
   promoTabSubtitle: string;
 
+  // Vault Tab Copy
+  vaultTabBadge: string;
+  vaultTabTitle: string;
+  vaultTabCta: string;
+  vaultFullCutLabel: string;
+  vaultViewsSuffix: string;
+
   // Footer
   footerText: string;
+  footerDiscordLabel: string;
 }
 
 interface VaultNumber {
@@ -172,7 +180,14 @@ const DEFAULT_CONFIG: SiteConfig = {
   promoTabSubtitle:
     'New to making captions and want visibility in front of an active audience (~14M total views, 1.5M+ weekly views across channels)? Submit your clip — I publish it with full credits to your name or link.',
 
+  vaultTabBadge: 'CaptionVibes Vault & Previews',
+  vaultTabTitle: 'Inside the Vault',
+  vaultTabCta: 'Full Vault on Discord',
+  vaultFullCutLabel: 'Full cut →',
+  vaultViewsSuffix: 'video views',
+
   footerText: 'CaptionVibes · 18+ Adult Anime & Caption Hub',
+  footerDiscordLabel: 'Discord',
 };
 
 const DEFAULT_VAULT_NUMBERS: VaultNumber[] = [
@@ -322,7 +337,7 @@ const createRandomToast = (prevUser?: string): SocialToastEvent => {
 };
 
 const BANNER_FALLBACKS = ['/banner.gif', '/standard(1).gif', '/banner.png', '/banner.jpg', '/standard(1).jpg'];
-const STORAGE_KEY = 'captionvibes_vertical_studio_v34';
+const STORAGE_KEY = 'captionvibes_vertical_studio_v35';
 
 export default function App() {
   const loadSaved = () => {
@@ -792,7 +807,7 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
 
             <span className="inline-flex items-center gap-1 text-xs font-semibold text-amber-300">
               <Eye className="w-3.5 h-3.5" />
-              <span>{siteViews.toLocaleString()} site views</span>
+              <span>{siteViews.toLocaleString()}</span>
             </span>
 
             <span className="text-white/20">|</span>
@@ -1251,7 +1266,7 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
                   className="px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-white shadow-lg shadow-red-600/30 hover:brightness-110 transition inline-flex items-center justify-center gap-1.5 shrink-0"
                   style={{ backgroundImage: 'linear-gradient(90deg, #B91C1C 0%, #DC2626 55%, #EF4444 100%)' }}
                 >
-                  <span>Full Vault on Discord</span>
+                  <span>{config.vaultTabCta}</span>
                   <ExternalLink className="w-3.5 h-3.5" />
                 </a>
               </div>
@@ -1313,7 +1328,7 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
                     <div className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-300">
                       <Eye className="w-4 h-4 text-red-400" />
                       <span>
-                        {(clipStats[featuredClip.id]?.views ?? 0).toLocaleString()} video views
+                        {(clipStats[featuredClip.id]?.views ?? 0).toLocaleString()} {config.vaultViewsSuffix}
                       </span>
                     </div>
 
@@ -1402,7 +1417,7 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
           </div>
           <div className="flex items-center gap-5">
             <a href={config.discordUrl} target="_blank" rel="noreferrer" className="hover:text-white transition">
-              Discord
+              {config.footerDiscordLabel}
             </a>
             <a href={config.redditUrl} target="_blank" rel="noreferrer" className="hover:text-white transition">
               {config.redditLabel}
@@ -1555,14 +1570,14 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
               <div className="p-4 overflow-y-auto space-y-3.5 flex-1">
                 {editorTab === 'copy' && (
                   <div className="space-y-3">
-                    <div className="grid grid-cols-2 gap-2">
+                    <div className="grid grid-cols-3 gap-2">
                       <div>
                         <label className="block text-[10px] text-[#A897B2] mb-1">Brand Parte 1</label>
                         <input
                           type="text"
                           value={config.brandPrefix}
                           onChange={(e) => setConfig({ ...config, brandPrefix: e.target.value })}
-                          className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1.5 text-white"
+                          className="w-full bg-black/50 border border-white/15 rounded-lg px-2 py-1.5 text-white"
                         />
                       </div>
                       <div>
@@ -1571,7 +1586,16 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
                           type="text"
                           value={config.brandAccent}
                           onChange={(e) => setConfig({ ...config, brandAccent: e.target.value })}
-                          className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1.5 text-white"
+                          className="w-full bg-black/50 border border-white/15 rounded-lg px-2 py-1.5 text-white"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-[10px] text-[#A897B2] mb-1">Badge Età</label>
+                        <input
+                          type="text"
+                          value={config.ageBadge}
+                          onChange={(e) => setConfig({ ...config, ageBadge: e.target.value })}
+                          className="w-full bg-black/50 border border-white/15 rounded-lg px-2 py-1.5 text-white"
                         />
                       </div>
                     </div>
@@ -1618,7 +1642,157 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
                     </div>
 
                     <div className="pt-2 border-t border-white/10 space-y-2">
-                      <label className="block text-[10px] font-bold text-red-400 uppercase">Link Principali</label>
+                      <label className="block text-[10px] font-bold text-red-400 uppercase">Testi Tab Discord</label>
+                      <div className="grid grid-cols-2 gap-2">
+                        <input
+                          type="text"
+                          value={config.discordTabBadge}
+                          onChange={(e) => setConfig({ ...config, discordTabBadge: e.target.value })}
+                          placeholder="Badge Discord"
+                          className="bg-black/50 border border-white/15 rounded-lg px-2 py-1 text-white"
+                        />
+                        <input
+                          type="text"
+                          value={config.discordTabTitle}
+                          onChange={(e) => setConfig({ ...config, discordTabTitle: e.target.value })}
+                          placeholder="Titolo Discord"
+                          className="bg-black/50 border border-white/15 rounded-lg px-2 py-1 text-white font-semibold"
+                        />
+                      </div>
+                      <textarea
+                        rows={2}
+                        value={config.discordTabSubtitle}
+                        onChange={(e) => setConfig({ ...config, discordTabSubtitle: e.target.value })}
+                        placeholder="Descrizione Discord"
+                        className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1 text-white"
+                      />
+                      <div className="grid grid-cols-2 gap-2">
+                        <input
+                          type="text"
+                          value={config.discordTabCta}
+                          onChange={(e) => setConfig({ ...config, discordTabCta: e.target.value })}
+                          placeholder="Bottone Discord Tab"
+                          className="bg-black/50 border border-white/15 rounded-lg px-2 py-1 text-white"
+                        />
+                        <input
+                          type="text"
+                          value={config.discordTabCtaSub}
+                          onChange={(e) => setConfig({ ...config, discordTabCtaSub: e.target.value })}
+                          placeholder="Sotto-testo bottone"
+                          className="bg-black/50 border border-white/15 rounded-lg px-2 py-1 text-white"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="pt-2 border-t border-white/10 space-y-2">
+                      <label className="block text-[10px] font-bold text-red-400 uppercase">Testi Tab VIP &amp; Avviso</label>
+                      <input
+                        type="text"
+                        value={config.vipTabTitle}
+                        onChange={(e) => setConfig({ ...config, vipTabTitle: e.target.value })}
+                        placeholder="Titolo VIP"
+                        className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1 text-white font-semibold"
+                      />
+                      <textarea
+                        rows={2}
+                        value={config.vipTabSubtitle}
+                        onChange={(e) => setConfig({ ...config, vipTabSubtitle: e.target.value })}
+                        placeholder="Sottotitolo VIP"
+                        className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1 text-white"
+                      />
+                      <div className="grid grid-cols-2 gap-2">
+                        <input
+                          type="text"
+                          value={config.vipReminderBold}
+                          onChange={(e) => setConfig({ ...config, vipReminderBold: e.target.value })}
+                          placeholder="Titolo avviso giallo"
+                          className="bg-black/50 border border-yellow-400/35 rounded-lg px-2 py-1 text-yellow-200 font-semibold"
+                        />
+                        <input
+                          type="text"
+                          value={config.vipReminderRest}
+                          onChange={(e) => setConfig({ ...config, vipReminderRest: e.target.value })}
+                          placeholder="Testo avviso giallo"
+                          className="bg-black/50 border border-white/15 rounded-lg px-2 py-1 text-white"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="pt-2 border-t border-white/10 space-y-2">
+                      <label className="block text-[10px] font-bold text-red-400 uppercase">Testi Tab Reddit, Promo &amp; Vault</label>
+                      <div className="grid grid-cols-2 gap-2">
+                        <input
+                          type="text"
+                          value={config.redditTabTitle}
+                          onChange={(e) => setConfig({ ...config, redditTabTitle: e.target.value })}
+                          placeholder="Titolo Reddit"
+                          className="bg-black/50 border border-white/15 rounded-lg px-2 py-1 text-white"
+                        />
+                        <input
+                          type="text"
+                          value={config.redditLabel}
+                          onChange={(e) => setConfig({ ...config, redditLabel: e.target.value })}
+                          placeholder="Etichetta Reddit"
+                          className="bg-black/50 border border-white/15 rounded-lg px-2 py-1 text-white"
+                        />
+                      </div>
+                      <textarea
+                        rows={2}
+                        value={config.redditTabSubtitle}
+                        onChange={(e) => setConfig({ ...config, redditTabSubtitle: e.target.value })}
+                        placeholder="Descrizione Reddit"
+                        className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1 text-white"
+                      />
+                      <div className="grid grid-cols-3 gap-2">
+                        <input
+                          type="text"
+                          value={config.promoSlotPrice}
+                          onChange={(e) => setConfig({ ...config, promoSlotPrice: e.target.value })}
+                          placeholder="Prezzo Promo"
+                          className="bg-black/50 border border-amber-400/35 rounded-lg px-2 py-1 text-amber-200 font-bold"
+                        />
+                        <input
+                          type="text"
+                          value={config.promoTabTitle}
+                          onChange={(e) => setConfig({ ...config, promoTabTitle: e.target.value })}
+                          placeholder="Titolo Promo"
+                          className="col-span-2 bg-black/50 border border-white/15 rounded-lg px-2 py-1 text-white"
+                        />
+                      </div>
+                      <textarea
+                        rows={2}
+                        value={config.promoTabSubtitle}
+                        onChange={(e) => setConfig({ ...config, promoTabSubtitle: e.target.value })}
+                        placeholder="Descrizione Promo"
+                        className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1 text-white"
+                      />
+                      <div className="grid grid-cols-3 gap-2">
+                        <input
+                          type="text"
+                          value={config.vaultTabTitle}
+                          onChange={(e) => setConfig({ ...config, vaultTabTitle: e.target.value })}
+                          placeholder="Titolo Vault"
+                          className="bg-black/50 border border-white/15 rounded-lg px-2 py-1 text-white"
+                        />
+                        <input
+                          type="text"
+                          value={config.vaultTabCta}
+                          onChange={(e) => setConfig({ ...config, vaultTabCta: e.target.value })}
+                          placeholder="Bottone Vault"
+                          className="bg-black/50 border border-white/15 rounded-lg px-2 py-1 text-white"
+                        />
+                        <input
+                          type="text"
+                          value={config.vaultViewsSuffix}
+                          onChange={(e) => setConfig({ ...config, vaultViewsSuffix: e.target.value })}
+                          placeholder="Etichetta views"
+                          className="bg-black/50 border border-white/15 rounded-lg px-2 py-1 text-white"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="pt-2 border-t border-white/10 space-y-2">
+                      <label className="block text-[10px] font-bold text-red-400 uppercase">Link Principali &amp; Footer</label>
                       <input
                         type="text"
                         value={config.discordUrl}
@@ -1640,6 +1814,22 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
                         placeholder="URL Checkout Promo"
                         className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1.5 text-white"
                       />
+                      <div className="grid grid-cols-3 gap-2">
+                        <input
+                          type="text"
+                          value={config.footerText}
+                          onChange={(e) => setConfig({ ...config, footerText: e.target.value })}
+                          placeholder="Testo Footer"
+                          className="col-span-2 bg-black/50 border border-white/15 rounded-lg px-2 py-1 text-white"
+                        />
+                        <input
+                          type="text"
+                          value={config.footerDiscordLabel}
+                          onChange={(e) => setConfig({ ...config, footerDiscordLabel: e.target.value })}
+                          placeholder="Link Discord"
+                          className="bg-black/50 border border-white/15 rounded-lg px-2 py-1 text-white"
+                        />
+                      </div>
                     </div>
                   </div>
                 )}
@@ -1766,7 +1956,7 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
 
                 {editorTab === 'stats' && (
                   <div className="space-y-3">
-                    <label className="block text-[10px] font-bold text-red-400 uppercase">Pillola Statistiche Hero</label>
+                    <label className="block text-[10px] font-bold text-red-400 uppercase">Pillola Statistiche &amp; Visite Sito</label>
                     <input
                       type="text"
                       value={config.statDiscord}
@@ -1779,12 +1969,26 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
                       onChange={(e) => setConfig({ ...config, statVault: e.target.value })}
                       className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1.5 text-white"
                     />
-                    <input
-                      type="text"
-                      value={config.statVips}
-                      onChange={(e) => setConfig({ ...config, statVips: e.target.value })}
-                      className="w-full bg-black/50 border border-white/15 rounded-lg px-2.5 py-1.5 text-white"
-                    />
+                    <div className="grid grid-cols-2 gap-2">
+                      <div>
+                        <label className="block text-[10px] text-[#A897B2] mb-1">VIP Badge</label>
+                        <input
+                          type="text"
+                          value={config.statVips}
+                          onChange={(e) => setConfig({ ...config, statVips: e.target.value })}
+                          className="w-full bg-black/50 border border-white/15 rounded-lg px-2 py-1.5 text-white"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-[10px] text-[#A897B2] mb-1">Numero Site Views</label>
+                        <input
+                          type="number"
+                          value={siteViews}
+                          onChange={(e) => setSiteViews(Math.max(0, Number(e.target.value)))}
+                          className="w-full bg-black/50 border border-amber-400/35 rounded-lg px-2 py-1.5 text-amber-300 font-bold"
+                        />
+                      </div>
+                    </div>
 
                     <div className="pt-2 border-t border-white/10 grid grid-cols-2 gap-2">
                       <div>
@@ -1807,32 +2011,103 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
                       </div>
                     </div>
 
+                    <div className="grid grid-cols-2 gap-2">
+                      <div>
+                        <label className="block text-[10px] text-[#A897B2] mb-1">Testo Giveaway</label>
+                        <input
+                          type="text"
+                          value={config.goalLabel}
+                          onChange={(e) => setConfig({ ...config, goalLabel: e.target.value })}
+                          className="w-full bg-black/50 border border-white/15 rounded-lg px-2 py-1.5 text-white"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-[10px] text-[#A897B2] mb-1">Nota Sconto</label>
+                        <input
+                          type="text"
+                          value={config.goalFooterNote}
+                          onChange={(e) => setConfig({ ...config, goalFooterNote: e.target.value })}
+                          className="w-full bg-black/50 border border-white/15 rounded-lg px-2 py-1.5 text-white"
+                        />
+                      </div>
+                    </div>
+
                     <div className="pt-2 border-t border-white/10 space-y-2">
                       <label className="block text-[10px] font-bold text-red-400 uppercase">4 Numeri Vault</label>
                       {vaultNumbers.map((item, idx) => (
-                        <div key={item.id} className="grid grid-cols-3 gap-1.5 bg-black/35 border border-white/10 p-2 rounded-lg">
+                        <div key={item.id} className="bg-black/35 border border-white/10 p-2 rounded-lg space-y-1.5">
+                          <div className="grid grid-cols-3 gap-1.5">
+                            <input
+                              type="text"
+                              value={item.value}
+                              onChange={(e) =>
+                                setVaultNumbers((prev) =>
+                                  prev.map((v, i) => (i === idx ? { ...v, value: e.target.value } : v))
+                                )
+                              }
+                              className="bg-black/60 border border-white/15 rounded px-2 py-1 text-white font-bold"
+                            />
+                            <input
+                              type="text"
+                              value={item.label}
+                              onChange={(e) =>
+                                setVaultNumbers((prev) =>
+                                  prev.map((v, i) => (i === idx ? { ...v, label: e.target.value } : v))
+                                )
+                              }
+                              className="col-span-2 bg-black/60 border border-white/15 rounded px-2 py-1 text-white"
+                            />
+                          </div>
                           <input
                             type="text"
-                            value={item.value}
+                            value={item.detail}
                             onChange={(e) =>
                               setVaultNumbers((prev) =>
-                                prev.map((v, i) => (i === idx ? { ...v, value: e.target.value } : v))
+                                prev.map((v, i) => (i === idx ? { ...v, detail: e.target.value } : v))
                               )
                             }
-                            className="bg-black/60 border border-white/15 rounded px-2 py-1 text-white font-bold"
-                          />
-                          <input
-                            type="text"
-                            value={item.label}
-                            onChange={(e) =>
-                              setVaultNumbers((prev) =>
-                                prev.map((v, i) => (i === idx ? { ...v, label: e.target.value } : v))
-                              )
-                            }
-                            className="col-span-2 bg-black/60 border border-white/15 rounded px-2 py-1 text-white"
+                            className="w-full bg-black/60 border border-white/15 rounded px-2 py-1 text-[#A897B2] text-[11px]"
                           />
                         </div>
                       ))}
+                    </div>
+
+                    <div className="pt-2 border-t border-white/10 space-y-2">
+                      <label className="block text-[10px] font-bold text-red-400 uppercase">Views &amp; Like per Video</label>
+                      {previewClips.map((clip) => {
+                        const st = clipStats[clip.id] || { views: 0, likes: 0, liked: false };
+                        return (
+                          <div key={clip.id} className="bg-black/35 border border-white/10 p-2 rounded-lg flex items-center justify-between gap-2">
+                            <span className="text-white font-semibold truncate">{clip.title}</span>
+                            <div className="flex items-center gap-1.5 shrink-0">
+                              <input
+                                type="number"
+                                value={st.views}
+                                onChange={(e) =>
+                                  setClipStats((prev) => ({
+                                    ...prev,
+                                    [clip.id]: { ...st, views: Math.max(0, Number(e.target.value)) },
+                                  }))
+                                }
+                                title="Views video"
+                                className="w-16 bg-black/60 border border-white/15 rounded px-1.5 py-1 text-white text-right"
+                              />
+                              <input
+                                type="number"
+                                value={st.likes}
+                                onChange={(e) =>
+                                  setClipStats((prev) => ({
+                                    ...prev,
+                                    [clip.id]: { ...st, likes: Math.max(0, Number(e.target.value)) },
+                                  }))
+                                }
+                                title="Like video"
+                                className="w-14 bg-black/60 border border-red-500/35 rounded px-1.5 py-1 text-red-300 text-right"
+                              />
+                            </div>
+                          </div>
+                        );
+                      })}
                     </div>
                   </div>
                 )}
