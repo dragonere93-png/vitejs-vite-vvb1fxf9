@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import {
   Sparkles, Unlock, EyeOff, Flame, ShieldCheck, Zap,
   Check, X, Crown, Film, Clock, ChevronDown,
