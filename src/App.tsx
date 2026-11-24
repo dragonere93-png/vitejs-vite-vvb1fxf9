@@ -12,6 +12,16 @@ import {
 // ============================================================================
 const ENABLE_OWNER_CUSTOMIZER = false;
 
+// ============================================================================
+// AGGIORNA QUI OGNI GIORNO (si aggiorna tutto il sito in automatico!)
+// ============================================================================
+const VIP_COUNT = 93;             // Abbonamenti VIP attuali
+const DISCORD_MEMBERS = '1,700+'; // Utenti su Discord
+const VAULT_TOTAL = '1,150+';     // Contenuti totali nel Vault
+const QUICK_VIDEOS = '160+';      // Video corti (Quick Videos)
+const LONG_VIDEOS = '45+';        // Video lunghi (Full Long Videos)
+const REELS_COUNT = '900+';       // CaptionVibes Reels
+
 type HubTab = 'discord' | 'vip' | 'reddit' | 'promo' | 'vault';
 type EditorTab = 'copy' | 'media' | 'stats' | 'tiers' | 'faq' | 'export';
 
@@ -138,9 +148,9 @@ const DEFAULT_CONFIG: SiteConfig = {
   showBanner: true,
   showNotifications: true,
 
-  statDiscord: '1,600+ on Discord',
-  statVault: '1,080+ content in vault',
-  statVips: '84 VIPs',
+  statDiscord: `${DISCORD_MEMBERS} on Discord`,
+  statVault: `${VAULT_TOTAL} content in vault`,
+  statVips: `${VIP_COUNT} VIPs`,
 
   heroTitle: 'CAPTIONVIBES',
   heroSubtitle:
@@ -148,7 +158,7 @@ const DEFAULT_CONFIG: SiteConfig = {
   primaryCtaText: 'Join Free Discord',
   secondaryCtaText: 'View VIP Tiers',
 
-  vipCurrent: 84,
+  vipCurrent: VIP_COUNT,
   vipGoal: 100,
   goalLabel: '€50 giveaway (or 1 yr Unlimited) at 100 VIPs',
   goalFooterNote: '25% founding discount active',
@@ -191,9 +201,9 @@ const DEFAULT_CONFIG: SiteConfig = {
 };
 
 const DEFAULT_VAULT_NUMBERS: VaultNumber[] = [
-  { id: 'quick', value: '145+', label: 'Quick Videos', detail: 'Short, fast-paced edits' },
-  { id: 'long', value: '42+', label: 'Full Long Videos', detail: 'Extended uncut stories' },
-  { id: 'reels', value: '900+', label: 'CaptionVibes Reels', detail: 'Vertical private archive' },
+  { id: 'quick', value: QUICK_VIDEOS, label: 'Quick Videos', detail: 'Short, fast-paced edits' },
+  { id: 'long', value: LONG_VIDEOS, label: 'Full Long Videos', detail: 'Extended uncut stories' },
+  { id: 'reels', value: REELS_COUNT, label: 'CaptionVibes Reels', detail: 'Vertical private archive' },
   { id: 'daily', value: 'Daily', label: 'New Uploads', detail: 'Posted directly in Discord' },
 ];
 
@@ -231,15 +241,15 @@ const DEFAULT_PRICING_TIERS: PricingTier[] = [
     price: '3.99',
     originalPrice: '5.99',
     dailyNote: '$0.13 / day',
-    description: 'Entry tier with VIP role and all 145+ Quick Videos.',
+    description: `Entry tier with VIP role and all ${QUICK_VIDEOS} Quick Videos.`,
     ctaText: 'Get Supporter',
     checkoutUrl: 'https://upgrade.chat/1529327614362128474/p/captionvibes',
     featured: false,
     features: [
       { text: 'VIP role & private channels', included: true },
-      { text: '145+ Quick Videos', included: true },
-      { text: '42+ Full Long Videos', included: false },
-      { text: '900+ CaptionVibes Reels', included: false },
+      { text: `${QUICK_VIDEOS} Quick Videos`, included: true },
+      { text: `${LONG_VIDEOS} Full Long Videos`, included: false },
+      { text: `${REELS_COUNT} CaptionVibes Reels`, included: false },
       { text: 'Vote on upcoming videos', included: false },
     ],
   },
@@ -255,9 +265,9 @@ const DEFAULT_PRICING_TIERS: PricingTier[] = [
     featured: true,
     features: [
       { text: 'VIP role & private channels', included: true },
-      { text: '145+ Quick Videos', included: true },
-      { text: '42+ Full Long Videos', included: true },
-      { text: '900+ CaptionVibes Reels', included: true },
+      { text: `${QUICK_VIDEOS} Quick Videos`, included: true },
+      { text: `${LONG_VIDEOS} Full Long Videos`, included: true },
+      { text: `${REELS_COUNT} CaptionVibes Reels`, included: true },
       { text: 'Vote on upcoming videos', included: true },
     ],
   },
@@ -267,15 +277,15 @@ const DEFAULT_PRICING_TIERS: PricingTier[] = [
     price: '6.99',
     originalPrice: '9.99',
     dailyNote: '$0.23 / day',
-    description: 'Quick Videos plus the full library of 42+ Full Long Videos.',
+    description: `Quick Videos plus the full library of ${LONG_VIDEOS} Full Long Videos.`,
     ctaText: 'Get Elite',
     checkoutUrl: 'https://upgrade.chat/1529327614362128474/p/40998f93-0851-4f70-a628-7400b3318b95',
     featured: false,
     features: [
       { text: 'VIP role & private channels', included: true },
-      { text: '145+ Quick Videos', included: true },
-      { text: '42+ Full Long Videos', included: true },
-      { text: '900+ CaptionVibes Reels', included: false },
+      { text: `${QUICK_VIDEOS} Quick Videos`, included: true },
+      { text: `${LONG_VIDEOS} Full Long Videos`, included: true },
+      { text: `${REELS_COUNT} CaptionVibes Reels`, included: false },
       { text: 'Vote on upcoming videos', included: false },
     ],
   },
@@ -319,7 +329,7 @@ const SOCIAL_PROOF_TEMPLATES = [
   { action: 'joined the Free Discord', note: 'Came from r/CaptionVibesHub', isVip: false },
   { action: 'joined the Free Discord', note: 'Browsing free weekly drops', isVip: false },
   { action: 'unlocked Unlimited VIP', note: 'Instant 5s Discord role', isVip: true },
-  { action: 'unlocked Unlimited VIP', note: 'Full 1,080+ video archive', isVip: true },
+  { action: 'unlocked Unlimited VIP', note: `Full ${VAULT_TOTAL} video archive`, isVip: true },
   { action: 'unlocked Elite VIP', note: 'Full Long Videos unlocked', isVip: true },
   { action: 'unlocked Supporter VIP', note: 'Upgraded after joining free chat', isVip: true },
 ];
@@ -1031,7 +1041,7 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
                   </div>
                   <h3 className="font-semibold text-white text-sm">Community &amp; Polls</h3>
                   <p className="text-xs text-slate-400 leading-relaxed">
-                    Chat with 1,600+ fans, suggest ideas and themes, and vote in polls to shape upcoming videos.
+                    Chat with {DISCORD_MEMBERS} fans, suggest ideas and themes, and vote in polls to shape upcoming videos.
                   </p>
                 </div>
                 <div className="rounded-xl bg-[#0C0D1A]/85 border border-[#5865F2]/35 p-4 space-y-2">
@@ -1212,7 +1222,7 @@ const DEFAULT_FAQS: FaqItem[] = ${JSON.stringify(faqs, null, 2)};`;
                 <div className="rounded-xl bg-[#140B0C]/85 border border-[#FF4500]/35 p-4 space-y-1.5">
                   <h3 className="font-semibold text-[#FF9E75] text-sm">Optional VIP Archive</h3>
                   <p className="text-xs text-slate-400 leading-relaxed">
-                    Switch to the VIP tab after joining Discord if you want all 1,080+ videos and reels.
+                    Switch to the VIP tab after joining Discord if you want all {VAULT_TOTAL} videos and reels.
                   </p>
                 </div>
               </div>
