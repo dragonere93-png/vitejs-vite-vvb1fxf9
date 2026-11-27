@@ -15,12 +15,12 @@ const ENABLE_OWNER_CUSTOMIZER = false;
 // ============================================================================
 // AGGIORNA QUI OGNI GIORNO (si aggiorna tutto il sito in automatico!)
 // ============================================================================
-const VIP_COUNT = 95;             // Abbonamenti VIP attuali
-const DISCORD_MEMBERS = '1,750+'; // Utenti su Discord
+const VIP_COUNT = 98;             // Abbonamenti VIP attuali
+const DISCORD_MEMBERS = '1,800+'; // Utenti su Discord
 const VAULT_TOTAL = '1,150+';     // Contenuti totali nel Vault
-const QUICK_VIDEOS = '165+';      // Video corti (Quick Videos)
-const LONG_VIDEOS = '46+';        // Video lunghi (Full Long Videos)
-const REELS_COUNT = '950+';       // CaptionVibes Reels
+const QUICK_VIDEOS = '170+';      // Video corti (Quick Videos)
+const LONG_VIDEOS = '47+';        // Video lunghi (Full Long Videos)
+const REELS_COUNT = '1000+';       // CaptionVibes Reels
 
 type HubTab = 'discord' | 'vip' | 'reddit' | 'promo' | 'vault';
 type EditorTab = 'copy' | 'media' | 'stats' | 'tiers' | 'faq' | 'export';
